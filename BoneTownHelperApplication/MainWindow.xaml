@@ -5,28 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoneTownHelperApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" Icon="Images/">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Button
-            Name="Btn_Find_Process"
-            Grid.Row="0"
-            Grid.Column="0"
-            Content="查询进程" />
+        <!--Top-->
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#126A74" Height="60">
+            <TextBlock Text="WPF中文网应用程序" Foreground="White" FontSize="20" Margin="15,15" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Border Height="35" Margin="10" BorderThickness="1" BorderBrush="#CA5100" Background="#CA5100"
+                        CornerRadius="10">
+                    <TextBlock Text="退出系统" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Margin="10 0 10 0" />
+                </Border>
+            </StackPanel>
+        </DockPanel>
 
+        <!-- <Button -->
+        <!--     Name="Btn_Find_Process" -->
+        <!--     Grid.Row="0" -->
+        <!--     Grid.Column="0" -->
+        <!--     Content="查询进程" /> -->
+
+        <Image
+            Grid.Row="1" 
+            Grid.Column="0" 
+            Source="Images/" />
+        
         <AccessText
             Name="AT_Money"
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
+            Text="钱Money:"
             Margin="1" />
+        
+        <TextBlock 
+            Grid.Row="1" 
+            Text="100"
+            Grid.Column="2" />
     </Grid>
 </Window>

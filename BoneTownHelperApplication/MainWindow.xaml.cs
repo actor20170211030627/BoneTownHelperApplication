@@ -10,83 +10,55 @@ namespace BoneTownHelperApplication {
     public partial class MainWindow {
 
         private const string ProcessName = "BoneTown";
-        private const string moduleName = "BoneTown.exe";
-        private const string Money    = moduleName + "+0x00532A28,0x2B8,0x478";
-        private const string Beer     = moduleName + "+0x00532A28,0x2B8,0x5A0";
-        private const string Whiskey  = moduleName + "+0x00532A28,0x2B8,0x5A4";
-        private const string Weed     = moduleName + "+0x00532A28,0x2B8,0x5A8";
-        private const string Mushroom = moduleName + "+0x00532A28,0x2B8,0x5AC";
-        private const string Cactus   = moduleName + "+0x00532A28,0x2B8,0x5B0";
-        private const string Frog     = moduleName + "+0x00532A28,0x2B8,0x5B4";
-        private const string Crack    = moduleName + "+0x00532A28,0x2B8,0x5B8";
-        private const string XAxis    = moduleName + "+0x00532A28,0x2B8,0x7C4";
-        private const string YAxis    = moduleName + "+0x00532A28,0x2B8,0x7C8";
-        private const string ZAxis    = moduleName + "+0x00532A28,0x2B8,0x7CC";
+        private const string ModuleName = "BoneTown.exe";
+        private const string Money    = ModuleName + "+0x00532A28,0x2B8,0x478";
+        private const string Beer     = ModuleName + "+0x00532A28,0x2B8,0x5A0";
+        private const string Whiskey  = ModuleName + "+0x00532A28,0x2B8,0x5A4";
+        private const string Weed     = ModuleName + "+0x00532A28,0x2B8,0x5A8";
+        private const string Mushroom = ModuleName + "+0x00532A28,0x2B8,0x5AC";
+        private const string Cactus   = ModuleName + "+0x00532A28,0x2B8,0x5B0";
+        private const string Frog     = ModuleName + "+0x00532A28,0x2B8,0x5B4";
+        private const string Crack    = ModuleName + "+0x00532A28,0x2B8,0x5B8";
+        private const string XAxis    = ModuleName + "+0x00532A28,0x2B8,0x7C4";
+        private const string YAxis    = ModuleName + "+0x00532A28,0x2B8,0x7C8";
+        private const string ZAxis    = ModuleName + "+0x00532A28,0x2B8,0x7CC";
 
-        private DispatcherTimer _timer;
-        private bool ProcOpen;
+        private DispatcherTimer _dispatcherTimer;
+
+        private bool _procOpen;
 
         public MainWindow() {
             InitializeComponent();
             InitializeTimer();
 
-            this.Btn_Find_Process.Click += (sender, args) => {
-
-                // Mem m = new Mem();
-                // int processId = m.GetProcIdFromName(ProcessName);
-                // ProcOpen = m.OpenProcess(processId, out var failReason);
-                // if (ProcOpen) {
-                //     IntPtr gameBase = m.GetModuleAddressByName(ProcessName);
-                //     Debug.WriteLine(gameBase.ToString("X"));
-                //     
-                //     int money = m.ReadMemory<int>($"{ProcessName}+{Money},${Money_Offset0},${Money_Offset1}");
-                //     this.AT_Money.Text = money.ToString();
-                // } else {
-                //     Console.WriteLine(failReason);
-                //     this.AT_Money.Text = failReason;
-                // }
-
-
-                /**
-                 * SharpMemoryCache
-                 */
-                // 获取目标进程
-                // var process = Process.GetProcessesByName("game").FirstOrDefault();
-                // if (process == null) return;
-                //
-                // // 创建内存操作实例
-                // MemoryCache cache = new TrimmingMemoryCache("notepad", null);
-                // // var memory = new SharpMemory(process.Id);
-                //
-                // TSource source = cache.FirstOrDefault();
-                //
-                // // 读取内存值
-                // long address = 0x12345678;
-                // int value = memory.ReadInt(address);
-                // Console.WriteLine($"读取值: {value}");
-                //
-                // // 写入内存值
-                // memory.WriteInt(address, 999);
-            };
+            //钱Money
+            MemoryDllUtils.BindToUI<int>(Money, delegate(string s) {
+                Console.WriteLine($"钱Money: {s}");
+                // 使用 Dispatcher 切换到 UI 线程
+                Dispatcher.Invoke(() => {
+                    this.AT_Money.Text = s;
+                });
+            });
+            //啤酒Beer
+            MemoryDllUtils.BindToUI<int>(Beer, delegate(string s) {
+                Dispatcher.Invoke(() => {
+                    // this.AT_Money.Text = s;
+                });
+            });
+            // this.Btn_Find_Process.Click += (sender, args) => {
+            //     Console.WriteLine("点击了!!!");
+            // };
         }
 
         private void InitializeTimer() {
             // 创建定时器，间隔为 1 秒
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += Timer_Tick;
-
-            // 启动定时器（也可以在页面加载时启动）
-            _timer.Start();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e) {
-            /**
-             * memory.dll
-             */
-            MemoryDllUtils.findProcess(ProcessName);
-            // 定时任务逻辑（例如更新界面控件）
-            // lblTime.Content = DateTime.Now.ToString("HH:mm:ss");
+            _dispatcherTimer = new DispatcherTimer();
+            _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(300.0);
+            _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
+                _procOpen = MemoryDllUtils.OpenProcess(ProcessName);
+                Console.WriteLine($"openProcessSuccess: {_procOpen}");
+            };
+            _dispatcherTimer.Start();
         }
 
         protected override void OnClosing(CancelEventArgs e) {
@@ -105,7 +77,8 @@ namespace BoneTownHelperApplication {
         protected override void OnClosed(EventArgs e) {
             Console.WriteLine("OnClosed()");
             //停止定时器
-            _timer.Stop();
+            _dispatcherTimer.Stop();
+            MemoryDllUtils.destroy();
             base.OnClosed(e);
         }
     }
