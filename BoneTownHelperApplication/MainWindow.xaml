@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoneTownHelperApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Icon="Images/">
+        Title="MainWindow" Height="350" Width="525" Icon="Resources/images/icon_plus_blue.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,7 +20,7 @@
 
         <!--Top-->
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#126A74" Height="60">
-            <TextBlock Text="WPF中文网应用程序" Foreground="White" FontSize="20" Margin="15,15" />
+            <TextBlock Text="BoneTown v1.5" Foreground="White" FontSize="20" Margin="15,15" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Border Height="35" Margin="10" BorderThickness="1" BorderBrush="#CA5100" Background="#CA5100"
                         CornerRadius="10">
@@ -37,20 +37,26 @@
         <!--     Content="查询进程" /> -->
 
         <Image
-            Grid.Row="1" 
-            Grid.Column="0" 
-            Source="Images/" />
-        
+            Grid.Row="1"
+            Grid.Column="0"
+            Source="Resources/images/icon_plus_blue.png" />
+
         <AccessText
             Name="AT_Money"
             Grid.Row="1"
             Grid.Column="1"
             Text="钱Money:"
             Margin="1" />
-        
-        <TextBlock 
-            Grid.Row="1" 
+
+        <TextBlock
+            Grid.Row="1"
             Text="100"
             Grid.Column="2" />
+
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Text="游戏玩法:
+            1.Shift+~ 打开控制台, 能输入命令, 将鼠标移除游戏." />
     </Grid>
 </Window>
