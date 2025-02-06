@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoneTownHelperApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Icon="Resources/images/icon_plus_blue.png">
+        Title="MainWindow" Height="350" Width="525" Icon="Assets/Bonetown.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -39,7 +39,8 @@
         <Image
             Grid.Row="1"
             Grid.Column="0"
-            Source="Resources/images/icon_plus_blue.png" />
+            Width="100"
+            Source="Resources/images/Bonetown_Side_Image(352x500).jpeg" />
 
         <AccessText
             Name="AT_Money"
@@ -50,8 +51,8 @@
 
         <TextBlock
             Grid.Row="1"
-            Text="100"
-            Grid.Column="2" />
+            Grid.Column="2"
+            Text="100" />
 
         <TextBlock
             Grid.Row="2"

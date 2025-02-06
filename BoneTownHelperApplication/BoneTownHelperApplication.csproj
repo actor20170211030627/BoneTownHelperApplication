@@ -14,7 +14,7 @@
         <WarningLevel>4</WarningLevel>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <!-- 应用图标, 使用png的话会报错: 生成 Win32 资源时出错 - 图标流不是预期格式。 -->
-        <ApplicationIcon>Assets\ic_launcher.ico</ApplicationIcon>
+        <ApplicationIcon>Assets\Bonetown.ico</ApplicationIcon>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -95,11 +95,12 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
-      <Content Include="Assets\ic_launcher.ico" />
-      <Content Include="Resources\images\icon_minus_blue.png" />
-      <Content Include="Resources\images\icon_plus_blue.png">
+      <Content Include="Assets\Bonetown.ico">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="Resources\images\Bonetown_Side_Image(352x500).jpeg" />
+      <Content Include="Resources\images\icon_minus_blue.png" />
+      <Content Include="Resources\images\icon_plus_blue.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -78,7 +78,7 @@ namespace BoneTownHelperApplication {
             Console.WriteLine("OnClosed()");
             //停止定时器
             _dispatcherTimer.Stop();
-            MemoryDllUtils.destroy();
+            MemoryDllUtils.Close();
             base.OnClosed(e);
         }
     }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using Memory;
 
-/// <summary>
-/// https://github.com/erfg12/memory.dll
-/// 32 位进程无法访问 64 位进程的模块。 
-/// </summary>
 namespace BoneTownHelperApplication.Utils {
+
+    /// <summary>
+    /// https://github.com/erfg12/memory.dll
+    /// 32 位进程无法访问 64 位进程的模块。 
+    /// </summary>
     public static class MemoryDllUtils {
 
         //进程id
@@ -48,94 +48,90 @@ namespace BoneTownHelperApplication.Utils {
             // return targetProcess;
         }
 
-        /// <summary>
-        /// 读内存值int
-        /// </summary>
+        /// <summary>读内存值int</summary>
         /// <param name="moduleName">module名称, 例: wps.exe, xxx.dll</param>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <returns></returns>
         public static int ReadInt(string code) {
-            // 创建 Memory.dll 实例
-            // Mem memory = new Mem();
-            // bool openSuccess = memory.OpenProcess(ProgressId);
-            // if (!openSuccess) {
-            //     // 关闭进程句柄
-            //     memory.CloseProcess();
-            //     Console.WriteLine("打开进程失败!");
-            //     return -1;
-            // }
-            
-            // 获取主模块的基地址
-            // IntPtr baseAddress = targetProcess.MainModule.BaseAddress;
-            // Console.WriteLine($"基地址: {baseAddress.ToString("X")}");
-            
-            // 获取模块基地址
-            // IntPtr baseAddress = memory.GetModuleAddressByName(moduleName);
-            // Console.WriteLine($"基地址: 0x{baseAddress.ToString("X")}");
-            
             //  address 是内存地址，可以是十六进制字符串（如 "0x12345678"）或十进制值。
             //gamedll_x64_rwdi.dll+0x00532A28,0x2B8,0x478
             int value = Memory.ReadInt(code);
             Console.WriteLine($"读取到的值: {value}");
-            
-            //如果有多层偏移量（指针链），可以使用 memory.dll 的 GetPointerAddress 方法：
-            // int[] offsets = { 0x2B8, 0x478 }; // 多层偏移量
-            // int finalAddress = memory.GetPointerAddress(baseAddress.ToString("X"), offsets);
-            
             // 关闭进程句柄
             Memory.CloseProcess();
             return value;
-
-            // 修改内存值
-            // memory.WriteMemory(baseAddress.ToString("X"), "int", "999");
-            // Console.WriteLine("内存值已修改！");
         }
-        
-        /// <summary>
-        /// 将int写入内存
-        /// </summary>
+
+        /// <summary>将int写入内存</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns></returns>
         public static bool WriteInt(string code, int value) {
-            // 创建 Memory.dll 实例
-            // Mem memory = new Mem();
-            // bool openSuccess = memory.OpenProcess(ProgressId);
-            // if (!openSuccess) {
-            //     // 关闭进程句柄
-            //     memory.CloseProcess();
-            //     Console.WriteLine("打开进程失败!");
-            //     return false;
-            // }
-            
-            //  address 是内存地址，可以是十六进制字符串（如 "0x12345678"）或十进制值。
-            //gamedll_x64_rwdi.dll+0x00532A28,0x2B8,0x478
             bool success = Memory.WriteMemory(code, "int", value.ToString());
             Console.WriteLine($"写入int: {value}, 成功: {success}");
-            
             // 关闭进程句柄
             Memory.CloseProcess();
             return success;
         }
-        
+
+        /// <summary>读内存值float</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <returns></returns>
+        public static float ReadFloat(string code) {
+            float value = Memory.ReadFloat(code, "", false);
+            Console.WriteLine($"读取到的值: {value}");
+            // 关闭进程句柄
+            Memory.CloseProcess();
+            return value;
+        }
+
+        /// <summary>将float写入内存</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
+        /// <param name="value">value to write to address.</param>
+        /// <returns>是否写入成功</returns>
+        public static bool WriteFloat(string code, float value) {
+            bool success = Memory.WriteMemory(code, "float", value.ToString());
+            Console.WriteLine($"写入float: {value}, 成功: {success}");
+            // 关闭进程句柄
+            Memory.CloseProcess();
+            return success;
+        }
+
+        /// <summary>读内存值byte</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <returns></returns>
+        public static float ReadByte(string code) {
+            int value = Memory.ReadByte(code);
+            Console.WriteLine($"读取到的值: {value}");
+            // 关闭进程句柄
+            Memory.CloseProcess();
+            return value;
+        }
+
+        /// <summary>将byte写入内存</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
+        /// <param name="value">value to write to address.</param>
+        /// <returns>是否写入成功</returns>
+        public static bool WriteByte(string code, byte value) {
+            bool success = Memory.WriteMemory(code, "byte", value.ToString());
+            Console.WriteLine($"写入byte: {value}, 成功: {success}");
+            // 关闭进程句柄
+            Memory.CloseProcess();
+            return success;
+        }
+
         /// <summary>绑定地址值到UI, Bind memory addresses to UI elements</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="address">value to write to address.</param>
         /// <returns></returns>
         public static void BindToUI<T>(string address, Action<string> UIObject) {
-            // Mem memory = new Mem();
-            // bool openSuccess = memory.OpenProcess(ProgressId);
-            // if (!openSuccess) {
-            //     // 关闭进程句柄
-            //     memory.CloseProcess();
-            //     Console.WriteLine("打开进程失败!");
-            //     return false;
-            // }
             Memory.BindToUI<T>(address, UIObject);
         }
-        
+
         /// <summary>冻结结果, Freeze values (infinte loop writing in threads)</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
@@ -148,7 +144,7 @@ namespace BoneTownHelperApplication.Utils {
             return success;
         }
 
-        
+
         /// <summary>取消冻结结果, Unfreeze a frozen value at an address</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
@@ -158,7 +154,7 @@ namespace BoneTownHelperApplication.Utils {
             Memory.UnfreezeValue(address);
         }
 
-        public static void destroy() {
+        public static void Close() {
             Memory.CloseProcess();
             Memory = null;
         }
