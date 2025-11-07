@@ -5,59 +5,374 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoneTownHelperApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Icon="Assets/Bonetown.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        Title="骨头镇修改器(Bonetown TRainer)-actor2015(v1.0)"
+        Height="Auto"
+        Width="Auto"
+        Icon="Assets/Bonetown.ico">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Image
+                Width="150"
+                Source="Resources/images/Bonetown_Side_Image(352x500).jpg" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
 
-        <!--Top-->
-        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#126A74" Height="60">
-            <TextBlock Text="BoneTown v1.5" Foreground="White" FontSize="20" Margin="15,15" />
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Border Height="35" Margin="10" BorderThickness="1" BorderBrush="#CA5100" Background="#CA5100"
-                        CornerRadius="10">
-                    <TextBlock Text="退出系统" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Margin="10 0 10 0" />
-                </Border>
-            </StackPanel>
-        </DockPanel>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
 
-        <!-- <Button -->
-        <!--     Name="Btn_Find_Process" -->
-        <!--     Grid.Row="0" -->
-        <!--     Grid.Column="0" -->
-        <!--     Content="查询进程" /> -->
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-        <Image
-            Grid.Row="1"
-            Grid.Column="0"
-            Width="100"
-            Source="Resources/images/Bonetown_Side_Image(352x500).jpeg" />
+                <!--Top-->
+                <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#126A74" Height="Auto">
+                    <TextBlock
+                        Foreground="White"
+                        FontSize="15"
+                        Text="运行状态:"
+                        Margin="5,5" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Border
+                            Height="25"
+                            Margin="5"
+                            BorderThickness="1"
+                            BorderBrush="#CA5100"
+                            Background="#CA5100"
+                            CornerRadius="10">
+                            <TextBlock
+                                Text="运行中"
+                                Foreground="White"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="10 0 10 0" />
+                        </Border>
+                    </StackPanel>
+                </DockPanel>
 
-        <AccessText
-            Name="AT_Money"
-            Grid.Row="1"
-            Grid.Column="1"
-            Text="钱Money:"
-            Margin="1" />
 
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="2"
-            Text="100" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="项目(Property)"
+                    Margin="1" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="当前值(Value)" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Margin="10 0 10 0"
+                    Text="加点热键(HotKey)" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Text="点击加点(Click2+)" />
+
+
+                <!--图片来源from: BoneTown\game\data\gui\mainCharacter -->
+                <Image
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/money_split.png" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="钱(Money):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Money"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Money"
+                    Grid.Row="2"
+                    Grid.Column="4"
+                    Content="+1000" />
+
+
+                <!--图片来源from: BoneTown\game\data\gui\powerup -->
+                <Image
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONBeerSM.png" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="啤酒(Beer):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Beer"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Beer"
+                    Grid.Row="3"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONWhiskeySM.png" />
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="威士忌(Whiskey):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Whiskey"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Whiskey"
+                    Grid.Row="4"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONNugSM.png" />
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Text="大麻(Nug):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Nug"
+                    Grid.Row="5"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Nug"
+                    Grid.Row="5"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONShroomSM.png" />
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Text="蘑菇(Shroom):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Shroom"
+                    Grid.Row="6"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Shroom"
+                    Grid.Row="6"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONPeyoteSM.png" />
+                <TextBlock
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Text="仙人掌(Peyote):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Peyote"
+                    Grid.Row="7"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Peyote"
+                    Grid.Row="7"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONFrogSM.png" />
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    Text="青蛙(Frog):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Frog"
+                    Grid.Row="8"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Frog"
+                    Grid.Row="8"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="9"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONCrackSM.png" />
+                <TextBlock
+                    Grid.Row="9"
+                    Grid.Column="1"
+                    Text="可卡因(Crack):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_Crack"
+                    Grid.Row="9"
+                    Grid.Column="2"
+                    Text="100" />
+                <Button
+                    Name="Btn_Crack"
+                    Grid.Row="9"
+                    Grid.Column="4"
+                    Content="+100" />
+
+
+                <Image
+                    Grid.Row="10"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONCrackSM.png" />
+                <TextBlock
+                    Grid.Row="10"
+                    Grid.Column="1"
+                    Text="东西(East&amp;West):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_XAxis"
+                    Grid.Row="10"
+                    Grid.Column="2"
+                    Text="100" />
+                <UniformGrid
+                    Grid.Row="10"
+                    Grid.Column="4"
+                    Rows="1"
+                    Columns="2">
+                    <Button
+                        Name="Btn_XAxis_Minus"
+                        Content="西(West)+5"
+                        Click="Btn_OnClick" />
+                    <Button
+                        Name="Btn_XAxis_Plus"
+                        HorizontalAlignment="Right"
+                        Content="东(East)+5"
+                        Click="Btn_OnClick" />
+                </UniformGrid>
+
+
+                <Image
+                    Grid.Row="11"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONCrackSM.png" />
+                <TextBlock
+                    Grid.Row="11"
+                    Grid.Column="1"
+                    Text="南北(South&amp;North):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_YAxis"
+                    Grid.Row="11"
+                    Grid.Column="2"
+                    Text="100" />
+                <UniformGrid
+                    Grid.Row="11"
+                    Grid.Column="4"
+                    Rows="1"
+                    Columns="2">
+                    <Button
+                        Name="Btn_YAxis_Minus"
+                        Content="南(South)+5"
+                        Click="Btn_OnClick" />
+                    <Button
+                        Name="Btn_YAxis_Plus"
+                        HorizontalAlignment="Right"
+                        Content="北(North)+5"
+                        Click="Btn_OnClick" />
+                </UniformGrid>
+
+
+                <Image
+                    Grid.Row="12"
+                    Grid.Column="0"
+                    Width="Auto" Height="20"
+                    Source="Resources/images/PwrICONCrackSM.png" />
+                <TextBlock
+                    Grid.Row="12"
+                    Grid.Column="1"
+                    Text="高度(Height):"
+                    Margin="1" />
+                <TextBlock
+                    Name="TB_ZAxis"
+                    Grid.Row="12"
+                    Grid.Column="2"
+                    Text="100" />
+                <UniformGrid
+                    Grid.Row="12"
+                    Grid.Column="4"
+                    Rows="1"
+                    Columns="2">
+                    <Button
+                        Name="Btn_ZAxis_Minus"
+                        Content="-5"
+                        Click="Btn_OnClick" />
+                    <Button
+                        Name="Btn_ZAxis_Plus"
+                        HorizontalAlignment="Right"
+                        Content="+5"
+                        Click="Btn_OnClick" />
+                </UniformGrid>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel
+            Orientation="Horizontal"
+            VerticalAlignment="Bottom">
+            <Button Name="Button_About" Width="100">关于(About)</Button>
+            <Button Name="Button_State">暂停(Pause)</Button>
+        </StackPanel>
 
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
             Text="游戏玩法:
-            1.Shift+~ 打开控制台, 能输入命令, 将鼠标移除游戏." />
-    </Grid>
+            1.在游戏中按Shift + ~ 打开控制台, 能输入命令, 将鼠标移除游戏." />
+
+    </StackPanel>
 </Window>

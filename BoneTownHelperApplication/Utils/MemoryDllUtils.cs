@@ -55,11 +55,7 @@ namespace BoneTownHelperApplication.Utils {
         public static int ReadInt(string code) {
             //  address 是内存地址，可以是十六进制字符串（如 "0x12345678"）或十进制值。
             //gamedll_x64_rwdi.dll+0x00532A28,0x2B8,0x478
-            int value = Memory.ReadInt(code);
-            Console.WriteLine($"读取到的值: {value}");
-            // 关闭进程句柄
-            Memory.CloseProcess();
-            return value;
+            return Memory.ReadInt(code);
         }
 
         /// <summary>将int写入内存</summary>
@@ -68,22 +64,14 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="value">value to write to address.</param>
         /// <returns></returns>
         public static bool WriteInt(string code, int value) {
-            bool success = Memory.WriteMemory(code, "int", value.ToString());
-            Console.WriteLine($"写入int: {value}, 成功: {success}");
-            // 关闭进程句柄
-            Memory.CloseProcess();
-            return success;
+            return Memory.WriteMemory(code, "int", value.ToString());
         }
 
         /// <summary>读内存值float</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <returns></returns>
         public static float ReadFloat(string code) {
-            float value = Memory.ReadFloat(code, "", false);
-            Console.WriteLine($"读取到的值: {value}");
-            // 关闭进程句柄
-            Memory.CloseProcess();
-            return value;
+            return Memory.ReadFloat(code, "", false);
         }
 
         /// <summary>将float写入内存</summary>
@@ -92,22 +80,14 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="value">value to write to address.</param>
         /// <returns>是否写入成功</returns>
         public static bool WriteFloat(string code, float value) {
-            bool success = Memory.WriteMemory(code, "float", value.ToString());
-            Console.WriteLine($"写入float: {value}, 成功: {success}");
-            // 关闭进程句柄
-            Memory.CloseProcess();
-            return success;
+            return Memory.WriteMemory(code, "float", value.ToString());
         }
 
         /// <summary>读内存值byte</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <returns></returns>
-        public static float ReadByte(string code) {
-            int value = Memory.ReadByte(code);
-            Console.WriteLine($"读取到的值: {value}");
-            // 关闭进程句柄
-            Memory.CloseProcess();
-            return value;
+        public static int ReadByte(string code) {
+            return Memory.ReadByte(code);
         }
 
         /// <summary>将byte写入内存</summary>
@@ -116,13 +96,10 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="value">value to write to address.</param>
         /// <returns>是否写入成功</returns>
         public static bool WriteByte(string code, byte value) {
-            bool success = Memory.WriteMemory(code, "byte", value.ToString());
-            Console.WriteLine($"写入byte: {value}, 成功: {success}");
-            // 关闭进程句柄
-            Memory.CloseProcess();
-            return success;
+            return Memory.WriteMemory(code, "byte", value.ToString());
         }
 
+        /// TODO: 为什么 BindToUI<float> 的值都=0???
         /// <summary>绑定地址值到UI, Bind memory addresses to UI elements</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
@@ -137,11 +114,8 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns></returns>
-        public static bool FreezeValue(string address, string type, int value) {
-            bool success = Memory.FreezeValue(address, type, value.ToString());
-            Console.WriteLine($"冻结结果: {value}, 成功: {success}");
-            Memory.CloseProcess();
-            return success;
+        public static bool FreezeValue(string address, string type, object value) {
+            return Memory.FreezeValue(address, type, value.ToString());
         }
 
 
@@ -154,7 +128,8 @@ namespace BoneTownHelperApplication.Utils {
             Memory.UnfreezeValue(address);
         }
 
-        public static void Close() {
+        public static void CloseProcess() {
+            // 关闭进程句柄
             Memory.CloseProcess();
             Memory = null;
         }
