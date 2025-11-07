@@ -13,7 +13,7 @@
         <StackPanel Orientation="Horizontal">
             <Image
                 Width="150"
-                Source="Resources/images/Bonetown_Side_Image(352x500).jpg" />
+                Source="Resources/images/Bonetown_Side_Image(225x320).jpg" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

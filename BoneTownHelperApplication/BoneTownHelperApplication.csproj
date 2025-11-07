@@ -5,7 +5,7 @@
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{1BB11617-13FC-471C-AD5E-B07177FBAAC0}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <RootNamespace>BoneTownHelperApplication</RootNamespace>
         <AssemblyName>BoneTownHelperApplication</AssemblyName>
         <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
@@ -40,12 +40,25 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+        </Reference>
         <Reference Include="Memory, Version=1.2.27.0, Culture=neutral, processorArchitecture=X86">
             <HintPath>..\packages\Memory.dll.x86.1.2.27\lib\netstandard2.0\Memory.dll</HintPath>
         </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        
+        <!--
+        添加Forms, 用于 globalmousekeyhook 框架的 Keys 导入:
+        1.先找1个 System.Windows.Forms.dll
+          C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.16\ref\net8.0\System.Windows.Forms.dll
+        2.将项目切换成 Solution 模式
+        3.右击 Dependencies → Reference... → Add From... → 选择上方找到的.dll, 就有了↓这句
+        -->
+        <Reference Include="System.Windows.Forms" />
+        
         <Reference Include="System.Xml" />
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -121,7 +134,7 @@
       <Resource Include="Resources\images\PwrICONBeerSM.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\Bonetown_Side_Image(352x500).jpg">
+      <Resource Include="Resources\images\Bonetown_Side_Image(225x320).jpg">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
       <Content Include="Resources\images\icon_minus_blue.png">
