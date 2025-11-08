@@ -72,7 +72,9 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="Utils\MediaPlayerUtils.cs" />
         <Compile Include="Utils\MemoryDllUtils.cs" />
+        <Compile Include="Utils\SoundPlayerUtils.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -110,37 +112,55 @@
       <Content Include="Assets\Bonetown.ico">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Resource Include="Resources\images\money_split.png">
+      <Resource Include="Resources\Medias\activate.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONCrackSM.png">
+      <Resource Include="Resources\Medias\ang.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONFrogSM.png">
+      <Resource Include="Resources\Medias\deactivate.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONNugSM.png">
+      <Resource Include="Resources\Images\north_south.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONPeyoteSM.png">
+      <Resource Include="Resources\Images\money_split.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONShroomSM.png">
+      <Resource Include="Resources\Images\PwrICONCrackSM.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONWhiskeySM.png">
+      <Resource Include="Resources\Images\PwrICONFrogSM.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\PwrICONBeerSM.png">
+      <Resource Include="Resources\Images\PwrICONNugSM.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\images\Bonetown_Side_Image(225x320).jpg">
+      <Resource Include="Resources\Images\PwrICONPeyoteSM.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Content Include="Resources\images\icon_minus_blue.png">
+      <Resource Include="Resources\Images\PwrICONShroomSM.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Images\PwrICONWhiskeySM.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Images\PwrICONBeerSM.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Images\Bonetown_Side_Image(225x320).jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Images\east_west.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Images\height.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Content Include="Resources\Images\icon_minus_blue.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="Resources\images\icon_plus_blue.png">
+      <Content Include="Resources\Images\icon_plus_blue.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

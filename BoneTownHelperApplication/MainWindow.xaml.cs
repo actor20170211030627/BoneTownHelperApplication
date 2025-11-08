@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Resources;
 using System.Windows.Threading;
 using BoneTownHelperApplication.Utils;
 using Gma.System.MouseKeyHook;
@@ -39,6 +42,8 @@ namespace BoneTownHelperApplication {
         private bool _False = false;
 
         private IKeyboardMouseEvents m_GlobalHook;
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private System.Media.SoundPlayer soundPlayer = new System.Media.SoundPlayer();
 
         public MainWindow() {
             InitializeComponent();
@@ -48,6 +53,20 @@ namespace BoneTownHelperApplication {
             // this.Btn_Find_Process.Click += (sender, args) => {
             //     Console.WriteLine("点击了!!!");
             // };
+            
+            
+            // 监听媒体成功打开的事件
+            // MediaPlayerUtils.MediaOpenedAdd(mediaPlayer, (sender1, e1) => {
+            //     // 媒体文件成功打开后，开始播放
+            //     mediaPlayer.Play();
+            //     Console.WriteLine("Media opened successfully.");
+            // });
+            // // 监听媒体打开失败的事件
+            // MediaPlayerUtils.MediaFailedAdd(mediaPlayer, (sender1, e2) => {
+            //     // 这里会显示具体的错误信息
+            //     Console.WriteLine($"Media failed: {e2.ErrorException.Message}");
+            // });
+            
 
             //钱Money
             MemoryDllUtils.BindToUI<int>(Money, delegate(string s) {
@@ -177,9 +196,9 @@ namespace BoneTownHelperApplication {
             m_GlobalHook.KeyUp += GlobalHookKeyUp;
             
             
-            
+            //todo: deleteQ!
             //下方是组合键, 先屏蔽掉
-            if (!_False) return;
+            // if (!_False) return;
             
             //1. Define key combinations
             //                                                               +数字无效???
@@ -188,21 +207,59 @@ namespace BoneTownHelperApplication {
             // Key.LeftCtrl;
             // Key.D0;
             Combination combinationMoney = Combination.TriggeredBy(Keys.D0).With(Keys.Control);
-            Combination combinationBeer = Combination.TriggeredBy(Keys.NumPad0).Control();
+            // Combination combinationMoney = Combination.TriggeredBy(Keys.NumPad0).With(Keys.Control);
+            Combination combinationBeer = Combination.TriggeredBy(Keys.D1).Control();
+            Combination combinationWhiskey = Combination.TriggeredBy(Keys.D2).Control();
+            Combination combinationNug = Combination.TriggeredBy(Keys.D3).Control();
+            Combination combinationShroom = Combination.TriggeredBy(Keys.D4).Control();
+            Combination combinationPeyote = Combination.TriggeredBy(Keys.D5).Control();
+            Combination combinationFrog = Combination.TriggeredBy(Keys.D6).Control();
+            Combination combinationCrack = Combination.TriggeredBy(Keys.D7).Control();
 
             //2. Define actions
             Action actionMoney = () => {
-                // if
-                Console.WriteLine("You pressed Money");
+                if (!_isProcOpen) return;
+                MoneyAdd();
             };
             Action actionBeer = () => {
-                Console.WriteLine("You Pressed Beer");
+                if (!_isProcOpen) return;
+                BeerAdd();
+            };
+            Action actionWhiskey = () => {
+                if (!_isProcOpen) return;
+                WhiskeyAdd();
+            };
+            Action actionNug = () => {
+                if (!_isProcOpen) return;
+                NugAdd();
+            };
+            Action actionShroom = () => {
+                if (!_isProcOpen) return;
+                ShroomAdd();
+            };
+            Action actionPeyote = () => {
+                if (!_isProcOpen) return;
+                PeyoteAdd();
+            };
+            Action actionFrog = () => {
+                if (!_isProcOpen) return;
+                FrogAdd();
+            };
+            Action actionCrack = () => {
+                if (!_isProcOpen) return;
+                CrackAdd();
             };
 
             //3. Assign actions to key combinations
             var assignment = new Dictionary<Combination, Action> {
                 {combinationMoney, actionMoney},
-                {combinationBeer, actionBeer}
+                {combinationBeer, actionBeer},
+                {combinationWhiskey, actionWhiskey},
+                {combinationNug, actionNug},
+                {combinationShroom, actionShroom},
+                {combinationPeyote, actionPeyote},
+                {combinationFrog, actionFrog},
+                {combinationCrack, actionCrack}
             };
 
             //4. Install listener
@@ -210,122 +267,238 @@ namespace BoneTownHelperApplication {
         }
 
         private void GlobalHookKeyUp(object sender, System.Windows.Forms.KeyEventArgs e) {
-            // KeyCode = Up, KeyData = Up, KeyValue = 38, SuppressKeyPress = False
-            // KeyCode = Down, KeyData = Down, KeyValue = 40, SuppressKeyPress = False
             // KeyCode = Left, KeyData = Left, KeyValue = 37, SuppressKeyPress = False
+            // KeyCode = Up, KeyData = Up, KeyValue = 38, SuppressKeyPress = False
             // KeyCode = Right, KeyData = Right, KeyValue = 39, SuppressKeyPress = False
+            // KeyCode = Down, KeyData = Down, KeyValue = 40, SuppressKeyPress = False
             // Console.WriteLine($"KeyCode = {e.KeyCode}, KeyData = {e.KeyData}, KeyValue = {e.KeyValue}, SuppressKeyPress = {e.SuppressKeyPress}");
+
+            if (!_isProcOpen) return;
             
             if (e.KeyCode == Keys.Right) {  //东
-                Go2East();
+                XAxisEdit(true);
                 return;
             }
             if (e.KeyCode == Keys.Left) {   //西
-                Go2West();
+                XAxisEdit(false);
                 return;
             }
             if (e.KeyCode == Keys.Up) {     //北
-                Go2North();
+                YAxisEdit(true);
                 return;
             }
             if (e.KeyCode == Keys.Down) {   //南
-                Go2South();
+                YAxisEdit(false);
                 return;
             }
             if (e.KeyCode == Keys.H) {      //高度+
-                HeightAdd();
+                ZAxisEdit(true);
                 return;
             }
             if (e.KeyCode == Keys.L) {      //高度-
-                HeightMinus();
+                ZAxisEdit(false);
                 return;
             }
         }
         
 
         private void Btn_OnClick(object sender, RoutedEventArgs e) {
+            if (!_isProcOpen) return;
+            
             if (!(sender is Button button)) return;
+
             string name = button.Name;
+            //钱💰
+            if (name == this.Btn_Money.Name) {
+                MoneyAdd();
+                return;
+            }
+            
+            //啤酒🍺
+            if (name == this.Btn_Beer.Name) {
+                BeerAdd();
+                return;
+            }
+            //威士忌🤳
+            if (name == this.Btn_Whiskey.Name) {
+                WhiskeyAdd();
+                return;
+            }
+            //大麻🍃
+            if (name == this.Btn_Nug.Name) {
+                NugAdd();
+                return;
+            }
+            //蘑菇🍄
+            if (name == this.Btn_Shroom.Name) {
+                ShroomAdd();
+                return;
+            }
+            //仙人掌🌵
+            if (name == this.Btn_Peyote.Name) {
+                PeyoteAdd();
+                return;
+            }
+            //青蛙🐸
+            if (name == this.Btn_Frog.Name) {
+                FrogAdd();
+                return;
+            }
+            //可卡因
+            if (name == this.Btn_Crack.Name) {
+                CrackAdd();
+                return;
+            }
+            
             //东
             if (name == this.Btn_XAxis_Plus.Name) {
-                Go2East();
+                XAxisEdit(true);
                 return;
             }
             //西
             if (name == this.Btn_XAxis_Minus.Name) {
-                Go2West();
+                XAxisEdit(false);
                 return;
             }
             
             //北
             if (name == this.Btn_YAxis_Plus.Name) {
-                Go2North();
+                YAxisEdit(true);
                 return;
             }
             //南
             if (name == this.Btn_YAxis_Minus.Name) {
-                Go2South();
+                YAxisEdit(false);
                 return;
             }
             
             //高度+
             if (name == this.Btn_ZAxis_Plus.Name) {
-                HeightAdd();
+                ZAxisEdit(true);
                 return;
             }
             //高度-
             if (name == this.Btn_ZAxis_Minus.Name) {
-                HeightMinus();
+                ZAxisEdit(false);
                 return;
             }
         }
 
-        private void Go2East() {
-            float x = MemoryDllUtils.ReadFloat(XAxis);;
-            bool isSuccessEast = MemoryDllUtils.WriteFloat(XAxis, x + 5.0f);
-            if (!isSuccessEast) {
-                Console.WriteLine("向东+5失败!");
+        private void MoneyAdd() {
+            int money = MemoryDllUtils.ReadInt(Money);
+            bool isSuccess = MemoryDllUtils.WriteInt(Money, money + 1000);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("钱+1000失败!");
+            }
+        }
+
+        private void BeerAdd() {
+            int beer = MemoryDllUtils.ReadInt(Beer);
+            bool isSuccess = MemoryDllUtils.WriteInt(Beer, beer + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("啤酒+100失败!");
+            }
+        }
+
+        private void WhiskeyAdd() {
+            int whiskey = MemoryDllUtils.ReadInt(Whiskey);
+            bool isSuccess = MemoryDllUtils.WriteInt(Whiskey, whiskey + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("威士忌+100失败!");
             }
         }
         
-        private void Go2West() {
+        private void NugAdd() {
+            int nug = MemoryDllUtils.ReadInt(Weed);
+            bool isSuccess = MemoryDllUtils.WriteInt(Weed, nug + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("大麻+100失败!");
+            }
+        }
+
+        private void ShroomAdd() {
+            int shroom = MemoryDllUtils.ReadInt(Shroom);
+            bool isSuccess = MemoryDllUtils.WriteInt(Shroom, shroom + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("蘑菇+100失败!");
+            }
+        }
+
+        private void PeyoteAdd() {
+            int peyote = MemoryDllUtils.ReadInt(Peyote);
+            bool isSuccess = MemoryDllUtils.WriteInt(Peyote, peyote + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("仙人掌+100失败!");
+            }
+        }
+
+        private void FrogAdd() {
+            int frog = MemoryDllUtils.ReadInt(Frog);
+            bool isSuccess = MemoryDllUtils.WriteInt(Frog, frog + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("青蛙+100失败!");
+            }
+        }
+
+        private void CrackAdd() {
+            int crack = MemoryDllUtils.ReadInt(Crack);
+            bool isSuccess = MemoryDllUtils.WriteInt(Crack, crack + 100);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("可卡因+100失败!");
+            }
+        }
+
+        private void XAxisEdit(bool isEast) {
             float x = MemoryDllUtils.ReadFloat(XAxis);
-            bool isSuccessEast = MemoryDllUtils.WriteFloat(XAxis, x - 5.0f);
-            if (!isSuccessEast) {
-                Console.WriteLine("向西+5失败!");
+            bool isSuccess = MemoryDllUtils.WriteFloat(XAxis, isEast ? x + 5.0f : x - 5.0f);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine(isEast ? "向东+5失败!" : "向西+5失败!");
             }
         }
         
-        private void Go2North() {
+        private void YAxisEdit(bool isNorth) {
             float y = MemoryDllUtils.ReadFloat(YAxis);
-            bool isSuccessEast = MemoryDllUtils.WriteFloat(YAxis, y + 5.0f);
-            if (!isSuccessEast) {
-                Console.WriteLine("向北+5失败!");
+            bool isSuccess = MemoryDllUtils.WriteFloat(YAxis, isNorth ? y + 5.0f : y - 5.0f);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine(isNorth ? "向北+5失败!" : "向南+5失败!");
             }
         }
         
-        private void Go2South() {
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            bool isSuccessEast = MemoryDllUtils.WriteFloat(YAxis, y - 5.0f);
-            if (!isSuccessEast) {
-                Console.WriteLine("向南+5失败!");
-            }
-        }
-        
-        private void HeightAdd() {
+        private void ZAxisEdit(bool isUp) {
             float z = MemoryDllUtils.ReadFloat(ZAxis);
-            bool isSuccessEast = MemoryDllUtils.WriteFloat(ZAxis, z + 5.0f);
-            if (!isSuccessEast) {
-                Console.WriteLine("高度+5失败!");
+            bool isSuccess = MemoryDllUtils.WriteFloat(ZAxis, isUp ? z + 5.0f : z - 5.0f);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine(isUp ? "高度+5失败!" : "高度-5失败!");
             }
         }
         
-        private void HeightMinus() {
-            float z = MemoryDllUtils.ReadFloat(ZAxis);
-            bool isSuccessEast = MemoryDllUtils.WriteFloat(ZAxis, z - 5.0f);
-            if (!isSuccessEast) {
-                Console.WriteLine("高度-5失败!");
-            }
+        //播放ang
+        private void PlayAng() {
+            Uri uri = new Uri("Resources/Medias/ang.wav", UriKind.Relative);
+            SoundPlayerUtils.Stream(soundPlayer, uri);
+            SoundPlayerUtils.Play(soundPlayer);
         }
         
         protected override void OnClosing(CancelEventArgs e) {
@@ -352,6 +525,11 @@ namespace BoneTownHelperApplication {
             _dispatcherTimer.Stop();
             // _dispatcherTimer.Tick -= ;
             MemoryDllUtils.CloseProcess();
+            
+            mediaPlayer.Stop();
+            mediaPlayer.Close();
+            mediaPlayer = null;
+            
             base.OnClosed(e);
         }
     }
