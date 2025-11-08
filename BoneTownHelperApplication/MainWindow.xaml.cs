@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Resources;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using BoneTownHelperApplication.Utils;
 using Gma.System.MouseKeyHook;
@@ -39,14 +37,43 @@ namespace BoneTownHelperApplication {
 
         //进程是否打开
         private bool _isProcOpen = false;
+        //修改器是否激活
+        private bool _isTRainerOpen = true;
         private bool _False = false;
+        
+        //程序集名称: BoneTownHelperApplication
+        private string assemblyName = string.Empty;
+        private string strAbout = "1.本软件针对英文版, 因为我没有中文版本. (这游戏剧情不难, 汉化版也只汉化了菜单那几个按钮, 所以没有安装中文版)\n" +
+                                  "2.如果你使用了另外的修改器, 可以和其他修改器混用.\n" +
+                                  "3.使用示例:\n" +
+                                  "  1.游戏左下角地图面向地图的\"N\"北极, 东南西北平移更直观.\n" +
+                                  "  2.和妹子友好交流的时候, 也可以平移, 能够看见更多细节哟(^_^).\n" +
+                                  "  3.打Boss的时候也可以直接平移到他头顶, 然后一直在空中放闪电技能(在空中的时候不要走动, 否则会掉下来).\n" +
+                                  "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
+                                  "5.杀毒软件报毒: 请自己添加进白名单.\n" +
+                                  "6.作者 actor2015\n" +
+                                  "7.版本 20230507 & v1.0\n" +
+                                  "\n" +
+                                  "1.This trainer not support Chinese menu version game.\n" +
+                                  "2.If you use other trainers, you can use this with others.\n" +
+                                  "3.Use example:\n" +
+                                  "  1.When you use the function of Translation to [E, W, N, S], you should let role face the North, and you will use visual.\n" +
+                                  "  2.If you make with the girl, you can translation too, and you can see more details(^_^).\n" +
+                                  "  3.If you hit boss, you can translation to hi's head, and release lightning(don't move, or you will drop down).\n" +
+                                  "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
+                                  "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
+                                  "6.Author actor2015\n" +
+                                  "7.Version 20230507 & v1.0";
 
         private IKeyboardMouseEvents m_GlobalHook;
-        private MediaPlayer mediaPlayer = new MediaPlayer();
         private System.Media.SoundPlayer soundPlayer = new System.Media.SoundPlayer();
 
         public MainWindow() {
             InitializeComponent();
+
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            assemblyName = assembly.GetName().Name;
+
             InitializeTimer();
             InitializeMouseKeyHook();
             
@@ -183,6 +210,9 @@ namespace BoneTownHelperApplication {
                 } else {
                     Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
                 }
+
+                this.Border_Running.Visibility = _isProcOpen ? Visibility.Visible : Visibility.Hidden;
+                this.Border_Stopped.Visibility = _isProcOpen ? Visibility.Hidden : Visibility.Visible;
             };
             _dispatcherTimer.Start();
         }
@@ -195,10 +225,6 @@ namespace BoneTownHelperApplication {
             m_GlobalHook = Hook.GlobalEvents();
             m_GlobalHook.KeyUp += GlobalHookKeyUp;
             
-            
-            //todo: deleteQ!
-            //下方是组合键, 先屏蔽掉
-            // if (!_False) return;
             
             //1. Define key combinations
             //                                                               +数字无效???
@@ -215,39 +241,59 @@ namespace BoneTownHelperApplication {
             Combination combinationPeyote = Combination.TriggeredBy(Keys.D5).Control();
             Combination combinationFrog = Combination.TriggeredBy(Keys.D6).Control();
             Combination combinationCrack = Combination.TriggeredBy(Keys.D7).Control();
+            Combination combinationHeightAdd = Combination.TriggeredBy(Keys.H).Control();
+            Combination combinationHeightMinus = Combination.TriggeredBy(Keys.L).Control();
 
             //2. Define actions
             Action actionMoney = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 MoneyAdd();
             };
             Action actionBeer = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 BeerAdd();
             };
             Action actionWhiskey = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 WhiskeyAdd();
             };
             Action actionNug = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 NugAdd();
             };
             Action actionShroom = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 ShroomAdd();
             };
             Action actionPeyote = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 PeyoteAdd();
             };
             Action actionFrog = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 FrogAdd();
             };
             Action actionCrack = () => {
                 if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
                 CrackAdd();
+            };
+            Action actionHeightAdd = () => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                ZAxisEdit(true);
+            };
+            Action actionHeightMinus = () => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                ZAxisEdit(false);
             };
 
             //3. Assign actions to key combinations
@@ -259,11 +305,14 @@ namespace BoneTownHelperApplication {
                 {combinationShroom, actionShroom},
                 {combinationPeyote, actionPeyote},
                 {combinationFrog, actionFrog},
-                {combinationCrack, actionCrack}
+                {combinationCrack, actionCrack},
+                {combinationHeightAdd, actionHeightAdd},
+                {combinationHeightMinus, actionHeightMinus}
             };
 
             //4. Install listener
-            Hook.GlobalEvents().OnCombination(assignment);
+            // Hook.GlobalEvents().OnCombination(assignment);
+            m_GlobalHook.OnCombination(assignment);
         }
 
         private void GlobalHookKeyUp(object sender, System.Windows.Forms.KeyEventArgs e) {
@@ -274,6 +323,7 @@ namespace BoneTownHelperApplication {
             // Console.WriteLine($"KeyCode = {e.KeyCode}, KeyData = {e.KeyData}, KeyValue = {e.KeyValue}, SuppressKeyPress = {e.SuppressKeyPress}");
 
             if (!_isProcOpen) return;
+            if (!_isTRainerOpen) return;
             
             if (e.KeyCode == Keys.Right) {  //东
                 XAxisEdit(true);
@@ -291,14 +341,6 @@ namespace BoneTownHelperApplication {
                 YAxisEdit(false);
                 return;
             }
-            if (e.KeyCode == Keys.H) {      //高度+
-                ZAxisEdit(true);
-                return;
-            }
-            if (e.KeyCode == Keys.L) {      //高度-
-                ZAxisEdit(false);
-                return;
-            }
         }
         
 
@@ -306,8 +348,25 @@ namespace BoneTownHelperApplication {
             if (!_isProcOpen) return;
             
             if (!(sender is Button button)) return;
-
+            
             string name = button.Name;
+            //修改器激活状态
+            if (name == this.Btn_TRainer_State.Name) {
+                _isTRainerOpen = !_isTRainerOpen;
+                Uri uri = _isTRainerOpen ? 
+                    new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_green2.png") 
+                    : new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_lightyellow.png");
+                this.Image_TRainer_State.Source = new BitmapImage(uri);
+                return;
+            }
+            //关于
+            if (name == this.Btn_About.Name) {
+                MessageBox.Show(strAbout, "说明(explain):");
+                return;
+            }
+
+            if (!_isTRainerOpen) return;
+            
             //钱💰
             if (name == this.Btn_Money.Name) {
                 MoneyAdd();
@@ -525,10 +584,6 @@ namespace BoneTownHelperApplication {
             _dispatcherTimer.Stop();
             // _dispatcherTimer.Tick -= ;
             MemoryDllUtils.CloseProcess();
-            
-            mediaPlayer.Stop();
-            mediaPlayer.Close();
-            mediaPlayer = null;
             
             base.OnClosed(e);
         }

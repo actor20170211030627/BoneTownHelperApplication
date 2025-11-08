@@ -112,6 +112,12 @@
       <Content Include="Assets\Bonetown.ico">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Resource Include="Resources\Images\icon_switch_green2.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Images\icon_switch_lightyellow.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
       <Resource Include="Resources\Medias\activate.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>

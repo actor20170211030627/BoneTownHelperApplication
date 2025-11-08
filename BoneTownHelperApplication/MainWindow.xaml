@@ -8,11 +8,82 @@
         Title="骨头镇修改器(Bonetown TRainer)-actor2015(v1.0)"
         Height="Auto"
         Width="Auto"
+        SizeToContent="WidthAndHeight"
         Icon="Assets/Bonetown.ico">
     <StackPanel Orientation="Vertical">
+        <!--Top-->
+        <DockPanel Background="LightSkyBlue" Height="Auto">
+            <TextBlock
+                Foreground="White"
+                VerticalAlignment="Center"
+                FontSize="13"
+                Text="游戏运行状态(Game run):"
+                Margin="5,5" />
+            <Canvas Width="90">
+                <Border
+                    Name="Border_Running"
+                    Height="Auto"
+                    Width="Auto"
+                    Canvas.Top="3"
+                    Visibility="Hidden"
+                    BorderThickness="1"
+                    BorderBrush="Green"
+                    Background="ForestGreen"
+                    CornerRadius="10">
+                    <TextBlock
+                        Text="✅运行中"
+                        Padding="5 2 5 2"
+                        Foreground="White" />
+                </Border>
+                <Border
+                    Name="Border_Stopped"
+                    Height="Auto"
+                    Width="Auto"
+                    Canvas.Top="3"
+                    BorderThickness="1"
+                    BorderBrush="DarkRed"
+                    Background="Red"
+                    CornerRadius="10">
+                    <TextBlock
+                        Text="❌未发现游戏"
+                        Padding="5 2 5 2"
+                        Foreground="White" />
+                </Border>
+            </Canvas>
+            
+            <StackPanel 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <TextBlock
+                    Foreground="White"
+                    FontSize="13"
+                    Text="修改器开关(TRainer state):"
+                    Margin="5,5" />
+                <Button
+                    Name="Btn_TRainer_State"
+                    Width="Auto" Height="Auto"
+                    Click="Btn_OnClick"
+                    Background="Transparent"
+                    Margin="0 0 10 0">
+                    <Image
+                        Name="Image_TRainer_State"
+                        Width="35" Height="Auto"
+                        Source="Resources/Images/icon_switch_green2.png" />
+                </Button>
+                <Button 
+                    Name="Btn_About"
+                    Width="80"
+                    Height="22"
+                    Click="Btn_OnClick"
+                    Margin="0 0 2 0"
+                    Content="关于(About)" />
+            </StackPanel>
+        </DockPanel>
+
         <StackPanel Orientation="Horizontal">
             <Image
                 Width="150"
+                VerticalAlignment="Top"
                 Source="Resources/Images/Bonetown_Side_Image(225x320).jpg" />
             <Grid>
                 <Grid.RowDefinitions>
@@ -40,52 +111,27 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <!--Top-->
-                <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#126A74" Height="Auto">
-                    <TextBlock
-                        Foreground="White"
-                        FontSize="15"
-                        Text="运行状态:"
-                        Margin="5,5" />
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Border
-                            Height="25"
-                            Margin="5"
-                            BorderThickness="1"
-                            BorderBrush="#CA5100"
-                            Background="#CA5100"
-                            CornerRadius="10">
-                            <TextBlock
-                                Text="运行中"
-                                Foreground="White"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Margin="10 0 10 0" />
-                        </Border>
-                    </StackPanel>
-                </DockPanel>
-
 
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="1"
                     TextAlignment="Center"
-                    VerticalAlignment="Center"
                     Text="项目(Property)" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="2"
-                    Text="当前值&#x0A;(Value)" />
+                    Text="当前值(Value)">
+                    <!-- 当前值&#x0A;(Value) -->
+                </TextBlock>
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="3"
                     TextAlignment="Center"
-                    Text="加点热键&#x0A;(HotKey)" />
+                    Text="热键(HotKey)" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="4"
                     TextAlignment="Center"
-                    VerticalAlignment="Center"
                     Text="点击加点(Click2+)" />
 
 
@@ -115,6 +161,7 @@
                     Name="Btn_Money"
                     Grid.Row="2"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+1000" />
 
 
@@ -144,6 +191,7 @@
                     Name="Btn_Beer"
                     Grid.Row="3"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -172,6 +220,7 @@
                     Name="Btn_Whiskey"
                     Grid.Row="4"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -200,6 +249,7 @@
                     Name="Btn_Nug"
                     Grid.Row="5"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -228,6 +278,7 @@
                     Name="Btn_Shroom"
                     Grid.Row="6"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -256,6 +307,7 @@
                     Name="Btn_Peyote"
                     Grid.Row="7"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -284,6 +336,7 @@
                     Name="Btn_Frog"
                     Grid.Row="8"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -312,6 +365,7 @@
                     Name="Btn_Crack"
                     Grid.Row="9"
                     Grid.Column="4"
+                    Click="Btn_OnClick"
                     Content="+100" />
 
 
@@ -431,19 +485,5 @@
                 </UniformGrid>
             </Grid>
         </StackPanel>
-
-        <StackPanel
-            Orientation="Horizontal"
-            VerticalAlignment="Bottom">
-            <Button Name="Button_About" Width="100">关于(About)</Button>
-            <Button Name="Button_State">暂停(Pause)</Button>
-        </StackPanel>
-
-        <TextBlock
-            Grid.Row="2"
-            Grid.Column="0"
-            Text="游戏玩法:
-            1.在游戏中按Shift + ~ 打开控制台, 能输入命令, 将鼠标移除游戏." />
-
     </StackPanel>
 </Window>
