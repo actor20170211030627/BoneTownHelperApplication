@@ -112,21 +112,21 @@
       <Content Include="Assets\Bonetown.ico">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Resource Include="Resources\Images\RonJEntrance.png" />
+      <Resource Include="Resources\Images\JugIKON.png" />
+      <Resource Include="Resources\Images\PchipIKON.png" />
+      <Resource Include="Resources\Medias\00004.wav" />
+      <Resource Include="Resources\Medias\click.wav" />
+      <Resource Include="Resources\Medias\process_not_found.xm" />
       <Resource Include="Resources\Images\icon_switch_green2.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
       <Resource Include="Resources\Images\icon_switch_lightyellow.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
-      <Resource Include="Resources\Medias\activate.wav">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Medias\ang.wav">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Medias\deactivate.wav">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
+      <Resource Include="Resources\Medias\activate.wav" />
+      <Resource Include="Resources\Medias\ang.wav" />
+      <Resource Include="Resources\Medias\deactivate.wav" />
       <Resource Include="Resources\Images\north_south.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
@@ -163,6 +163,12 @@
       <Resource Include="Resources\Images\height.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
+      <Resource Include="Resources\Images\BeerBongIKON.png" />
+      <Resource Include="Resources\Images\DaytonIKON.png" />
+      <Resource Include="Resources\Images\DiamondIKON.png" />
+      <Resource Include="Resources\Images\FunTicketIKON.png" />
+      <Resource Include="Resources\Images\GaneshIKON.png" />
+      <Resource Include="Resources\Images\Angle.png" />
       <Content Include="Resources\Images\icon_minus_blue.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>

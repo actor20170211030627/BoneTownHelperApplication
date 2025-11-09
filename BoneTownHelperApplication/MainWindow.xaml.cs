@@ -9,9 +9,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using BoneTownHelperApplication.Utils;
 using Gma.System.MouseKeyHook;
-using Button = System.Windows.Controls.Button;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace BoneTownHelperApplication {
     /// <summary>
@@ -32,8 +32,6 @@ namespace BoneTownHelperApplication {
         private const string XAxis    = ModuleName + "+0x00532A28,0x2B8,0x7C4";
         private const string YAxis    = ModuleName + "+0x00532A28,0x2B8,0x7C8";
         private const string ZAxis    = ModuleName + "+0x00532A28,0x2B8,0x7CC";
-
-        private DispatcherTimer _dispatcherTimer;
 
         //进程是否打开
         private bool _isProcOpen = false;
@@ -64,6 +62,14 @@ namespace BoneTownHelperApplication {
                                   "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                   "6.Author actor2015\n" +
                                   "7.Version 20230507 & v1.0";
+
+        //大富翁RonJ
+        private readonly float[] _coordinateRonJEntrance = {-318.0f, -436f, 633.894f};
+        //天使
+        private readonly float[] _coordinateAngle = {15.0f, -938.6f, 771.5678f};
+        
+        
+        private DispatcherTimer _dispatcherTimer;
 
         private IKeyboardMouseEvents m_GlobalHook;
         private System.Media.SoundPlayer soundPlayer = new System.Media.SoundPlayer();
@@ -345,18 +351,20 @@ namespace BoneTownHelperApplication {
         
 
         private void Btn_OnClick(object sender, RoutedEventArgs e) {
-            if (!_isProcOpen) return;
             
-            if (!(sender is Button button)) return;
+            PlayClick();
+
+            if (!(sender is FrameworkElement fe)) return;
+            string name = fe.Name;
             
-            string name = button.Name;
             //修改器激活状态
-            if (name == this.Btn_TRainer_State.Name) {
+            if (name == this.Image_TRainer_State.Name) {
                 _isTRainerOpen = !_isTRainerOpen;
                 Uri uri = _isTRainerOpen ? 
                     new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_green2.png") 
                     : new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_lightyellow.png");
                 this.Image_TRainer_State.Source = new BitmapImage(uri);
+                PlayActivate();
                 return;
             }
             //关于
@@ -365,6 +373,7 @@ namespace BoneTownHelperApplication {
                 return;
             }
 
+            if (!_isProcOpen) return;
             if (!_isTRainerOpen) return;
             
             //钱💰
@@ -552,7 +561,62 @@ namespace BoneTownHelperApplication {
                 Console.WriteLine(isUp ? "高度+5失败!" : "高度-5失败!");
             }
         }
+
+
+        private void OnTeleportClick(object sender, RoutedEventArgs e) {
+
+            PlayClick();
+
+            if (!_isProcOpen) return;
+            if (!_isTRainerOpen) return;
+
+            if (!(sender is FrameworkElement fe)) return;
+            string name = fe.Name;
+
+            //RonJ大富翁
+            if (name == this.TB_RonJTowers.Name) {
+                Teleport(_coordinateRonJEntrance, "瞬移到RonJ大富翁失败!");
+                return;
+            }
+            
+            //天使
+            if (name == this.TB_Angle.Name) {
+                Teleport(_coordinateAngle, "瞬移到天使失败!");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 瞬移到坐标
+        /// </summary>
+        /// <param name="coordinate"></param>
+        private void Teleport(float[] coordinate, string failureStr) {
+            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, coordinate[0]);
+            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, coordinate[1]);
+            bool isSuccessZ = MemoryDllUtils.WriteFloat(ZAxis, coordinate[2]);
+            if (isSuccessX && isSuccessY && isSuccessZ) {
+                PlayAng();
+            } else {
+                Console.WriteLine(failureStr);
+            }
+        }
         
+
+        //播放click
+        private void PlayClick() {
+            Uri uri = new Uri($"Resources/Medias/click.wav", UriKind.Relative);
+            SoundPlayerUtils.Stream(soundPlayer, uri);
+            SoundPlayerUtils.Play(soundPlayer);
+        }
+
+        //播放activate
+        private void PlayActivate() {
+            Uri uri = _isTRainerOpen ? new Uri($"Resources/Medias/activate.wav", UriKind.Relative)
+                :  new Uri($"Resources/Medias/deactivate.wav", UriKind.Relative);
+            SoundPlayerUtils.Stream(soundPlayer, uri);
+            SoundPlayerUtils.Play(soundPlayer);
+        }
+
         //播放ang
         private void PlayAng() {
             Uri uri = new Uri("Resources/Medias/ang.wav", UriKind.Relative);
@@ -586,6 +650,33 @@ namespace BoneTownHelperApplication {
             MemoryDllUtils.CloseProcess();
             
             base.OnClosed(e);
+        }
+
+        /// <summary>
+        /// 是否显示Popup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MouseEnterLeaveEvent(object sender, MouseEventArgs e) {
+            bool isMouseEnter = e.RoutedEvent.Equals(Mouse.MouseEnterEvent);
+            // Console.Write($"sender = {sender}, e.OriginalSource = {e.OriginalSource}, ");
+            // Console.WriteLine($"RoutedEvent = {e.RoutedEvent}, isMouseEnter = {isMouseEnter}");
+            // Console.WriteLine($"myPopup.IsOpen = {myPopup.IsOpen}");
+            // if (this.myPopup.IsOpen != isMouseEnter) this.myPopup.IsOpen = isMouseEnter;
+            this.myPopup.IsOpen = isMouseEnter;
+
+
+            // if (!(sender is UIElement element)) return;
+            //
+            // // 获取鼠标在目标元素内的相对位置
+            // Point mousePos = e.GetPosition(element);
+            // // 判断鼠标是否在元素的视觉范围内（包括子元素）
+            // Console.WriteLine($"mousePos = {mousePos}, element.RenderSize = {element.RenderSize}");
+            // bool isInside = mousePos.X >= 0 
+            //                 && mousePos.X <= element.RenderSize.Width 
+            //                 && mousePos.Y >= 0 
+            //                 && mousePos.Y <= element.RenderSize.Height;
+            // if (this.myPopup.IsOpen != isInside) this.myPopup.IsOpen = isInside;
         }
     }
 }

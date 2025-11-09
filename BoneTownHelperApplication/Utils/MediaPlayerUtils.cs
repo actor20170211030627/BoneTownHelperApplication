@@ -108,6 +108,14 @@ namespace BoneTownHelperApplication.Utils {
         }
         
         /// <summary>
+        /// 开始播放
+        /// </summary>
+        /// <param name="mediaPlayer"></param>
+        public static void Play(MediaPlayer mediaPlayer) {
+            mediaPlayer.Play();
+        }
+
+        /// <summary>
         /// 暂停播放
         /// </summary>
         /// <param name="mediaPlayer"></param>
