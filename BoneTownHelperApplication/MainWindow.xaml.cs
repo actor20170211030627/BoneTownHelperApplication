@@ -11,7 +11,6 @@ using BoneTownHelperApplication.Utils;
 using Gma.System.MouseKeyHook;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
-using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace BoneTownHelperApplication {
     /// <summary>
@@ -63,10 +62,56 @@ namespace BoneTownHelperApplication {
                                   "6.Author actor2015\n" +
                                   "7.Version 20230507 & v1.0";
 
-        //大富翁RonJ
-        private readonly float[] _coordinateRonJEntrance = {-318.0f, -436f, 633.894f};
-        //天使
-        private readonly float[] _coordinateAngle = {15.0f, -938.6f, 771.5678f};
+        //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
+        private readonly float[] _coordinateMissionaryBeach2FirmWoodForest = {1066.876f, -347.3445f, 50.521f};
+        //Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地)
+        private readonly float[] _coordinateMissionaryBeach2GabachoHeights = {1177.695f, 433.6344f, 56.082f};
+        
+        //Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩)
+        private readonly float[] _coordinateFirmWoodForest2MissionaryBeach = {1066.192f, -372.8936f, 105.096f};
+        //Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园)
+        private readonly float[] _coordinateFirmWoodForest2HomelandTrailerPark = {920.4601f, -812.3506f, 105.376f};
+        
+        //Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林)
+        private readonly float[] _coordinateHomelandTrailerPark2FirmWoodForest = {716.3653f, -602.741f, 138.2291f};
+
+        //Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩)
+        private readonly float[] _coordinateGabachoHeights2MissionaryBeach = {248.1642f, 1012.699f, 286.917f};
+        //Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)
+        private readonly float[] _coordinateGabachoHeights2HavajoIndianReservation = {-19.91007f, 997.032f, 275.5724f};
+        //Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山)
+        private readonly float[] _coordinateGabachoHeights2NobbingHill = {-307.834f, 1045.434f, 291.167f};
+        
+        //Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地)
+        private readonly float[] _coordinateHavajoIndianReservation2GabachoHeights = {1101.682f, 1483.074f, 53.1938f};
+        
+        //Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心)
+        private readonly float[] _coordinateNobbingHill2DownTown = {-646.0f, 146f, 414.574f};
+        //Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地)
+        private readonly float[] _coordinateNobbingHill2GabachoHeights = {-968.0f, 367f, 414.574f};
+        //Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽)
+        private readonly float[] _coordinateNobbingHill2MushroomMarsh = {-821.0f, -108.0f, 409.991f};
+        
+        //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan)
+        private readonly float[] _coordinateMushroomMarsh_Satan = {-1318.774f, -120.5363f, 459.324f};
+        //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife)
+        private readonly float[] _coordinateMushroomMarsh_Satan_wife = {-1379.268f, -332.1819f, 493.792f};
+        //Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山)
+        private readonly float[] _coordinateMushroomMarsh2NobbingHill = {-1027.47f, 98.30942f, 415.667f};
+        
+        //Map8 大富翁RonJ
+        private readonly float[] _coordinateDowntown_RonJEntrance = {-318.0f, -436f, 633.894f};
+        //Map8 天使
+        private readonly float[] _coordinateDowntown_Angle = {15.0f, -938.6f, 771.5678f};
+        //Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点
+        private readonly float[] _coordinateDownTown2ManIsland = {-858.6f, -636.0f, 650.2626f};
+        //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
+        private readonly float[] _coordinateDownTown2NobbingHill = {-291.0f, -426.6f, 626.894f};
+        
+        //Map9(Man Island 曼岛)→高塔入口(Man Needle)
+        private readonly float[] _coordinateManIsland_ManNeedle = {-145.5f, 532.0f, 883.1036f};
+        //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
+        private readonly float[] _coordinateManIsland2DownTown = {-409.55f, 103.70f, 710.8217f};
         
         
         private DispatcherTimer _dispatcherTimer;
@@ -82,6 +127,13 @@ namespace BoneTownHelperApplication {
 
             InitializeTimer();
             InitializeMouseKeyHook();
+            
+            
+            int[] xyzDistanceArray = {1, 2, 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+            this.ComboBox_XYZDistance.ItemsSource = xyzDistanceArray;
+            // this.ComboBox_XYZDistance.SelectedItem = xyzDistanceArray[2];
+            // this.ComboBox_XYZDistance.SelectedIndex = 2;
+            
             
             // this.Btn_Find_Process.Click += (sender, args) => {
             //     Console.WriteLine("点击了!!!");
@@ -203,6 +255,8 @@ namespace BoneTownHelperApplication {
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
                 _isProcOpen = MemoryDllUtils.OpenProcess(ProcessName);
                 if (_isProcOpen) {
+                    //TODO: _False 先屏蔽掉显示坐标
+                    if (_False) {
                     //x轴 XAxis
                     float x = MemoryDllUtils.ReadFloat(XAxis);
                     //InvariantCulture: 美国英语（en-US）但独立于特定国家或地区，主要用于处理货币、日期、时间等文化敏感数据时避免因地区差异导致格式错误。
@@ -213,6 +267,7 @@ namespace BoneTownHelperApplication {
                     //z轴 ZAxis
                     float z = MemoryDllUtils.ReadFloat(ZAxis);
                     this.TB_ZAxis.Text = z.ToString(CultureInfo.InvariantCulture);
+                    }
                 } else {
                     Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
                 }
@@ -365,6 +420,14 @@ namespace BoneTownHelperApplication {
                     : new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_lightyellow.png");
                 this.Image_TRainer_State.Source = new BitmapImage(uri);
                 PlayActivate();
+                
+                //TODO: 打印坐标, 判断当前是点击运行的程序, 还是打包发布后的程序???
+                if (_isProcOpen && !_isTRainerOpen) {
+                    float x = MemoryDllUtils.ReadFloat(XAxis);
+                    float y = MemoryDllUtils.ReadFloat(YAxis);
+                    float z = MemoryDllUtils.ReadFloat(ZAxis);
+                    Console.WriteLine($"x={x}, y={y}, z={z}");
+                }
                 return;
             }
             //关于
@@ -533,8 +596,9 @@ namespace BoneTownHelperApplication {
         }
 
         private void XAxisEdit(bool isEast) {
+            if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
             float x = MemoryDllUtils.ReadFloat(XAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(XAxis, isEast ? x + 5.0f : x - 5.0f);
+            bool isSuccess = MemoryDllUtils.WriteFloat(XAxis, isEast ? x + value : x - value);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -543,8 +607,9 @@ namespace BoneTownHelperApplication {
         }
         
         private void YAxisEdit(bool isNorth) {
+            if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
             float y = MemoryDllUtils.ReadFloat(YAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(YAxis, isNorth ? y + 5.0f : y - 5.0f);
+            bool isSuccess = MemoryDllUtils.WriteFloat(YAxis, isNorth ? y + value : y - value);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -553,8 +618,9 @@ namespace BoneTownHelperApplication {
         }
         
         private void ZAxisEdit(bool isUp) {
+            if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
             float z = MemoryDllUtils.ReadFloat(ZAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(ZAxis, isUp ? z + 5.0f : z - 5.0f);
+            bool isSuccess = MemoryDllUtils.WriteFloat(ZAxis, isUp ? z + value : z - value);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -573,15 +639,122 @@ namespace BoneTownHelperApplication {
             if (!(sender is FrameworkElement fe)) return;
             string name = fe.Name;
 
-            //RonJ大富翁
-            if (name == this.TB_RonJTowers.Name) {
-                Teleport(_coordinateRonJEntrance, "瞬移到RonJ大富翁失败!");
+            //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
+            if (name == this.TB_MissionaryBeach2FirmWoodForest.Name) {
+                Teleport(_coordinateMissionaryBeach2FirmWoodForest, "Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
+                return;
+            }
+            //Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地)
+            if (name == this.TB_MissionaryBeach2GabachoHeights.Name) {
+                Teleport(_coordinateMissionaryBeach2GabachoHeights, "Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             
-            //天使
-            if (name == this.TB_Angle.Name) {
-                Teleport(_coordinateAngle, "瞬移到天使失败!");
+            //Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩)
+            if (name == this.TB_FirmWoodForest2MissionaryBeach.Name) {
+                Teleport(_coordinateFirmWoodForest2MissionaryBeach, "Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
+                return;
+            }
+            //Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园)
+            if (name == this.TB_FirmWoodForest2HomelandTrailerPark.Name) {
+                Teleport(_coordinateFirmWoodForest2HomelandTrailerPark, "Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!");
+                return;
+            }
+            
+            //Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林)
+            if (name == this.TB_HomelandTrailerPark2FirmWoodForest.Name) {
+                Teleport(_coordinateHomelandTrailerPark2FirmWoodForest, "Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
+                return;
+            }
+
+            //Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩)
+            if (name == this.TB_GabachoHeights2MissionaryBeach.Name) {
+                Teleport(_coordinateGabachoHeights2MissionaryBeach, "Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
+                return;
+            }
+            //Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)
+            if (name == this.TB_GabachoHeights2HavajoIndianReservation.Name) {
+                Teleport(_coordinateGabachoHeights2HavajoIndianReservation, "Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地) 传送点失败!");
+                return;
+            }
+            //Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山)
+            if (name == this.TB_GabachoHeights2NobbingHill.Name) {
+                Teleport(_coordinateGabachoHeights2NobbingHill, "Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                return;
+            }
+            
+            
+            //Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地)
+            if (name == this.TB_HavajoIndianReservation2GabachoHeights.Name) {
+                Teleport(_coordinateHavajoIndianReservation2GabachoHeights, "Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                return;
+            }
+            
+            
+            //Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心)
+            if (name == this.TB_NobbingHill2DownTown.Name) {
+                Teleport(_coordinateNobbingHill2DownTown, "Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心) 传送点失败!");
+                return;
+            }
+            //Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地)
+            if (name == this.TB_NobbingHill2GabachoHeights.Name) {
+                Teleport(_coordinateNobbingHill2GabachoHeights, "Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                return;
+            }
+            //Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽)
+            if (name == this.TB_NobbingHill2MushroomMarsh.Name) {
+                Teleport(_coordinateNobbingHill2MushroomMarsh, "Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽) 传送点失败!");
+                return;
+            }
+            
+            
+            //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan)
+            if (name == this.TB_MushroomMarsh_Satan.Name) {
+                Teleport(_coordinateMushroomMarsh_Satan, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan) 失败!");
+                return;
+            }
+            //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife)
+            if (name == this.TB_MushroomMarsh_Satan_wife.Name) {
+                Teleport(_coordinateMushroomMarsh_Satan_wife, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife) 失败!");
+                return;
+            }
+            //Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山)
+            if (name == this.TB_MushroomMarsh2NobbingHill.Name) {
+                Teleport(_coordinateMushroomMarsh2NobbingHill, "Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山) 失败!");
+                return;
+            }
+            
+            
+            //Map8(DownTown 市中心) RonJ大富翁
+            if (name == this.TB_Downtown_RonJTowers.Name) {
+                Teleport(_coordinateDowntown_RonJEntrance, "瞬移到 Map8(DownTown 市中心) RonJ大富翁 失败!");
+                return;
+            }
+            //Map8(DownTown 市中心) 天使
+            if (name == this.TB_Downtown_Angle.Name) {
+                Teleport(_coordinateDowntown_Angle, "瞬移到 Map8(DownTown 市中心) 天使 失败!");
+                return;
+            }
+            //Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点
+            if (name == this.TB_DownTown2ManIsland.Name) {
+                Teleport(_coordinateDownTown2ManIsland, "Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点失败!");
+                return;
+            }
+            //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
+            if (name == this.TB_DownTown2NobbingHill.Name) {
+                Teleport(_coordinateDownTown2NobbingHill, "Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                return;
+            }
+            
+            
+            //Map9(Man Island 曼岛)→高塔入口(Man Needle)
+            if (name == this.TB_ManIsland2ManNeedle.Name) {
+                Teleport(_coordinateManIsland_ManNeedle, "Map9(Man Island 曼岛)→高塔入口(Man Needle) 传送点失败!");
+                return;
+            }
+            //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
+            if (name == this.TB_ManIsland2DownTown.Name) {
+                Teleport(_coordinateManIsland2DownTown, "Map9(Man Island 曼岛)→Map8(DownTown 市中心) 传送点失败!");
                 return;
             }
         }
@@ -623,6 +796,16 @@ namespace BoneTownHelperApplication {
             SoundPlayerUtils.Stream(soundPlayer, uri);
             SoundPlayerUtils.Play(soundPlayer);
         }
+
+        /// <summary>
+        /// DesignerProperties.GetIsInDesignMode 方法不能直接用于区分 “开发工具中运行的程序” 和 “打包发布后的程序”，
+        /// 因为它的设计目的是判断代码是否在设计时环境（如 Visual Studio 的设计视图、Blend 的预览界面）中执行，
+        /// 而不是判断程序是否处于 “调试运行” 或 “发布运行” 状态。
+        /// </summary>
+        /// <returns></returns>
+        private bool IsInDesignMode() {
+            return DesignerProperties.GetIsInDesignMode(this);
+        }
         
         protected override void OnClosing(CancelEventArgs e) {
             Console.WriteLine("OnClosing()");
@@ -650,33 +833,6 @@ namespace BoneTownHelperApplication {
             MemoryDllUtils.CloseProcess();
             
             base.OnClosed(e);
-        }
-
-        /// <summary>
-        /// 是否显示Popup
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MouseEnterLeaveEvent(object sender, MouseEventArgs e) {
-            bool isMouseEnter = e.RoutedEvent.Equals(Mouse.MouseEnterEvent);
-            // Console.Write($"sender = {sender}, e.OriginalSource = {e.OriginalSource}, ");
-            // Console.WriteLine($"RoutedEvent = {e.RoutedEvent}, isMouseEnter = {isMouseEnter}");
-            // Console.WriteLine($"myPopup.IsOpen = {myPopup.IsOpen}");
-            // if (this.myPopup.IsOpen != isMouseEnter) this.myPopup.IsOpen = isMouseEnter;
-            this.myPopup.IsOpen = isMouseEnter;
-
-
-            // if (!(sender is UIElement element)) return;
-            //
-            // // 获取鼠标在目标元素内的相对位置
-            // Point mousePos = e.GetPosition(element);
-            // // 判断鼠标是否在元素的视觉范围内（包括子元素）
-            // Console.WriteLine($"mousePos = {mousePos}, element.RenderSize = {element.RenderSize}");
-            // bool isInside = mousePos.X >= 0 
-            //                 && mousePos.X <= element.RenderSize.Width 
-            //                 && mousePos.Y >= 0 
-            //                 && mousePos.Y <= element.RenderSize.Height;
-            // if (this.myPopup.IsOpen != isInside) this.myPopup.IsOpen = isInside;
         }
     }
 }
