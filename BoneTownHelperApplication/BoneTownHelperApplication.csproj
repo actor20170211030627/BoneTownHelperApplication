@@ -79,9 +79,9 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
-        <Compile Include="Utils\MediaPlayerUtils.cs" />
         <Compile Include="Utils\MemoryDllUtils.cs" />
         <Compile Include="Utils\SoundPlayerUtils.cs" />
+        <Compile Include="Utils\TRainerHelper.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
