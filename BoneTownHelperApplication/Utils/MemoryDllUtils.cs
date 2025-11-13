@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using Memory;
 
 namespace BoneTownHelperApplication.Utils {
@@ -76,11 +77,25 @@ namespace BoneTownHelperApplication.Utils {
 
         /// <summary>将float写入内存</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
-        /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns>是否写入成功</returns>
         public static bool WriteFloat(string code, float value) {
-            return Memory.WriteMemory(code, "float", value.ToString());
+            return Memory.WriteMemory(code, "float", value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>读内存值long</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <returns></returns>
+        public static long ReadLong(string code) {
+            return Memory.ReadLong(code);
+        }
+
+        /// <summary>将long写入内存</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="value">value to write to address.</param>
+        /// <returns>是否写入成功</returns>
+        public static bool WriteLong(string code, long value) {
+            return Memory.WriteMemory(code, "long", value.ToString());
         }
 
         /// <summary>读内存值byte</summary>
@@ -92,7 +107,6 @@ namespace BoneTownHelperApplication.Utils {
 
         /// <summary>将byte写入内存</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
-        /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns>是否写入成功</returns>
         public static bool WriteByte(string code, byte value) {
@@ -101,8 +115,6 @@ namespace BoneTownHelperApplication.Utils {
 
         /// TODO: 为什么 BindToUI<float> 的值都=0???
         /// <summary>绑定地址值到UI, Bind memory addresses to UI elements</summary>
-        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
-        /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="address">value to write to address.</param>
         /// <returns></returns>
         public static void BindToUI<T>(string address, Action<string> UIObject) {
@@ -110,7 +122,7 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>冻结结果, Freeze values (infinte loop writing in threads)</summary>
-        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="address">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns></returns>
@@ -120,7 +132,7 @@ namespace BoneTownHelperApplication.Utils {
 
 
         /// <summary>取消冻结结果, Unfreeze a frozen value at an address</summary>
-        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="address">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="type">byte, 2bytes, bytes, float, int, string, double or long.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns></returns>

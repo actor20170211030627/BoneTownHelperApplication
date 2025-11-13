@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoneTownHelperApplication"
         mc:Ignorable="d"
-        Title="骨头镇修改器(Bonetown TRainer)-actor2015(v1.0)"
+        Title="骨头镇修改器(Bonetown TRainer)-actor2015(v1.1)"
         Height="Auto"
         Width="Auto"
         Background="White"
         SizeToContent="WidthAndHeight"
         Icon="Resources/Images/Angle.png">
+    <ScrollViewer>
     <StackPanel Orientation="Vertical">
         <!--Top-->
         <DockPanel Background="LightSkyBlue" Height="Auto">
@@ -469,14 +470,14 @@
                     <Button
                         Name="Btn_YAxis_Minus"
                         Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
-                        ContentStringFormat="前(F)+{0}"
+                        ContentStringFormat="后(B)+{0}"
                         Click="Btn_OnClick" />
                     <!-- 北(N)+{0} -->
                     <Button
                         Name="Btn_YAxis_Plus"
                         Margin="5 0 0 0"
                         Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
-                        ContentStringFormat="后(B)+{0}"
+                        ContentStringFormat="前(F)+{0}"
                         Click="Btn_OnClick" />
                 </UniformGrid>
 
@@ -524,6 +525,94 @@
             </Grid>
         </StackPanel>
 
+        <TextBlock
+            Foreground="White"
+            Background="LightSkyBlue"
+            FontSize="13"
+            Padding="5"
+            Margin="0 5 0 0"
+            Text=" 亮度(Light):" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="灯(Lamp):"
+                Margin="1" />
+            <Image
+                Grid.Row="0"
+                Grid.Column="1"
+                Name="Image_Lamp_State"
+                Width="35" Height="Auto"
+                Margin="5 0 0 0"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Light_OnClick"
+                Source="Resources/Images/icon_switch_green2.png" />
+            <!-- <StackPanel -->
+            <!--     Grid.Row="0" -->
+            <!--     Grid.Column="1" -->
+            <!--     Orientation="Horizontal"> -->
+            <!--     <RadioButton -->
+            <!--         Name="RB_Lamp_Close" -->
+            <!--         GroupName="Lamp" -->
+            <!--         Checked="Control_OnChecked" -->
+            <!--         Content="关(Close)" -->
+            <!--         Margin="5 5 0 5"/> -->
+            <!--     <RadioButton -->
+            <!--         Name="RB_Lamp_Open" -->
+            <!--         GroupName="Lamp" -->
+            <!--         Checked="Control_OnChecked" -->
+            <!--         Content="开(Open)" -->
+            <!--         Margin="5 5 0 5"/> -->
+            <!-- </StackPanel> -->
+            
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="亮度(Brightness):"
+                Margin="1" />
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Orientation="Horizontal">
+                <RadioButton
+                    Name="RB_Brightness_Night"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="晚上(Night)"
+                    Margin="5 5 0 5"/>
+                <RadioButton
+                    Name="RB_Brightness_Evening"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="傍晚(Evening)"
+                    Margin="5 5 0 5"/>
+                <RadioButton
+                    Name="RB_Brightness_Noon"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="白天(Noon)"
+                    Margin="5 5 0 5"/>
+            </StackPanel>
+        </Grid>
+        
+        
+        <TextBlock
+            Foreground="White"
+            Background="LightSkyBlue"
+            FontSize="13"
+            Padding="5"
+            Margin="0 5 0 0"
+            Text="在地图上瞬移(teleport on map):" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -551,17 +640,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
             <TextBlock
                 Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Foreground="DarkRed"
-                Text="在地图上瞬移(teleport on map):"
-                Margin="1 5 0 0" />
-
-            <TextBlock
-                Grid.Row="1"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
@@ -578,7 +658,7 @@
             <!--     Margin="2 0 5 0" /> -->
 
             <TextBlock
-                Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="1"
                 TextAlignment="Center"
                 Foreground="Red"
@@ -586,30 +666,31 @@
                 Margin="0 0 5 0" />
 
             <TextBlock
-                Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="2"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="4"
+                TextAlignment="Center"
                 VerticalAlignment="Center"
                 Foreground="Red"
                 Text="瞬移到(teleport to)"
                 Margin="1" />
 
             <TextBlock
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="1.传教士海滩&#x0A;(Missionary Beach)" />
             <!-- 图片来自: BoneTown\game\data\gui\Tokens -->
             <Image
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/FunTicketIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="4"
                 Margin="1 0 0 0"
                 BorderThickness="0.5"
@@ -628,7 +709,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="5"
                 Margin="1 0 0 0"
                 BorderThickness="0.5"
@@ -647,20 +728,20 @@
 
             
             <TextBlock
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="2.(阔叶林)&#x0A;(Firm Wood Forest)" />
             <Image
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/DiamondIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -679,7 +760,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="4"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -698,20 +779,20 @@
 
             
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="3"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="3.国土安全拖车公园&#x0A;(Homeland Trailer Park)" />
             <Image
-                Grid.Row="4"
+                Grid.Row="3"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/JugIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="4"
+                Grid.Row="3"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -730,20 +811,20 @@
 
             
             <TextBlock
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="4.加巴乔高地&#x0A;(Gabacho Heights)" />
             <Image
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/GaneshIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -762,7 +843,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="4"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -781,7 +862,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="5"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -800,20 +881,20 @@
 
             
             <TextBlock
-                Grid.Row="6"
+                Grid.Row="5"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="5.哈瓦那印第安人保留地&#x0A;(Havajo Indian Reservation)" />
             <Image
-                Grid.Row="6"
+                Grid.Row="5"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/PchipIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="6"
+                Grid.Row="5"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -832,20 +913,20 @@
 
             
             <TextBlock
-                Grid.Row="7"
+                Grid.Row="6"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="6.诺丁山&#x0A;(Nobbing Hill)" />
             <Image
-                Grid.Row="7"
+                Grid.Row="6"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/BeerBongIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="7"
+                Grid.Row="6"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -864,7 +945,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="7"
+                Grid.Row="6"
                 Grid.Column="4"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -883,7 +964,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="7"
+                Grid.Row="6"
                 Grid.Column="5"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -902,13 +983,13 @@
 
             
             <TextBlock
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="7.蘑菇沼泽&#x0A;(Mushroom Marsh)" />
             <TextBlock
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="1"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
@@ -916,7 +997,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="2"
                 Margin="0 1 0 0"
                 BorderThickness="0.5"
@@ -935,7 +1016,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -954,7 +1035,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="4"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -973,20 +1054,20 @@
 
             
             <TextBlock
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="8.骨头镇市中心&#x0A;(Downtown BoneTown)" />
             <Image
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="1"
                 Width="33" Height="Auto"
                 Source="Resources/Images/DaytonIKON.png" />
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="2"
                 Margin="0 1 0 0"
                 BorderThickness="0.5"
@@ -1005,7 +1086,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="3"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -1037,7 +1118,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="4"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -1056,7 +1137,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="5"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -1075,13 +1156,13 @@
             
             
             <TextBlock
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="0"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="9.男人岛&#x0A;(Man Island)" />
             <TextBlock
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="1"
                 TextAlignment="Center"
                 VerticalAlignment="Center"
@@ -1089,7 +1170,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="4"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -1108,7 +1189,7 @@
             <Border
                 Height="Auto"
                 Width="Auto"
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="5"
                 Margin="1 1 0 0"
                 BorderThickness="0.5"
@@ -1126,4 +1207,5 @@
             </Border>
         </Grid>
     </StackPanel>
+    </ScrollViewer>
 </Window>

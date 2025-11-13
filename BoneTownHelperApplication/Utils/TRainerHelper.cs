@@ -6,22 +6,41 @@ namespace BoneTownHelperApplication.Utils {
     public static class TRainerHelper {
         public const string ProcessName = "BoneTown";
         private const string ModuleName = "BoneTown.exe";
+        
         public const string Money = ModuleName + "+0x00532A28,0x2B8,0x478";
-        public const string Beer = ModuleName + "+0x00532A28,0x2B8,0x5A0";
+        
+        public const string Beer    = ModuleName + "+0x00532A28,0x2B8,0x5A0";
         public const string Whiskey = ModuleName + "+0x00532A28,0x2B8,0x5A4";
-        public const string Weed = ModuleName + "+0x00532A28,0x2B8,0x5A8";
-        public const string Shroom = ModuleName + "+0x00532A28,0x2B8,0x5AC";
-        public const string Peyote = ModuleName + "+0x00532A28,0x2B8,0x5B0";
-        public const string Frog = ModuleName + "+0x00532A28,0x2B8,0x5B4";
-        public const string Crack = ModuleName + "+0x00532A28,0x2B8,0x5B8";
-        private const string Degree = ModuleName + "+0x00532A28,0x2B8,0x7A8";
-        public const string XAxis = ModuleName + "+0x00532A28,0x2B8,0x7C4";
-        public const string YAxis = ModuleName + "+0x00532A28,0x2B8,0x7C8";
-        public const string ZAxis = ModuleName + "+0x00532A28,0x2B8,0x7CC";
-        // private const string Degree  = ModuleName + "+0x00532A28,0x2B8,0x7D0";
+        public const string Weed    = ModuleName + "+0x00532A28,0x2B8,0x5A8";
+        public const string Shroom  = ModuleName + "+0x00532A28,0x2B8,0x5AC";
+        public const string Peyote  = ModuleName + "+0x00532A28,0x2B8,0x5B0";
+        public const string Frog    = ModuleName + "+0x00532A28,0x2B8,0x5B4";
+        public const string Crack   = ModuleName + "+0x00532A28,0x2B8,0x5B8";
+        
+        public const string XAxis   = ModuleName + "+0x00532A28,0x2B8,0x7C4";
+        public const string YAxis   = ModuleName + "+0x00532A28,0x2B8,0x7C8";
+        public const string ZAxis   = ModuleName + "+0x00532A28,0x2B8,0x7CC";
+        
+        //人物朝向的角度
+        // private const string DegreePersonFront = ModuleName + "+0x00532A28,0x2B8,0x7A8";   //不能修改值
+        private const string DegreePersonFront  = ModuleName + "+0x00532A28,0x2B8,0x7D0";
+        //鼠标左右移动的角度
+        private const string DegreeMouseLeftRight = ModuleName + "+0x00532A28,0xA0,0x3AC";
+        
+        //灯光
+        private const string LampLight = ModuleName + "+0x00633CC4,0x34";
+        
+        //环境亮度
+        private const string Brightness_Ground_Green2 = ModuleName + "+0x00633D9C,0x14,0x1C8";
+        private const string Brightness_Ground_Purper2 = ModuleName + "+0x00633E98,0x4,0x1CC";
+        private const string Brightness_Ground_Yellow2 = ModuleName + "+0x00633E98,0x4,0x1D0";
+        private const string Brightness_Ground_Green = ModuleName + "+0x00633E98,0x4,0x1D4";
+        private const string Brightness_Ground_Purper = ModuleName + "+0x00633D9C,0x14,0x1D8";
+        private const string Brightness_Ground_Yellow = ModuleName + "+0x00633D9C,0x14,0x1DC";
 
 
         public const string StrAbout = "游戏操作说明:\n" +
+                                       "Shift + ~\t    : 开启控制台(可将鼠标切换出游戏界面)\n" +
                                        "1 ~ 7 \t    : 切换食物\n" +
                                        "C     \t    : 按住就是防御\n" +
                                        "E     \t    : 吃东西，可以用鼠标滚轮切换食物(眼睛下吃东西有FBI)\n" +
@@ -41,9 +60,10 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20230507 & v1.0\n" +
+                                       "7.版本 20251113 & v1.1\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
+                                       "Shift + ~ \t\t     : Open the console (you can switch the mouse out of the game interface)\n" +
                                        "1 ~ 7 \t\t     : Switch foods\n" +
                                        "C     \t\t     : Pressing down is defense\n" +
                                        "E     \t\t     : Eat, you can use the mouse wheel to switch foods.(There's some FBI under eyes when eating.)\n" +
@@ -63,7 +83,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20230507 & v1.0";
+                                       "7.Version 20251113 & v1.1";
 
         //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
         public static readonly float[] CoordinateMissionaryBeach2FirmWoodForest = { 1066.876f, -347.3445f, 50.521f };
@@ -127,6 +147,32 @@ namespace BoneTownHelperApplication.Utils {
 
         //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
         public static readonly float[] CoordinateManIsland2DownTown = { -409.55f, 103.70f, 710.8217f };
+
+
+        /// <summary>
+        ///                             大晚上亮度   傍晚亮度   大白天亮度
+        /// Lamp_Light                  3F800000    00000000    00000000
+        /// SkyEdge_Color               FF1A0000    FF803B73    FFD9A6A6    //天上亮度, 最主要参数
+        /// SkyEdge_Light               00000000    3F400000    3F800000
+        /// Object_Light                00000000    00000000    3F800000    //晚上改的时候, 右侧参数会亮一些
+        /// SkyEdge_Inner_Green_Light   00000000    3EE66666    3F266666    //视野范围内远处山区(大晚上改成白天: 远方下阵雨的效果)
+        /// SkyEdge_Inner_Blue_Light    00000000    3E6B851F    3F266666
+        /// SkyEdge_Inner_Yellow_Light  3DCCCCCD    3F000000    3F59999A
+        /// Ground_Green2               3DF5C28F    3F19999A    3F333333    //方圆100米颜色亮度(改了后效果比较好)
+        /// Ground_Purper2              3E428F5C    3F0CCCCD    3F333333
+        /// Ground_Yellow2              3F266666    3F0CCCCD    3F266666
+        /// Ground_Green                3D75C28F    3EE66666    3F19999A    //地面颜色亮度(改了后效果一般)
+        /// Ground_Purper               3DE147AE    3E4CCCCD    3F19999A
+        /// Ground_Yellow               3E99999A    3E800000    3F000000
+        /// </summary>
+        private static readonly long[] LampBrightness = { 0x00000000, 0x3F800000 };
+        private static readonly long[] Ground_Green2 = { 0x3DF5C28F, 0x3F19999A, 0x3F333333 };
+        private static readonly long[] Ground_Purper2 = { 0x3E428F5C, 0x3F0CCCCD, 0x3F333333 };
+        private static readonly long[] Ground_Yellow2 = { 0x3F266666, 0x3F0CCCCD, 0x3F266666 };
+        private static readonly long[] Ground_Green = { 0x3D75C28F, 0x3EE66666, 0x3F19999A };
+        private static readonly long[] Ground_Purper = { 0x3DE147AE, 0x3E4CCCCD, 0x3F19999A };
+        private static readonly long[] Ground_Yellow = { 0x3E99999A, 0x3E800000, 0x3F000000 };
+        
 
 
         public static readonly System.Media.SoundPlayer SoundPlayer = new System.Media.SoundPlayer();
@@ -252,9 +298,11 @@ namespace BoneTownHelperApplication.Utils {
         public static void GoRightOrLeft(bool isRight, int value) {
             float x = MemoryDllUtils.ReadFloat(XAxis);
             float y = MemoryDllUtils.ReadFloat(YAxis);
-            double rotateDegree = GetRotateDegree();
-            x = isRight ? x + (float)Math.Cos(rotateDegree) * value : x - (float)Math.Cos(rotateDegree) * value;
-            y = isRight ? y + (float)Math.Sin(rotateDegree) * value * -1 : y - (float)Math.Sin(rotateDegree) * value * -1;
+            // double degreePersonFront = GetDegreePersonFront();
+            float degreeMouseLeftRight = GetDegreeMouseLeftRight();
+            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
+            x = isRight ? x + (float)Math.Cos(degreeMouseLeftRight) * value : x - (float)Math.Cos(degreeMouseLeftRight) * value;
+            y = isRight ? y + (float)Math.Sin(degreeMouseLeftRight) * value * -1 : y - (float)Math.Sin(degreeMouseLeftRight) * value * -1;
             bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
             bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
             if (isSuccessX && isSuccessY) {
@@ -272,15 +320,51 @@ namespace BoneTownHelperApplication.Utils {
         public static void GoFrontOrBack(bool isFront, int value) {
             float x = MemoryDllUtils.ReadFloat(XAxis);
             float y = MemoryDllUtils.ReadFloat(YAxis);
-            double rotateDegree = GetRotateDegree();
-            x = isFront ? x + (float)Math.Sin(rotateDegree) * value : x - (float)Math.Sin(rotateDegree) * value;
-            y = isFront ? y + (float)Math.Cos(rotateDegree) * value : y - (float)Math.Cos(rotateDegree) * value;
+            // float degreePersonFront = GetDegreePersonFront();
+            float degreeMouseLeftRight = GetDegreeMouseLeftRight();
+            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
+            x = isFront ? x + (float)Math.Sin(degreeMouseLeftRight) * value : x - (float)Math.Sin(degreeMouseLeftRight) * value;
+            y = isFront ? y + (float)Math.Cos(degreeMouseLeftRight) * value : y - (float)Math.Cos(degreeMouseLeftRight) * value;
             bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
             bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
             if (isSuccessX && isSuccessY) {
                 PlayAng();
             } else {
                 Console.WriteLine(isFront ? "人物向前平移失败!" : "人物向后平移失败!");
+            }
+        }
+
+        /// <summary>
+        /// 灯光设置
+        /// </summary>
+        /// <param name="isOpen">是否打开</param>
+        /// <param name="isFreeze">是否冻结值</param>
+        public static void LampLightSet(bool isOpen) {
+            bool isSuccess = MemoryDllUtils.WriteLong(LampLight, LampBrightness[isOpen ? 1 : 0]);
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("灯光亮度设置 失败!");
+            }
+        }
+
+
+        /// <summary>
+        /// 环境亮度设置
+        /// </summary>
+        /// <param name="position">第几个亮度</param>
+        /// <param name="isFreeze">是否冻结值</param>
+        public static void BrightnessSet(int position) {
+            bool isSuccess0 = MemoryDllUtils.WriteLong(Brightness_Ground_Green2, Ground_Green2[position]);
+            bool isSuccess1 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper2, Ground_Purper2[position]);
+            bool isSuccess2 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow2, Ground_Yellow2[position]);
+            bool isSuccess3 = MemoryDllUtils.WriteLong(Brightness_Ground_Green, Ground_Green[position]);
+            bool isSuccess4 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper, Ground_Purper[position]);
+            bool isSuccess5 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow, Ground_Yellow[position]);
+            if (isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5) {
+                PlayAng();
+            } else {
+                Console.WriteLine("环境亮度设置 失败!");
             }
         }
 
@@ -310,58 +394,32 @@ namespace BoneTownHelperApplication.Utils {
 
 
         /// <summary>
-        /// 获取人物左右旋转角度 (从E开始, E右侧最小, E左侧最大)
+        /// 获取人物正前方角度 (从E开始, E右侧最小, E左侧最大)
         /// minDegree = 1.49568E-05(0.0000149568 ‌), degreeI = 930803445
         /// maxDegree =             6.283183,           degreeI = 1086918614
         /// </summary>
-        /// <returns>返回弧度: (-1 ~ 1), 不是角度: (0~360)</returns>
-        public static double GetRotateDegree() {
-            if (false) {
-                // 1086918614 - 930803445 = 156115169
-                // 156115169 / 360°       = 433653.2472222222/°
-                //180°左右的值: 1078572423, 与最大值差距: 8346191,    与最小值差距: 147768978, 数值极不合理, 算出角度偏差巨大!
-                int rotateDegree = MemoryDllUtils.ReadInt(Degree);
-                if (rotateDegree < 930803445) {
-                    Console.WriteLine($"发现更小的人物左右旋转角度: {rotateDegree}");
-                    return 0.0D;
-                }
-
-                if (rotateDegree > 1086918614) {
-                    Console.WriteLine($"发现更大的人物左右旋转角度: {rotateDegree}");
-                    return 360.0D;
-                }
-                return (rotateDegree - 930803445) / 433653.2472222222D;
-            }
-
-            // 6.283183 - 0.0000149568 = 6.2831680432
-            // 6.2831680432 / 360°     = 0.0174532445644444/°
-            // 6.2831680432 / 2π       = 0.99999725235231137462218436295753 ≈ 1
-            float rotateDegreeF = MemoryDllUtils.ReadFloat(Degree);
-            if (false) {
-                if (rotateDegreeF < 0.0000149568f) {
-                    Console.WriteLine($"发现更小的人物左右旋转角度: {rotateDegreeF}");
-                    return 0.0D;
-                }
-
-                if (rotateDegreeF > 6.283183f) {
-                    Console.WriteLine($"发现更大的人物左右旋转角度: {rotateDegreeF}");
-                    return 360.0D;
-                }
-                //0~360°
-                // double degree = (rotateDegreeF - 0.0000149568f) / 0.0174532445644444D;
-                // return (rotateDegreeF - 0.0000149568f) / 0.99999725235231137462218436295753D;
-            }
-
-            //原来读取到的就是 0 ~ 2π ...
-            return rotateDegreeF;
+        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0°~360°)</returns>
+        private static float GetDegreePersonFront() {
+            return MemoryDllUtils.ReadFloat(DegreePersonFront);
+        }
+        private static bool SetDegreePersonFront(float degree) {
+            return MemoryDllUtils.WriteFloat(DegreePersonFront, degree);
         }
 
         /// <summary>
-        /// 获取人物左右旋转角度
+        /// 获取鼠标左右旋转角度 (从E开始, E右侧最小, E左侧最大)
+        /// </summary>
+        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0°~360°)</returns>
+        private static float GetDegreeMouseLeftRight() {
+            return MemoryDllUtils.ReadFloat(DegreeMouseLeftRight);
+        }
+
+        /// <summary>
+        /// 获取人物正前方角度
         /// minDegree = 1.49568E-05(0.0000149568 ‌), degreeI = 930803445
         /// maxDegree =             6.283183,           degreeI = 1086918614
         /// </summary>
-        public static void PrintDegree() {
+        public static void PrintDegreePersonFront() {
             float minDegree = 100, maxDegree = -100;
             Task.Factory.StartNew((Action)(() => {
                 while (true) {
@@ -370,8 +428,8 @@ namespace BoneTownHelperApplication.Utils {
                         Console.WriteLine($"minDegree to 100!");
                     }
 
-                    float degree = MemoryDllUtils.ReadFloat(Degree);
-                    int degreeI = MemoryDllUtils.ReadInt(Degree);
+                    float degree = MemoryDllUtils.ReadFloat(DegreePersonFront);
+                    int degreeI = MemoryDllUtils.ReadInt(DegreePersonFront);
                     if (degree < minDegree) {
                         minDegree = degree;
                         Console.WriteLine($"minDegree = {minDegree}, degreeI = {degreeI}");

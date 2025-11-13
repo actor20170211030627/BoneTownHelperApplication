@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -20,6 +21,8 @@ namespace BoneTownHelperApplication {
 
         //修改器是否激活
         private bool _isTRainerOpen = true;
+        //灯光是否打开
+        private bool _isLampOpen = true;
 
         //进程是否打开
         private static bool _isProcOpen = false;
@@ -567,6 +570,43 @@ namespace BoneTownHelperApplication {
                 :  new Uri($"Resources/Medias/deactivate.wav", UriKind.Relative);
             SoundPlayerUtils.Stream(TRainerHelper.SoundPlayer, uri);
             SoundPlayerUtils.Play(TRainerHelper.SoundPlayer);
+        }
+
+        private void Light_OnClick(object sender, RoutedEventArgs e) {
+            PlayClick();
+            
+            if (!_isProcOpen) return;
+            if (!_isTRainerOpen) return;
+
+            if (sender is Image image) {
+                string nameImage = image.Name;
+                if (nameImage == this.Image_Lamp_State.Name) {
+                    _isLampOpen = !_isLampOpen;
+                    Uri uri = _isLampOpen ? 
+                        new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_green2.png") 
+                        : new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_lightyellow.png");
+                    this.Image_Lamp_State.Source = new BitmapImage(uri);
+                    
+                    TRainerHelper.LampLightSet(_isLampOpen);
+                }
+                return;
+            }
+            
+            if (!(sender is System.Windows.Controls.Control control)) return;
+            string name = control.Name;
+            //环境亮度设置
+            if (name == this.RB_Brightness_Night.Name) {
+                TRainerHelper.BrightnessSet(0);
+                return;
+            }
+            if (name == this.RB_Brightness_Evening.Name) {
+                TRainerHelper.BrightnessSet(1);
+                return;
+            }
+            if (name == this.RB_Brightness_Noon.Name) {
+                TRainerHelper.BrightnessSet(2);
+                return;
+            }
         }
 
         /// <summary>
