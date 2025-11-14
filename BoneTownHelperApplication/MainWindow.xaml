@@ -525,13 +525,23 @@
             </Grid>
         </StackPanel>
 
-        <TextBlock
-            Foreground="White"
+        <DockPanel
             Background="LightSkyBlue"
-            FontSize="13"
-            Padding="5"
             Margin="0 5 0 0"
-            Text=" 亮度(Light):" />
+            VerticalAlignment="Center">
+            <TextBlock
+                Foreground="White"
+                FontSize="13"
+                Padding="5"
+                VerticalAlignment="Center"
+                Text=" 亮度(Light):" />
+            <Image
+                Name="Image_Question_Mark"
+                Width="20" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="Resources/Images/question_mark_red.png" />
+        </DockPanel>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -564,13 +574,13 @@
             <!--     <RadioButton -->
             <!--         Name="RB_Lamp_Close" -->
             <!--         GroupName="Lamp" -->
-            <!--         Checked="Control_OnChecked" -->
+            <!--         Checked="Light_OnClick" -->
             <!--         Content="关(Close)" -->
             <!--         Margin="5 5 0 5"/> -->
             <!--     <RadioButton -->
             <!--         Name="RB_Lamp_Open" -->
             <!--         GroupName="Lamp" -->
-            <!--         Checked="Control_OnChecked" -->
+            <!--         Checked="Light_OnClick" -->
             <!--         Content="开(Open)" -->
             <!--         Margin="5 5 0 5"/> -->
             <!-- </StackPanel> -->

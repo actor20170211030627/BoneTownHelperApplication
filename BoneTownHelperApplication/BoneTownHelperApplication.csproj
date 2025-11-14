@@ -116,6 +116,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
+      <Content Include="Resources\Images\question_mark_red.png" />
       <None Include="Assets\Bonetown.ico" />
       <Resource Include="Resources\Images\Powermove.png" />
       <Resource Include="Resources\Images\RonJEntrance.png" />

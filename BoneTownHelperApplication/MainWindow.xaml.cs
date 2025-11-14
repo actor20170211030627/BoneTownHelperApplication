@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -339,6 +340,11 @@ namespace BoneTownHelperApplication {
                 MessageBox.Show(TRainerHelper.StrAbout, "说明(explain):");
                 return;
             }
+            //问号❓️❔️
+            if (name == this.Image_Question_Mark.Name) {
+                MessageBox.Show(TRainerHelper.StrBrightness, "亮度修改说明(Brightness explain):");
+                return;
+            }
 
             if (!_isProcOpen) return;
             if (!_isTRainerOpen) return;
@@ -579,6 +585,8 @@ namespace BoneTownHelperApplication {
             if (!_isTRainerOpen) return;
 
             if (sender is Image image) {
+                //先停止掉以前的线程, 否则以前的线程也一直在修改值, 就会n多个线程在改值, 快速闪动!!!
+                isStartEditLamp = false;
                 string nameImage = image.Name;
                 if (nameImage == this.Image_Lamp_State.Name) {
                     _isLampOpen = !_isLampOpen;
@@ -586,27 +594,189 @@ namespace BoneTownHelperApplication {
                         new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_green2.png") 
                         : new Uri($"pack://application:,,,/{assemblyName};component/Resources/Images/icon_switch_lightyellow.png");
                     this.Image_Lamp_State.Source = new BitmapImage(uri);
-                    
-                    TRainerHelper.LampLightSet(_isLampOpen);
+
+                    if (false) {
+                        //CPU占用非常高, 50%左右, 线程没有写对???
+                        isStartEditLamp = true;
+                        StartEditLamp();
+                    } else {
+                        TRainerHelper.LampLightSet(_isLampOpen, true, true);
+                    }
                 }
                 return;
             }
             
             if (!(sender is System.Windows.Controls.Control control)) return;
+            //先停止掉以前的线程, 否则以前的线程也一直在修改值, 就会n多个线程在改值, 快速闪动!!!
+            isStartEditBrightness = false;
+            
             string name = control.Name;
+
             //环境亮度设置
             if (name == this.RB_Brightness_Night.Name) {
-                TRainerHelper.BrightnessSet(0);
+                if (false) {
+                    editBrightnessPosition = 0;
+                    isStartEditBrightness = true;
+                    StartEditBrightness();
+                } else {
+                    TRainerHelper.BrightnessSet(0, false);
+                }
                 return;
             }
             if (name == this.RB_Brightness_Evening.Name) {
-                TRainerHelper.BrightnessSet(1);
+                if (false) {
+                    editBrightnessPosition = 1;
+                    isStartEditBrightness = true;
+                    StartEditBrightness();
+                } else {
+                    TRainerHelper.BrightnessSet(1, false);
+                }
                 return;
             }
             if (name == this.RB_Brightness_Noon.Name) {
-                TRainerHelper.BrightnessSet(2);
+                if (false) {
+                    editBrightnessPosition = 2;
+                    isStartEditBrightness = true;
+                    StartEditBrightness();
+                } else {
+                    TRainerHelper.BrightnessSet(2, false);
+                }
                 return;
             }
+        }
+
+        private bool isStartEditLamp = false, isStartEditBrightness = false;
+        private int editBrightnessPosition = 0;
+        private void StartEditLamp() {
+            Task.Factory.StartNew((Action)(() => {
+                while (isStartEditLamp) {
+                    if (!_isProcOpen) return;
+                    if (!_isTRainerOpen) return;
+                    //1~2ms
+                    TRainerHelper.LampLightSet(_isLampOpen, false, false);
+                    // Thread.Sleep(1);    //1~10都会闪动
+                }
+            }));
+            TRainerHelper.PlayAng();
+        }
+        //都会闪动
+        private void StartEditBrightness() {
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         //1~8ms                                 参2=false, 也会一直闪动
+            //         TRainerHelper.BrightnessSet(editBrightnessPosition, false);
+            //         // TRainerHelper.BrightnessSet2(editBrightnessPosition);
+            //         Thread.Sleep(10);
+            //     }
+            // }));
+            // return;
+            
+            
+            // UIntPtr code1 = MemoryDllUtils.Memory.GetCode(TRainerHelper.Brightness_Ground_Green2, "");
+            // if (code1 == UIntPtr.Zero || code1.ToUInt64() < 65536UL /*0x010000*/)
+            //     return /*false*/;
+            // UIntPtr code2 = MemoryDllUtils.Memory.GetCode(TRainerHelper.Brightness_Ground_Purper2, "");
+            // if (code2 == UIntPtr.Zero || code2.ToUInt64() < 65536UL /*0x010000*/)
+            //     return /*false*/;
+            // UIntPtr code3 = MemoryDllUtils.Memory.GetCode(TRainerHelper.Brightness_Ground_Yellow2, "");
+            // if (code3 == UIntPtr.Zero || code3.ToUInt64() < 65536UL /*0x010000*/)
+            //     return /*false*/;
+            // UIntPtr code4 = MemoryDllUtils.Memory.GetCode(TRainerHelper.Brightness_Ground_Green, "");
+            // if (code4 == UIntPtr.Zero || code4.ToUInt64() < 65536UL /*0x010000*/)
+            //     return /*false*/;
+            // UIntPtr code5 = MemoryDllUtils.Memory.GetCode(TRainerHelper.Brightness_Ground_Purper, "");
+            // if (code5 == UIntPtr.Zero || code5.ToUInt64() < 65536UL /*0x010000*/)
+            //     return /*false*/;
+            // UIntPtr code6 = MemoryDllUtils.Memory.GetCode(TRainerHelper.Brightness_Ground_Yellow, "");
+            // if (code6 == UIntPtr.Zero || code6.ToUInt64() < 65536UL /*0x010000*/)
+            //     return /*false*/;
+
+            //也是一直闪动
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer = BitConverter.GetBytes(TRainerHelper.Ground_Green2[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
+            //
+            //         byte[] lpBuffer2 = BitConverter.GetBytes(TRainerHelper.Ground_Purper2[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
+            //
+            //         byte[] lpBuffer3 = BitConverter.GetBytes(TRainerHelper.Ground_Yellow2[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
+            //
+            //         byte[] lpBuffer4 = BitConverter.GetBytes(TRainerHelper.Ground_Green[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
+            //
+            //         byte[] lpBuffer5 = BitConverter.GetBytes(TRainerHelper.Ground_Purper[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
+            //
+            //         byte[] lpBuffer6 = BitConverter.GetBytes(TRainerHelper.Ground_Yellow[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
+            //         
+            //         // Thread.Sleep(15);
+            //     }
+            // }));
+            
+            
+            //下方分成6个线程执行, 也是一直闪动!
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer = BitConverter.GetBytes(TRainerHelper.Ground_Green2[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
+            //     }
+            // }));
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer2 = BitConverter.GetBytes(TRainerHelper.Ground_Purper2[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
+            //     }
+            // }));
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer3 = BitConverter.GetBytes(TRainerHelper.Ground_Yellow2[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
+            //     }
+            // }));
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer4 = BitConverter.GetBytes(TRainerHelper.Ground_Green[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
+            //     }
+            // }));
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer5 = BitConverter.GetBytes(TRainerHelper.Ground_Purper[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
+            //     }
+            // }));
+            // Task.Factory.StartNew((Action)(() => {
+            //     while (isStartEditBrightness) {
+            //         if (!_isProcOpen) return;
+            //         if (!_isTRainerOpen) return;
+            //         
+            //         byte[] lpBuffer6 = BitConverter.GetBytes(TRainerHelper.Ground_Yellow[editBrightnessPosition]);
+            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
+            //     }
+            // }));
         }
 
         /// <summary>
@@ -634,6 +804,9 @@ namespace BoneTownHelperApplication {
 
         protected override void OnClosed(EventArgs e) {
             Console.WriteLine("OnClosed()");
+
+            isStartEditLamp = false;
+            isStartEditBrightness = false;
             
             m_GlobalHook.KeyUp -= GlobalHookKeyUp;
             //It is recommened to dispose it

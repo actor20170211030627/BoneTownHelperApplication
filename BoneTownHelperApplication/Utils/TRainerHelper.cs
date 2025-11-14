@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Memory;
 
 namespace BoneTownHelperApplication.Utils {
     public static class TRainerHelper {
@@ -31,12 +32,12 @@ namespace BoneTownHelperApplication.Utils {
         private const string LampLight = ModuleName + "+0x00633CC4,0x34";
         
         //环境亮度
-        private const string Brightness_Ground_Green2 = ModuleName + "+0x00633D9C,0x14,0x1C8";
-        private const string Brightness_Ground_Purper2 = ModuleName + "+0x00633E98,0x4,0x1CC";
-        private const string Brightness_Ground_Yellow2 = ModuleName + "+0x00633E98,0x4,0x1D0";
-        private const string Brightness_Ground_Green = ModuleName + "+0x00633E98,0x4,0x1D4";
-        private const string Brightness_Ground_Purper = ModuleName + "+0x00633D9C,0x14,0x1D8";
-        private const string Brightness_Ground_Yellow = ModuleName + "+0x00633D9C,0x14,0x1DC";
+        public const string Brightness_Ground_Green2 = ModuleName + "+0x00633D9C,0x14,0x1C8";
+        public const string Brightness_Ground_Purper2 = ModuleName + "+0x00633E98,0x4,0x1CC";
+        public const string Brightness_Ground_Yellow2 = ModuleName + "+0x00633E98,0x4,0x1D0";
+        public const string Brightness_Ground_Green = ModuleName + "+0x00633E98,0x4,0x1D4";
+        public const string Brightness_Ground_Purper = ModuleName + "+0x00633D9C,0x14,0x1D8";
+        public const string Brightness_Ground_Yellow = ModuleName + "+0x00633D9C,0x14,0x1DC";
 
 
         public const string StrAbout = "游戏操作说明:\n" +
@@ -84,6 +85,24 @@ namespace BoneTownHelperApplication.Utils {
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
                                        "7.Version 20251113 & v1.1";
+
+        public const string StrBrightness = "亮度修改说明:\n" +
+                                            "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +
+                                            "    1.开灯后, 有时候灯会闪动, 这是正常现象.\n" +
+                                            "    2.设置亮度后, 人物周围亮度会突然改变, 这是正常现象.\n" +
+                                            "所以:\n" +
+                                            "    当人物周围亮度突然改变后, 等游戏将亮度修改完, 再自行点击下方修改亮度.\n" +
+                                            "另外:\n" +
+                                            "    地图7(蘑菇沼泽🍄)无法修改亮度, 因为这个地图里亮度一直在变, 无法插手.\n" +
+                                            "\n" +
+                                            "Brightness modification instructions:\n" +
+                                            "Premise: The game also modifies the brightness when time to switch the day / night, so:\n" +
+                                            "    1.After turning on the light, sometimes it flashes. This is a normal phenomenon.\n" +
+                                            "    2.After setting the brightness, the brightness around the character will suddenly change. This is a normal phenomenon.\n" +
+                                            "So:\n" +
+                                            "    When the brightness around the character suddenly changes, wait for the game to modify the brightness, and then click the button below to modify the brightness by yourself.\n" +
+                                            "Also:\n" +
+                                            "    Map 7(Mushroom Marsh🍄) cannot have its brightness modified, because the brightness in this map is constantly changing.";
 
         //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
         public static readonly float[] CoordinateMissionaryBeach2FirmWoodForest = { 1066.876f, -347.3445f, 50.521f };
@@ -339,10 +358,17 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isOpen">是否打开</param>
         /// <param name="isFreeze">是否冻结值</param>
-        public static void LampLightSet(bool isOpen) {
-            bool isSuccess = MemoryDllUtils.WriteLong(LampLight, LampBrightness[isOpen ? 1 : 0]);
+        public static void LampLightSet(bool isOpen, bool isFreeze, bool isPlayAng) {
+            bool isSuccess;
+            if (isFreeze) {
+                //一直闪, 应该是修改间隔25ms还是太久了
+                isSuccess = MemoryDllUtils.FreezeValue(LampLight, "long", LampBrightness[isOpen ? 1 : 0]);
+            } else {
+                MemoryDllUtils.UnfreezeValue(LampLight);
+                isSuccess = MemoryDllUtils.WriteLong(LampLight, LampBrightness[isOpen ? 1 : 0]);
+            }
             if (isSuccess) {
-                PlayAng();
+                if (isPlayAng) PlayAng();
             } else {
                 Console.WriteLine("灯光亮度设置 失败!");
             }
@@ -354,14 +380,82 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="position">第几个亮度</param>
         /// <param name="isFreeze">是否冻结值</param>
-        public static void BrightnessSet(int position) {
-            bool isSuccess0 = MemoryDllUtils.WriteLong(Brightness_Ground_Green2, Ground_Green2[position]);
-            bool isSuccess1 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper2, Ground_Purper2[position]);
-            bool isSuccess2 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow2, Ground_Yellow2[position]);
-            bool isSuccess3 = MemoryDllUtils.WriteLong(Brightness_Ground_Green, Ground_Green[position]);
-            bool isSuccess4 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper, Ground_Purper[position]);
-            bool isSuccess5 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow, Ground_Yellow[position]);
-            if (isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5) {
+        public static void BrightnessSet(int position, bool isFreeze) {
+            bool isSuccess;
+            if (isFreeze) {
+                //一直闪, 应该是修改间隔25ms还是太久了
+                bool isSuccess0 = MemoryDllUtils.FreezeValue(Brightness_Ground_Green2, "long", Ground_Green2[position]);
+                bool isSuccess1 = MemoryDllUtils.FreezeValue(Brightness_Ground_Purper2, "long", Ground_Purper2[position]);
+                bool isSuccess2 = MemoryDllUtils.FreezeValue(Brightness_Ground_Yellow2, "long", Ground_Yellow2[position]);
+                bool isSuccess3 = MemoryDllUtils.FreezeValue(Brightness_Ground_Green, "long", Ground_Green[position]);
+                bool isSuccess4 = MemoryDllUtils.FreezeValue(Brightness_Ground_Purper, "long", Ground_Purper[position]);
+                bool isSuccess5 = MemoryDllUtils.FreezeValue(Brightness_Ground_Yellow, "long", Ground_Yellow[position]);
+                isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
+            } else {
+                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Green2);
+                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Purper2);
+                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Yellow2);
+                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Green);
+                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Purper);
+                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Yellow);
+                bool isSuccess0 = MemoryDllUtils.WriteLong(Brightness_Ground_Green2, Ground_Green2[position]);
+                bool isSuccess1 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper2, Ground_Purper2[position]);
+                bool isSuccess2 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow2, Ground_Yellow2[position]);
+                bool isSuccess3 = MemoryDllUtils.WriteLong(Brightness_Ground_Green, Ground_Green[position]);
+                bool isSuccess4 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper, Ground_Purper[position]);
+                bool isSuccess5 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow, Ground_Yellow[position]);
+                isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
+            }
+            if (isSuccess) {
+                PlayAng();
+            } else {
+                Console.WriteLine("环境亮度设置 失败!");
+            }
+        }
+        public static void BrightnessSet2(int position) {
+            bool isSuccess;
+            // byte[] lpBuffer = new byte[4];
+            // int nSize = 8;
+            // lpBuffer = BitConverter.GetBytes(Convert.ToInt64(write));
+            byte[] lpBuffer = BitConverter.GetBytes(Ground_Green2[position]);
+            UIntPtr code1 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Green2, "");
+            if (code1 == UIntPtr.Zero || code1.ToUInt64() < 65536UL /*0x010000*/)
+                return /*false*/;
+            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
+
+            byte[] lpBuffer2 = BitConverter.GetBytes(Ground_Purper2[position]);
+            UIntPtr code2 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Purper2, "");
+            if (code2 == UIntPtr.Zero || code2.ToUInt64() < 65536UL /*0x010000*/)
+                return /*false*/;
+            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
+
+            byte[] lpBuffer3 = BitConverter.GetBytes(Ground_Yellow2[position]);
+            UIntPtr code3 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Yellow2, "");
+            if (code3 == UIntPtr.Zero || code3.ToUInt64() < 65536UL /*0x010000*/)
+                return /*false*/;
+            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
+
+            byte[] lpBuffer4 = BitConverter.GetBytes(Ground_Green[position]);
+            UIntPtr code4 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Green, "");
+            if (code4 == UIntPtr.Zero || code4.ToUInt64() < 65536UL /*0x010000*/)
+                return /*false*/;
+            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
+
+            byte[] lpBuffer5 = BitConverter.GetBytes(Ground_Purper[position]);
+            UIntPtr code5 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Purper, "");
+            if (code5 == UIntPtr.Zero || code5.ToUInt64() < 65536UL /*0x010000*/)
+                return /*false*/;
+            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
+
+            byte[] lpBuffer6 = BitConverter.GetBytes(Ground_Yellow[position]);
+            UIntPtr code6 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Yellow, "");
+            if (code6 == UIntPtr.Zero || code6.ToUInt64() < 65536UL /*0x010000*/)
+                return /*false*/;
+            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
+
+            isSuccess = true;
+            
+            if (isSuccess) {
                 PlayAng();
             } else {
                 Console.WriteLine("环境亮度设置 失败!");
