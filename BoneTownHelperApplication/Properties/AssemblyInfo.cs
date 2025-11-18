@@ -55,6 +55,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]              // 程序集版本（用于程序集引用和强命名）
-[assembly: AssemblyFileVersion("1.1.0.0")]          // 文件版本（显示在程序属性的“文件版本”）
-[assembly: AssemblyInformationalVersion("1.1.0.0(20251113)")]   // 信息版本（显示在“产品版本”，可包含额外信息）
+[assembly: AssemblyVersion("1.2.0.0")]              // 程序集版本（用于程序集引用和强命名）
+[assembly: AssemblyFileVersion("1.2.0.0")]          // 文件版本（显示在程序属性的“文件版本”）
+[assembly: AssemblyInformationalVersion("1.2.0.0(20251118)")]   // 信息版本（显示在“产品版本”，可包含额外信息）

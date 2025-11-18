@@ -1,0 +1,1337 @@
+﻿<Page x:Class="BoneTownHelperApplication.Pages.TRainer_Old_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:BoneTownHelperApplication.Pages"
+      mc:Ignorable="d"
+      Height="Auto"
+      Width="Auto">
+    
+    <StackPanel Orientation="Vertical">
+        <!--Top-->
+        <DockPanel
+            Background="LightSkyBlue"
+            Height="Auto">
+            <TextBlock
+                Foreground="White"
+                FontSize="13"
+                TextAlignment="Center"
+                Text="游戏运行状态&#x0A;(Game running state):"
+                Margin="5,5" />
+            <Border
+                Name="Border_Running"
+                Height="Auto"
+                Width="Auto"
+                VerticalAlignment="Center"
+                Visibility="Collapsed"
+                BorderThickness="1"
+                BorderBrush="Green"
+                Background="ForestGreen"
+                CornerRadius="10">
+                <TextBlock
+                    Text="✅运行中"
+                    Padding="5 2 5 2"
+                    Foreground="White" />
+            </Border>
+            <Border
+                Name="Border_Stopped"
+                Height="Auto"
+                Width="Auto"
+                VerticalAlignment="Center"
+                BorderThickness="1"
+                BorderBrush="DarkRed"
+                Background="Red"
+                CornerRadius="10">
+                <TextBlock
+                    Text="❌未发现游戏"
+                    Padding="5 2 5 2"
+                    Foreground="White" />
+            </Border>
+
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <TextBlock
+                    Foreground="White"
+                    TextAlignment="Center"
+                    FontSize="13"
+                    Text="修改器开关&#x0A;(TRainer switch):"
+                    Margin="5,5" />
+                <Image
+                    Name="Image_TRainer_State"
+                    Width="35" Height="Auto"
+                    Margin="0 0 10 0"
+                    MouseLeftButtonDown="Btn_OnClick"
+                    Source="/Resources/Images/icon_switch_green2.png" />
+                <Button
+                    Name="Btn_About"
+                    Width="80"
+                    Height="22"
+                    Click="Btn_OnClick"
+                    Margin="0 0 2 0"
+                    Content="关于(About)" />
+            </StackPanel>
+        </DockPanel>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.RowSpan="10"
+                Width="150"
+                Source="/Resources/Images/Bonetown_Side_Image(225x320).jpg" />
+            
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Foreground="Red"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="项目(Property)" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="3"
+                Foreground="Red"
+                VerticalAlignment="Center"
+                Text="当前值(Value)">
+                <!-- 当前值&#x0A;(Value) -->
+            </TextBlock>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="4"
+                TextAlignment="Center"
+                Foreground="Red"
+                VerticalAlignment="Center"
+                Text="热键(HotKey)" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="5"
+                TextAlignment="Center"
+                Foreground="Red"
+                VerticalAlignment="Center"
+                Text="点击加点(Click2+)" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="6"
+                TextAlignment="Center"
+                Foreground="Red"
+                Text="加点设置&#x0A;(Setting+)" />
+            
+            
+            <!--图片来源from: BoneTown\game\data\gui\mainCharacter -->
+            <Image
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/money_split.png" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="钱(Money):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Money"
+                Grid.Row="1"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="4"
+                Text="Ctrl + 0"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Money"
+                Grid.Row="1"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+1000" />
+            
+            
+            <!--图片来源from: BoneTown\game\data\gui\powerup -->
+            <Image
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONBeerSM.png" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="2"
+                Text="啤酒(Beer):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Beer"
+                Grid.Row="2"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="4"
+                Text="Ctrl + 1"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Beer"
+                Grid.Row="2"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="3"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONWhiskeySM.png" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="2"
+                Text="威士忌(Whiskey):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Whiskey"
+                Grid.Row="3"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="4"
+                Text="Ctrl + 2"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Whiskey"
+                Grid.Row="3"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONNugSM.png" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="2"
+                Text="大麻(Nug):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Nug"
+                Grid.Row="4"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="4"
+                Text="Ctrl + 3"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Nug"
+                Grid.Row="4"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="5"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONShroomSM.png" />
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="2"
+                Text="蘑菇(Shroom):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Shroom"
+                Grid.Row="5"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="4"
+                Text="Ctrl + 4"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Shroom"
+                Grid.Row="5"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="6"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONPeyoteSM.png" />
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="2"
+                Text="仙人掌(Peyote):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Peyote"
+                Grid.Row="6"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="4"
+                Text="Ctrl + 5"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Peyote"
+                Grid.Row="6"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="7"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONFrogSM.png" />
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="2"
+                Text="青蛙(Frog):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Frog"
+                Grid.Row="7"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="4"
+                Text="Ctrl + 6"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Frog"
+                Grid.Row="7"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="8"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/PwrICONCrackSM.png" />
+            <TextBlock
+                Grid.Row="8"
+                Grid.Column="2"
+                Text="可卡因(Crack):"
+                Margin="1" />
+            <TextBlock
+                Name="TB_Crack"
+                Grid.Row="8"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="100" />
+            <TextBlock
+                Grid.Row="8"
+                Grid.Column="4"
+                Text="Ctrl + 7"
+                TextAlignment="Center" />
+            <Button
+                Name="Btn_Crack"
+                Grid.Row="8"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="+100" />
+
+
+            <Image
+                Grid.Row="9"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/east_west.png" />
+            <!-- 东西(East&amp;West): -->
+            <TextBlock
+                Grid.Row="9"
+                Grid.Column="2"
+                Text="左右(Left&amp;Right)"
+                Margin="1" />
+            <TextBlock
+                Name="TB_XAxis"
+                Grid.Row="9"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="" />
+            <TextBlock
+                Grid.Row="9"
+                Grid.Column="4"
+                Text="← →"
+                TextAlignment="Center" />
+            <UniformGrid
+                Grid.Row="9"
+                Grid.Column="5"
+                Rows="1"
+                Columns="2">
+                <!--下面这种方式不行, 不知道为什么???-->
+                <!-- Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue, StringFormat='西(W)+{0}'}" -->
+                <!-- 西(W)+{0} -->
+                <Button
+                    Name="Btn_XAxis_Minus"
+                    Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
+                    ContentStringFormat="左(L)+{0}"
+                    Click="Btn_OnClick" />
+                <!-- 东(E)+{0} -->
+                <Button
+                    Name="Btn_XAxis_Plus"
+                    Margin="5 0 0 0"
+                    Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
+                    ContentStringFormat="右(R)+{0}"
+                    Click="Btn_OnClick" />
+            </UniformGrid>
+            <ComboBox
+                x:Name="ComboBox_XYZDistance"
+                Grid.Row="9"
+                Grid.Column="6"
+                Grid.RowSpan="3"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Margin="1 0"
+                IsEditable="False"
+                StaysOpenOnEdit="True"
+                SelectedIndex="2"
+                SelectedValue="5" />
+
+
+            <Image
+                Grid.Row="10"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/north_south.png" />
+            <!-- 南北(South&amp;North): -->
+            <TextBlock
+                Grid.Row="10"
+                Grid.Column="2"
+                Text="前后(Front&amp;Back)"
+                Margin="1" />
+            <TextBlock
+                Name="TB_YAxis"
+                Grid.Row="10"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="" />
+            <TextBlock
+                Grid.Row="10"
+                Grid.Column="4"
+                Text="↕‌"
+                TextAlignment="Center" />
+            <UniformGrid
+                Grid.Row="10"
+                Grid.Column="5"
+                Rows="1"
+                Columns="2">
+                <!-- 南(S)+{0} -->
+                <Button
+                    Name="Btn_YAxis_Minus"
+                    Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
+                    ContentStringFormat="后(B)+{0}"
+                    Click="Btn_OnClick" />
+                <!-- 北(N)+{0} -->
+                <Button
+                    Name="Btn_YAxis_Plus"
+                    Margin="5 0 0 0"
+                    Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
+                    ContentStringFormat="前(F)+{0}"
+                    Click="Btn_OnClick" />
+            </UniformGrid>
+
+
+            <Image
+                Grid.Row="11"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/height.png" />
+            <TextBlock
+                Grid.Row="11"
+                Grid.Column="2"
+                Text="高度(Height)"
+                Margin="1" />
+            <TextBlock
+                Name="TB_ZAxis"
+                Grid.Row="11"
+                Grid.Column="3"
+                Padding="1 0 0 0"
+                Text="" />
+            <TextBlock
+                Grid.Row="11"
+                Grid.Column="4"
+                Padding="5 0"
+                Text="Ctrl + L, Ctrl + H‌"
+                TextAlignment="Center"
+                Margin="1" />
+            <UniformGrid
+                Grid.Row="11"
+                Grid.Column="5"
+                Rows="1"
+                Columns="2">
+                <Button
+                    Name="Btn_ZAxis_Minus"
+                    Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
+                    ContentStringFormat="-{0}"
+                    Click="Btn_OnClick" />
+                <Button
+                    Name="Btn_ZAxis_Plus"
+                    Margin="5 0 0 0"
+                    Content="{Binding ElementName=ComboBox_XYZDistance, Path=SelectedValue}"
+                    ContentStringFormat="+{0}"
+                    Click="Btn_OnClick" />
+            </UniformGrid>
+            
+            <Border
+                Grid.Row="12"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Margin="1.5"
+                BorderThickness="1"
+                CornerRadius="1 5 5 1"
+                BorderBrush="Black">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#9393fd" Offset="0.0" />
+                        <GradientStop Color="#a3a5f8" Offset="0.5" />
+                        <GradientStop Color="#6b6bee" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <TextBlock
+                Grid.Row="12"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Text="jj性感度(Balls sexy)"
+                Margin="1" />
+            <Button
+                Name="Btn_Balls_Max"
+                Grid.Row="12"
+                Grid.Column="5"
+                Click="Btn_OnClick"
+                Content="加到最大(add2Max)" />
+            
+            
+            <Border
+                Grid.Row="13"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Margin="1.5"
+                BorderThickness="1"
+                CornerRadius="1 5 5 1"
+                BorderBrush="Black">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#85fe86" Offset="0.0" />
+                        <GradientStop Color="#3dc540" Offset="0.5" />
+                        <GradientStop Color="#4bf64b" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <TextBlock
+                Grid.Row="13"
+                Grid.Column="2"
+                TextAlignment="Center"
+                Text="无限健康&#x0A;(Infinite Health)"
+                Margin="1" />
+            <Image
+                Grid.Row="13"
+                Grid.Column="5"
+                Name="Image_Infinite_Health"
+                Width="35" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="/Resources/Images/icon_switch_lightyellow.png" />
+                
+            <Image
+                Grid.Row="14"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/icon_jump.png" />
+            <TextBlock
+                Grid.Row="14"
+                Grid.Column="2"
+                TextAlignment="Center"
+                Text="冻结跳高效果&#x0A;(Freeze Jump)"
+                Margin="1" />
+            <Image
+                Grid.Row="14"
+                Grid.Column="5"
+                Name="Image_Freeze_High_Jump"
+                Width="35" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="/Resources/Images/icon_switch_lightyellow.png" />
+            
+            <Image
+                Grid.Row="15"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/icon_fast_run.png" />
+            <TextBlock
+                Grid.Row="15"
+                Grid.Column="2"
+                TextAlignment="Center"
+                Text="冻结快跑效果&#x0A;(Freeze Fast Run)"
+                Margin="1" />
+            <Image
+                Grid.Row="15"
+                Grid.Column="5"
+                Name="Image_Freeze_Fast_Run"
+                Width="35" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="/Resources/Images/icon_switch_lightyellow.png" />
+            
+            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
+            <Image
+                Grid.Row="16"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/StaminaTIP.png" />
+            <TextBlock
+                Grid.Row="16"
+                Grid.Column="2"
+                TextAlignment="Center"
+                Text="冻结快感进度&#x0A;(Freeze Climax)"
+                Margin="1" />
+            <Image
+                Grid.Row="16"
+                Grid.Column="5"
+                Name="Image_Freeze_Climax"
+                Width="35" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="/Resources/Images/icon_switch_lightyellow.png" />
+        </Grid>
+        
+        <DockPanel
+            Background="LightSkyBlue"
+            Margin="0 5 0 0"
+            VerticalAlignment="Center">
+            <TextBlock
+                Foreground="White"
+                FontSize="13"
+                Padding="5"
+                VerticalAlignment="Center"
+                Text=" 亮度(Light):" />
+            <Image
+                Name="Image_Question_Mark"
+                Width="20" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="/Resources/Images/question_mark_red.png" />
+        </DockPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="灯(Lamp):"
+                Margin="1" />
+            <Image
+                Grid.Row="0"
+                Grid.Column="1"
+                Name="Image_Lamp_State"
+                Width="35" Height="Auto"
+                Margin="5 0 0 0"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Light_OnClick"
+                Source="/Resources/Images/icon_switch_green2.png" />
+            <!-- <StackPanel -->
+            <!--     Grid.Row="0" -->
+            <!--     Grid.Column="1" -->
+            <!--     Orientation="Horizontal"> -->
+            <!--     <RadioButton -->
+            <!--         Name="RB_Lamp_Close" -->
+            <!--         GroupName="Lamp" -->
+            <!--         Checked="Light_OnClick" -->
+            <!--         Content="关(Close)" -->
+            <!--         Margin="5 5 0 5"/> -->
+            <!--     <RadioButton -->
+            <!--         Name="RB_Lamp_Open" -->
+            <!--         GroupName="Lamp" -->
+            <!--         Checked="Light_OnClick" -->
+            <!--         Content="开(Open)" -->
+            <!--         Margin="5 5 0 5"/> -->
+            <!-- </StackPanel> -->
+            
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="亮度(Brightness):"
+                Margin="1" />
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Orientation="Horizontal">
+                <RadioButton
+                    Name="RB_Brightness_Night"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="晚上(Night)"
+                    Margin="5 5 0 5"/>
+                <RadioButton
+                    Name="RB_Brightness_Evening"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="傍晚(Evening)"
+                    Margin="5 5 0 5"/>
+                <RadioButton
+                    Name="RB_Brightness_Noon"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="白天(Noon)"
+                    Margin="5 5 0 5"/>
+            </StackPanel>
+        </Grid>
+        
+        
+        <TextBlock
+            Foreground="White"
+            Background="LightSkyBlue"
+            FontSize="13"
+            Padding="5"
+            Margin="0 5 0 0"
+            Text="在地图上瞬移(teleport on map):" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="Red"
+                Text="地图编号&#x0A;(map №)"
+                Margin="2 0 5 0" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                TextAlignment="Center"
+                Foreground="Red"
+                Text="可收集的物品&#x0A;(Tokens)"
+                Margin="0 0 5 0" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Grid.ColumnSpan="4"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="Red"
+                Text="瞬移到(teleport to)"
+                Margin="1" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="1.传教士海滩&#x0A;(Missionary Beach)" />
+            <!-- 图片来自: BoneTown\game\data\gui\Tokens -->
+            <Image
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/FunTicketIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="1"
+                Grid.Column="4"
+                Margin="1 0 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_MissionaryBeach2FirmWoodForest"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    去地图2<LineBreak />(to Map2)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="1"
+                Grid.Column="5"
+                Margin="1 0 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_MissionaryBeach2GabachoHeights"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    去地图4<LineBreak />(to Map4)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="2.(阔叶林)&#x0A;(Firm Wood Forest)" />
+            <Image
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/DiamondIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="2"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_FirmWoodForest2MissionaryBeach"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    返回地图1<LineBreak />(return Map1)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="2"
+                Grid.Column="4"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_FirmWoodForest2HomelandTrailerPark"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    去地图3<LineBreak />(to Map3)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="3.国土安全拖车公园&#x0A;(Homeland Trailer Park)" />
+            <Image
+                Grid.Row="3"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/JugIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="3"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_HomelandTrailerPark2FirmWoodForest"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    返回地图2<LineBreak />(return Map2)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="4.加巴乔高地&#x0A;(Gabacho Heights)" />
+            <Image
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/GaneshIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="4"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_GabachoHeights2MissionaryBeach"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    返回地图1<LineBreak />(return Map1)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="4"
+                Grid.Column="4"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_GabachoHeights2HavajoIndianReservation"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    去地图5<LineBreak />(to Map5)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="4"
+                Grid.Column="5"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_GabachoHeights2NobbingHill"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    去地图6<LineBreak />(to Map6)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="5.哈瓦那印第安人保留地&#x0A;(Havajo Indian Reservation)" />
+            <Image
+                Grid.Row="5"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/PchipIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="5"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_HavajoIndianReservation2GabachoHeights"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    返回地图4<LineBreak />(return Map4)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="6.诺丁山&#x0A;(Nobbing Hill)" />
+            <Image
+                Grid.Row="6"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/BeerBongIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="6"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_NobbingHill2GabachoHeights"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    返回地图4<LineBreak />(return Map4)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="6"
+                Grid.Column="4"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_NobbingHill2MushroomMarsh"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    去地图7<LineBreak />(to Map7)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="6"
+                Grid.Column="5"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_NobbingHill2DownTown"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    去地图8<LineBreak />(to Map8)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="7.蘑菇沼泽&#x0A;(Mushroom Marsh)" />
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="1"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="无(None)" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="7"
+                Grid.Column="2"
+                Margin="0 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_MushroomMarsh_Satan"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/Powermove.png" />
+                    撒旦Boss<LineBreak />(Boss Satan)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="7"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_MushroomMarsh_Satan_wife"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/HookerLips.png" />
+                    撒旦的老婆<LineBreak />(Satan's wife)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="7"
+                Grid.Column="4"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_MushroomMarsh2NobbingHill"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    返回地图6<LineBreak />(return Map6)
+                </TextBlock>
+            </Border>
+
+            
+            <TextBlock
+                Grid.Row="8"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="8.骨头镇市中心&#x0A;(Downtown BoneTown)" />
+            <Image
+                Grid.Row="8"
+                Grid.Column="1"
+                Width="33" Height="Auto"
+                Source="/Resources/Images/DaytonIKON.png" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="8"
+                Grid.Column="2"
+                Margin="0 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_Downtown_RonJTowers"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="15" Height="Auto"
+                        Source="/Resources/Images/RonJEntrance.png" />
+                    RJ大富翁<LineBreak />(RonJ Towers)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="8"
+                Grid.Column="3"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_Downtown_Angle"
+                    MouseLeftButtonDown="OnTeleportClick"
+                    TextAlignment="Center">
+                    <Image
+                        Width="15" Height="Auto"
+                        Source="/Resources/Images/Angle.png" />
+                    天使<LineBreak />(angle)
+                </TextBlock>
+            </Border>
+            <!-- 
+                关键：添加 Mode=OneWay，因为 TextBlock 的 IsMouseOver 是只读的
+                否则报错: dOperationException: 无法对“System.Windows.Controls.TextBlock”类型的只读属性“IsMouseOver”进行 TwoWay 或 OneWayToSource 绑定。
+                 -->
+            <Popup 
+                IsOpen="{Binding ElementName=TB_Downtown_Angle, Path=IsMouseOver, Mode=OneWay}"
+                Placement="MousePoint"
+                PlacementTarget="{Binding ElementName=TB_Downtown_Angle}" 
+                StaysOpen="True">
+                <Image
+                    Width="180" Height="180"
+                    Source="/Resources/Images/Angle.png" />
+            </Popup>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="8"
+                Grid.Column="4"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_DownTown2NobbingHill"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    返回地图6<LineBreak />(return Map6)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="8"
+                Grid.Column="5"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_DownTown2ManIsland"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="12" Height="Auto"
+                        Source="/Resources/Images/BlueStarYellowPoint.png" />
+                    去地图9<LineBreak />(to Map9)
+                </TextBlock>
+            </Border>
+            
+            
+            <TextBlock
+                Grid.Row="9"
+                Grid.Column="0"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="9.男人岛&#x0A;(Man Island)" />
+            <TextBlock
+                Grid.Row="9"
+                Grid.Column="1"
+                TextAlignment="Center"
+                VerticalAlignment="Center"
+                Text="无(None)" />
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="9"
+                Grid.Column="4"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_ManIsland2DownTown"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    返回地图8<LineBreak />(return Map8)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="9"
+                Grid.Column="5"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_ManIsland2ManNeedle"
+                    TextAlignment="Center"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="11" Height="Auto"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    去高塔入口<LineBreak />(to Man Needle)
+                </TextBlock>
+            </Border>
+        </Grid>
+    </StackPanel>
+</Page>
