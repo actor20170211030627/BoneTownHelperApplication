@@ -29,12 +29,12 @@ namespace BoneTownHelperApplication.Utils {
         public const string ZAxis   = ModuleName + "+0x00354318,0x2E0,0x7F0";
         
         //人物朝向的角度
-        private const string DegreePersonFront  = ModuleName + "+0x00354318,0xA4,0xE04";
+        private const string DegreePersonFront  = ModuleName + "+0x00354318,0x2E0,0x7F4";
         //鼠标左右移动的角度
         private const string DegreeMouseLeftRight = ModuleName + "+0x00354318,0xA4,0x3AC";
         
         //灯光
-        private const string LampLight = ModuleName + "+0x???,0x??";
+        private const string LampLight = ModuleName + "+0x00454DD4,0x34";
         
         //环境亮度
         private const string Brightness_Ground_Green2 = ModuleName + "+0x???,0x??";
@@ -117,7 +117,7 @@ namespace BoneTownHelperApplication.Utils {
         ///                             大晚上亮度   傍晚亮度   大白天亮度
         /// 下方参数没搞, CE上修改了也没效果, 不知道啥原因???
         /// </summary>
-        private static readonly long[] LampBrightness = { 0x00000000, 0x00000000 };
+        private static readonly long[] LampBrightness = TRainerHelper.LampBrightness;
         private static readonly long[] Ground_Green2 = { 0x00000000, 0x00000000, 0x00000000 };
         private static readonly long[] Ground_Purper2 = { 0x00000000, 0x00000000, 0x00000000 };
         private static readonly long[] Ground_Yellow2 = { 0x00000000, 0x00000000, 0x00000000 };

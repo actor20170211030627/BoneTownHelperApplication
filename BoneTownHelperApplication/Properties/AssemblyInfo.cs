@@ -13,7 +13,7 @@ using System.Windows;
 [assembly: AssemblyCompany("命运")]                                       // 公司名称（显示在“公司”）
 [assembly: AssemblyProduct("骨头镇修改器(Bowntown TRainer)-actor2015")]   // 产品名称（显示在“产品名称”，通常与标题一致）
 [assembly: AssemblyCopyright("Copyright ©  2024")]                       // 版权信息（显示在“版权”）
-[assembly: AssemblyTrademark("")]                                        // 商标信息（显示在“商标”，可选）
+[assembly: AssemblyTrademark("https://tieba.baidu.com/f?kw=bonetown")]   // 商标信息（显示在“商标”，可选）, 可填官网?
 [assembly: AssemblyCulture("")]                                          // 文化/语言（如 zh-CN，中性文化留空）
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -55,6 +55,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.0.0")]              // 程序集版本（用于程序集引用和强命名）
-[assembly: AssemblyFileVersion("1.2.0.0")]          // 文件版本（显示在程序属性的“文件版本”）
-[assembly: AssemblyInformationalVersion("1.2.0.0(20251118)")]   // 信息版本（显示在“产品版本”，可包含额外信息）
+[assembly: AssemblyVersion("1.2.1.0")]              // 程序集版本（用于程序集引用和强命名）
+[assembly: AssemblyFileVersion("1.2.1.0")]          // 文件版本（显示在程序属性的“文件版本”）
+[assembly: AssemblyInformationalVersion("1.2.1.0(20251118)")]   // 信息版本（显示在“产品版本”，可包含额外信息）

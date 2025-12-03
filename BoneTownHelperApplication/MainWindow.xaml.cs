@@ -30,7 +30,6 @@ namespace BoneTownHelperApplication {
         }
         
         protected override void OnClosing(CancelEventArgs e) {
-            Console.WriteLine("OnClosing()");
             // MessageBoxResult result = MessageBox.Show("是否保存更改？", "提示", MessageBoxButton.YesNoCancel);
             // if (result == MessageBoxResult.Cancel) {
             //     e.Cancel = true; // 取消关闭
@@ -43,7 +42,6 @@ namespace BoneTownHelperApplication {
         }
 
         protected override void OnClosed(EventArgs e) {
-            Console.WriteLine("OnClosed()");
             base.OnClosed(e);
         }
     }

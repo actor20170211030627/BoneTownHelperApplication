@@ -69,7 +69,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20251118 & v1.2\n" +
+                                       "7.版本 20251118 & v1.2.1\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
                                        "Shift + ~ \t\t     : Old version game open the console (you can switch the mouse out of the game interface)\n" +
@@ -93,7 +93,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20251118 & v1.2";
+                                       "7.Version 20251118 & v1.2.1";
 
         public const string StrBrightness = "亮度修改说明:\n" +
                                             "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +
@@ -193,7 +193,7 @@ namespace BoneTownHelperApplication.Utils {
         /// Ground_Purper               3DE147AE    3E4CCCCD    3F19999A
         /// Ground_Yellow               3E99999A    3E800000    3F000000
         /// </summary>
-        private static readonly long[] LampBrightness = { 0x00000000, 0x3F800000 };
+        public static readonly long[] LampBrightness = { 0x00000000, 0x3F800000 };
         private static readonly long[] Ground_Green2 = { 0x3DF5C28F, 0x3F19999A, 0x3F333333 };
         private static readonly long[] Ground_Purper2 = { 0x3E428F5C, 0x3F0CCCCD, 0x3F333333 };
         private static readonly long[] Ground_Yellow2 = { 0x3F266666, 0x3F0CCCCD, 0x3F266666 };

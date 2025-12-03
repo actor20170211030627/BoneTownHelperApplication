@@ -132,7 +132,7 @@
       <Resource Include="Resources\Images\StaminaTIP.png" />
       <Resource Include="Resources\Images\icon_fast_run.png" />
       <Resource Include="Resources\Images\icon_jump.png" />
-      <Content Include="Resources\Images\question_mark_red.png" />
+      <Resource Include="Resources\Images\question_mark_red.png" />
       <None Include="Assets\Bonetown.ico" />
       <Resource Include="Resources\Images\Powermove.png" />
       <Resource Include="Resources\Images\RonJEntrance.png" />

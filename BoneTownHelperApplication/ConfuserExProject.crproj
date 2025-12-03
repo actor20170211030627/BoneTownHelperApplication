@@ -1,0 +1,6 @@
+<project outputDir="E:\workspace_cpp\BoneTownHelperApplication\BoneTownHelperApplication\bin\Confused" baseDir="E:\workspace_cpp\BoneTownHelperApplication" xmlns="http://confuser.codeplex.com">
+  <rule pattern="true" preset="maximum" inherit="false" />
+  <module path="BoneTownHelperApplication\bin\Release\BoneTownHelperApplication.exe" />
+  <module path="packages\Memory.dll.x86.1.2.27\lib\netstandard2.0\Memory.dll" />
+  <module path="packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll" />
+</project>
