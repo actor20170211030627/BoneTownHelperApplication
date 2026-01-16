@@ -54,16 +54,30 @@
                 HorizontalAlignment="Right">
                 <TextBlock
                     Foreground="White"
+                    Margin="0 0 5 0"
                     TextAlignment="Center"
-                    FontSize="13"
-                    Text="修改器开关&#x0A;(TRainer switch):"
-                    Margin="5,5" />
-                <Image
-                    Name="Image_TRainer_State"
-                    Width="35" Height="Auto"
+                    VerticalAlignment="Center"
+                    FontSize="13">
+                    播放声音(Play Ang)<LineBreak />
+                    <Image
+                        Name="Image_Play_Ang"
+                        Width="35" Height="Auto"
+                        MouseLeftButtonDown="Btn_OnClick"
+                        Source="/Resources/Images/icon_switch_green2.png" />
+                </TextBlock>
+                <TextBlock
+                    Foreground="White"
                     Margin="0 0 10 0"
-                    MouseLeftButtonDown="Btn_OnClick"
-                    Source="/Resources/Images/icon_switch_green2.png" />
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="13">
+                    激活修改器(TRainer activate)<LineBreak />
+                    <Image
+                        Name="Image_TRainer_State"
+                        Width="35" Height="Auto"
+                        MouseLeftButtonDown="Btn_OnClick"
+                        Source="/Resources/Images/icon_switch_green2.png" />
+                </TextBlock>
                 <Button
                     Name="Btn_About"
                     Width="80"
@@ -77,7 +91,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-
+                <!-- rows = 9 -->
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -88,6 +102,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
 
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -152,7 +167,7 @@
                 Text="加点设置&#x0A;(Setting+)" />
             
             
-            <!--图片来源from: BoneTown\game\data\gui\mainCharacter -->
+            <!--图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\mainCharacter -->
             <Image
                 Grid.Row="1"
                 Grid.Column="1"
@@ -182,7 +197,7 @@
                 Content="+1000" />
             
             
-            <!--图片来源from: BoneTown\game\data\gui\powerup -->
+            <!--图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\powerup -->
             <Image
                 Grid.Row="2"
                 Grid.Column="1"
@@ -501,7 +516,7 @@
                 Grid.Row="11"
                 Grid.Column="3"
                 Padding="1 0 0 0"
-                Text="" />
+                Text="0" />
             <TextBlock
                 Grid.Row="11"
                 Grid.Column="4"
@@ -644,6 +659,28 @@
                 Grid.Row="16"
                 Grid.Column="5"
                 Name="Image_Freeze_Climax"
+                Width="35" Height="Auto"
+                HorizontalAlignment="Left"
+                MouseLeftButtonDown="Btn_OnClick"
+                Source="/Resources/Images/icon_switch_lightyellow.png" />
+            
+            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
+            <Image
+                Grid.Row="17"
+                Grid.Column="1"
+                Stretch="Fill"
+                Width="Auto" Height="15"
+                Source="/Resources/Images/DrownBezel.png" />
+            <TextBlock
+                Grid.Row="17"
+                Grid.Column="2"
+                TextAlignment="Center"
+                Text="潜水&#x0A;(Diving able)"
+                Margin="1" />
+            <Image
+                Grid.Row="17"
+                Grid.Column="5"
+                Name="Image_Diving"
                 Width="35" Height="Auto"
                 HorizontalAlignment="Left"
                 MouseLeftButtonDown="Btn_OnClick"
@@ -808,7 +845,7 @@
                 TextAlignment="Center"
                 VerticalAlignment="Center"
                 Text="1.传教士海滩&#x0A;(Missionary Beach)" />
-            <!-- 图片来自: BoneTown\game\data\gui\Tokens -->
+            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\Tokens -->
             <Image
                 Grid.Row="1"
                 Grid.Column="1"
@@ -827,6 +864,8 @@
                     Name="TB_MissionaryBeach2FirmWoodForest"
                     TextAlignment="Center"
                     MouseLeftButtonDown="OnTeleportClick">
+                    
+                    <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\map -->
                     <Image
                         Width="11" Height="Auto"
                         Source="/Resources/Images/GoldArrow.png" />

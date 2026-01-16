@@ -129,6 +129,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
+      <Resource Include="Resources\Images\DrownBezel.png" />
       <Resource Include="Resources\Images\StaminaTIP.png" />
       <Resource Include="Resources\Images\icon_fast_run.png" />
       <Resource Include="Resources\Images\icon_jump.png" />

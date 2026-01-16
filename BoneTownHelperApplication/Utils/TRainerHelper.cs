@@ -8,6 +8,13 @@ namespace BoneTownHelperApplication.Utils {
         public const string ProcessName = "BoneTown";
         public const string ModuleName = "BoneTown.exe";
         
+        //沉溺进度条
+        private const string Drown_ProgressBar = ModuleName + "+0x002E3CB0,0x3C,0x0,0x3C,0xC,0x180";
+        //是否能淹死
+        private const string Is_Drown_Deadable = ModuleName + "+0x00532A28,0x2B8,0x451";
+        //是否沉溺, Byte: 0, 1
+        private const string Is_Drown_Byte = ModuleName + "+0x00532A28,0x2B8,0x452";
+        
         private const string Balls_Sexy_Progress = ModuleName + "+0x00532A28,0x2B8,0x470";
         private const string Balls_Sexy_Count    = ModuleName + "+0x00532A28,0x2B8,0x474";
 
@@ -69,7 +76,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20251118 & v1.2.1\n" +
+                                       "7.版本 20260116 & v1.2.2\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
                                        "Shift + ~ \t\t     : Old version game open the console (you can switch the mouse out of the game interface)\n" +
@@ -93,7 +100,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20251118 & v1.2.1";
+                                       "7.Version 20260116 & v1.2.2";
 
         public const string StrBrightness = "亮度修改说明:\n" +
                                             "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +
@@ -205,6 +212,9 @@ namespace BoneTownHelperApplication.Utils {
         private static readonly System.Media.SoundPlayer SoundPlayer = new System.Media.SoundPlayer();
         //程序集名称: BoneTownHelperApplication
         private static readonly string AssemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
+        //是否播放Ang
+        public static bool IsPlayAng = true;
 
 
         public static void MoneyAdd() {
@@ -403,6 +413,35 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
+        /// <summary>
+        /// 冻结潜水
+        /// </summary>
+        /// <param name="isFreezeDiving"></param>
+        public static void FreezeDiving(bool isFreezeDiving) {
+            if (isFreezeDiving) {
+                bool isSuccess0 = MemoryDllUtils.FreezeValue(Drown_ProgressBar, "long", 0);
+                bool isSuccess1 = MemoryDllUtils.FreezeValue(Is_Drown_Deadable, "byte", 0);
+                bool isSuccess2 = MemoryDllUtils.FreezeValue(Is_Drown_Byte, "byte", 0);
+                if (isSuccess0 && isSuccess1 && isSuccess2) {
+                    PlayAng();
+                } else {
+                    Console.WriteLine("冻结潜水 失败!");
+                }
+            } else {
+                MemoryDllUtils.UnfreezeValue(Drown_ProgressBar);
+                MemoryDllUtils.UnfreezeValue(Is_Drown_Deadable);
+                MemoryDllUtils.UnfreezeValue(Is_Drown_Byte);
+                bool isSuccess0 = MemoryDllUtils.WriteByte(Drown_ProgressBar, 0);
+                bool isSuccess1 = MemoryDllUtils.WriteByte(Is_Drown_Deadable, 0);   //重置, 否则可能会一下水就死
+                bool isSuccess2 = MemoryDllUtils.WriteByte(Is_Drown_Byte, 0);
+                if (isSuccess0 && isSuccess1 && isSuccess2) {
+                    // PlayAng();
+                } else {
+                    Console.WriteLine("取消冻结潜水 失败!");
+                }
+            }
+        }
+
 
         /// <summary>
         /// 人物向左平移 or 向右平移
@@ -416,7 +455,7 @@ namespace BoneTownHelperApplication.Utils {
             float degreeMouseLeftRight = GetDegreeMouseLeftRight();
             bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
             x = isRight ? x + (float)Math.Cos(degreeMouseLeftRight) * value : x - (float)Math.Cos(degreeMouseLeftRight) * value;
-            y = isRight ? y + (float)Math.Sin(degreeMouseLeftRight) * value * -1 : y - (float)Math.Sin(degreeMouseLeftRight) * value * -1;
+            y = isRight ? y - (float)Math.Sin(degreeMouseLeftRight) * value : y + (float)Math.Sin(degreeMouseLeftRight) * value;
             bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
             bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
             if (isSuccessX && isSuccessY) {
@@ -473,9 +512,9 @@ namespace BoneTownHelperApplication.Utils {
         /// <summary>
         /// 环境亮度设置
         /// </summary>
-        /// <param name="position">第几个亮度</param>
+        /// <param name="position">第几个亮度[0~2]</param>
         /// <param name="isFreeze">是否冻结值</param>
-        public static void BrightnessSet(int position, bool isFreeze) {
+        public static void BrightnessSet(int position, bool isFreeze, bool isPlayAng) {
             bool isSuccess;
             if (isFreeze) {
                 //一直闪, 应该是修改间隔25ms还是太久了
@@ -502,7 +541,7 @@ namespace BoneTownHelperApplication.Utils {
                 isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
             }
             if (isSuccess) {
-                PlayAng();
+                if (isPlayAng) PlayAng();
             } else {
                 Console.WriteLine("环境亮度设置 失败!");
             }
@@ -576,6 +615,7 @@ namespace BoneTownHelperApplication.Utils {
 
         //播放ang
         public static void PlayAng() {
+            if (!IsPlayAng) return;
             Uri uri = new Uri("Resources/Medias/ang.wav", UriKind.Relative);
             SoundPlayerUtils.Stream(SoundPlayer, uri);
             SoundPlayerUtils.Play(SoundPlayer);
@@ -598,7 +638,7 @@ namespace BoneTownHelperApplication.Utils {
 
 
         /// <summary>
-        /// 获取人物正前方角度 (从E开始, E右侧最小, E左侧最大)
+        /// 获取人物正前方角度 (从N开始, N右侧最小, N左侧最大)
         /// minDegree = 1.49568E-05(0.0000149568 ‌), degreeI = 930803445
         /// maxDegree =             6.283183,           degreeI = 1086918614
         /// </summary>
@@ -611,7 +651,7 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
-        /// 获取鼠标左右旋转角度 (从E开始, E右侧最小, E左侧最大)
+        /// 获取鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
         /// </summary>
         /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0°~360°)</returns>
         private static float GetDegreeMouseLeftRight() {

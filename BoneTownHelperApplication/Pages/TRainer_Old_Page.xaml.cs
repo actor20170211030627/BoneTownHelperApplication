@@ -18,7 +18,7 @@ namespace BoneTownHelperApplication.Pages {
     public partial class TRainer_Old_Page : Page {
         
         //进程是否打开
-        private static bool _isProcOpen = false;
+        private bool _isProcOpen = false;
         //修改器是否激活
         private bool _isTRainerOpen = true;
         //灯光是否打开
@@ -31,6 +31,10 @@ namespace BoneTownHelperApplication.Pages {
         private bool isFreezeFastRun = false;
         //冻结快感进度
         private bool isFreezeClimax = false;
+        //潜水
+        private bool isDiving = false;
+        //是否取消冻结所有
+        private bool isUnfreezeAll = true;
 
 
         private DispatcherTimer _dispatcherTimer;
@@ -160,21 +164,20 @@ namespace BoneTownHelperApplication.Pages {
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
                 _isProcOpen = MemoryDllUtils.OpenProcess(TRainerHelper.ProcessName);
                 if (_isProcOpen) {
-                    //TODO: false 先屏蔽掉显示坐标, true
-                    if (false) {
-                        //x轴 XAxis
-                        float x = MemoryDllUtils.ReadFloat(TRainerHelper.XAxis);
-                        //InvariantCulture: 美国英语（en-US）但独立于特定国家或地区，主要用于处理货币、日期、时间等文化敏感数据时避免因地区差异导致格式错误。
-                        this.TB_XAxis.Text = x.ToString(CultureInfo.InvariantCulture);
-                        //y轴 YAxis
-                        float y = MemoryDllUtils.ReadFloat(TRainerHelper.YAxis);
-                        this.TB_YAxis.Text = y.ToString(CultureInfo.InvariantCulture);
-                        //z轴 ZAxis
-                        float z = MemoryDllUtils.ReadFloat(TRainerHelper.ZAxis);
-                        this.TB_ZAxis.Text = z.ToString(CultureInfo.InvariantCulture);
-                    }
+                    //x轴 XAxis
+                    // float x = MemoryDllUtils.ReadFloat(TRainerHelper.XAxis);
+                    // //InvariantCulture: 美国英语（en-US）但独立于特定国家或地区，主要用于处理货币、日期、时间等文化敏感数据时避免因地区差异导致格式错误。
+                    // this.TB_XAxis.Text = x.ToString(CultureInfo.InvariantCulture);
+                    // //y轴 YAxis
+                    // float y = MemoryDllUtils.ReadFloat(TRainerHelper.YAxis);
+                    // this.TB_YAxis.Text = y.ToString(CultureInfo.InvariantCulture);
+                    //z轴 ZAxis
+                    float z = MemoryDllUtils.ReadFloat(TRainerHelper.ZAxis);
+                    // this.TB_ZAxis.Text = z.ToString(CultureInfo.InvariantCulture);
+                    this.TB_ZAxis.Text = ((int) z).ToString(CultureInfo.InvariantCulture);
                 } else {
                     Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
+                    UnfreezeAll();
                 }
 
                 this.Border_Running.Visibility = _isProcOpen ? Visibility.Visible : Visibility.Collapsed;
@@ -323,20 +326,24 @@ namespace BoneTownHelperApplication.Pages {
             if (!(sender is FrameworkElement fe)) return;
             string name = fe.Name;
             
-            //修改器激活状态
+            //播放Ang
+            if (name == this.Image_Play_Ang.Name) {
+                TRainerHelper.IsPlayAng = !TRainerHelper.IsPlayAng;
+                Uri uri = TRainerHelper.GetSwitchUri(TRainerHelper.IsPlayAng);
+                this.Image_Play_Ang.Source = new BitmapImage(uri);
+                if (TRainerHelper.IsPlayAng) {
+                    TRainerHelper.PlayAng();
+                }
+                return;
+            }
+            //激活修改器(TRainer activate)
             if (name == this.Image_TRainer_State.Name) {
                 _isTRainerOpen = !_isTRainerOpen;
                 Uri uri = TRainerHelper.GetSwitchUri(_isTRainerOpen);
                 this.Image_TRainer_State.Source = new BitmapImage(uri);
                 TRainerHelper.PlayActivate(_isTRainerOpen);
-                
-                //TODO: 打印坐标, 判断当前是点击运行的程序, 还是打包发布后的程序??? _isTRainerOpen true
-                if (_isProcOpen && !true) {
-                    // float x = MemoryDllUtils.ReadFloat(XAxis);
-                    // float y = MemoryDllUtils.ReadFloat(YAxis);
-                    // float z = MemoryDllUtils.ReadFloat(ZAxis);
-                    // Console.WriteLine($"x={x}, y={y}, z={z}");
-                    Console.WriteLine($"x={this.TB_XAxis.Text}, y={this.TB_YAxis.Text}, z={this.TB_ZAxis.Text}");
+                if (!_isTRainerOpen) {
+                    UnfreezeAll();
                 }
                 return;
             }
@@ -445,6 +452,9 @@ namespace BoneTownHelperApplication.Pages {
                 Uri uri = TRainerHelper.GetSwitchUri(isFreezeHealth);
                 this.Image_Infinite_Health.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeHealth(isFreezeHealth);
+                if (isFreezeHealth) {
+                    isUnfreezeAll = false;
+                }
                 return;
             }
             //冻结跳高效果
@@ -453,6 +463,9 @@ namespace BoneTownHelperApplication.Pages {
                 Uri uri = TRainerHelper.GetSwitchUri(isFreezeHighJump);
                 this.Image_Freeze_High_Jump.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeHighJump(isFreezeHighJump);
+                if (isFreezeHighJump) {
+                    isUnfreezeAll = false;
+                }
                 return;
             }
             //冻结快跑效果
@@ -461,6 +474,9 @@ namespace BoneTownHelperApplication.Pages {
                 Uri uri = TRainerHelper.GetSwitchUri(isFreezeFastRun);
                 this.Image_Freeze_Fast_Run.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeFastRun(isFreezeFastRun);
+                if (isFreezeFastRun) {
+                    isUnfreezeAll = false;
+                }
                 return;
             }
             //冻结快感进度
@@ -469,6 +485,20 @@ namespace BoneTownHelperApplication.Pages {
                 Uri uri = TRainerHelper.GetSwitchUri(isFreezeClimax);
                 this.Image_Freeze_Climax.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeClimax(isFreezeClimax);
+                if (isFreezeClimax) {
+                    isUnfreezeAll = false;
+                }
+                return;
+            }
+            //潜水
+            if (name == this.Image_Diving.Name) {
+                isDiving = !isDiving;
+                Uri uri = TRainerHelper.GetSwitchUri(isDiving);
+                this.Image_Diving.Source = new BitmapImage(uri);
+                TRainerHelper.FreezeDiving(isDiving);
+                if (isDiving) {
+                    isUnfreezeAll = false;
+                }
                 return;
             }
         }
@@ -626,6 +656,7 @@ namespace BoneTownHelperApplication.Pages {
                     } else {
                         TRainerHelper.LampLightSet(_isLampOpen, true, true);
                     }
+                    isUnfreezeAll = false;
                 }
                 return;
             }
@@ -643,8 +674,9 @@ namespace BoneTownHelperApplication.Pages {
                     isStartEditBrightness = true;
                     StartEditBrightness();
                 } else {
-                    TRainerHelper.BrightnessSet(0, false);
+                    TRainerHelper.BrightnessSet(0, false, true);
                 }
+                // isUnFreezeAll = false;
                 return;
             }
             if (name == this.RB_Brightness_Evening.Name) {
@@ -653,8 +685,9 @@ namespace BoneTownHelperApplication.Pages {
                     isStartEditBrightness = true;
                     StartEditBrightness();
                 } else {
-                    TRainerHelper.BrightnessSet(1, false);
+                    TRainerHelper.BrightnessSet(1, false, true);
                 }
+                // isUnFreezeAll = false;
                 return;
             }
             if (name == this.RB_Brightness_Noon.Name) {
@@ -663,8 +696,9 @@ namespace BoneTownHelperApplication.Pages {
                     isStartEditBrightness = true;
                     StartEditBrightness();
                 } else {
-                    TRainerHelper.BrightnessSet(2, false);
+                    TRainerHelper.BrightnessSet(2, false, true);
                 }
+                // isUnFreezeAll = false;
                 return;
             }
         }
@@ -801,6 +835,21 @@ namespace BoneTownHelperApplication.Pages {
             //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
             //     }
             // }));
+        }
+
+        /// <summary>
+        /// 取消所有冻结
+        /// </summary>
+        private void UnfreezeAll() {
+            if (isUnfreezeAll) return;
+            TRainerHelper.FreezeHealth(false);
+            TRainerHelper.FreezeHighJump(false);
+            TRainerHelper.FreezeFastRun(false);
+            TRainerHelper.FreezeClimax(false);
+            TRainerHelper.LampLightSet(true, false, false);
+            TRainerHelper.BrightnessSet(2, false, false);
+            TRainerHelper.FreezeDiving(false);
+            isUnfreezeAll = true;
         }
         
         // 页面卸载时执行 - 这是主要的方法
