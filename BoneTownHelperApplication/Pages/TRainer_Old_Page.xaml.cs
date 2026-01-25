@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -107,32 +106,13 @@ namespace BoneTownHelperApplication.Pages {
                     this.TB_Crack.Text = s;
                 });
             });
-            
-            
-            /*
-             * 下方读取到的xyz值都为0...
-             */
-            //x轴 XAxis
-            // MemoryDllUtils.BindToUI<float>(TRainerHelper.XAxis, delegate(string s) {
-            //     Console.WriteLine($"x = {s}");
-            //     Dispatcher.Invoke(() => {
-            //         this.TB_XAxis.Text = s;
-            //     });
-            // });
-            // //y轴 YAxis
-            // MemoryDllUtils.BindToUI<float>(TRainerHelper.YAxis, delegate(string s) {
-            //     Console.WriteLine($"y = {s}");
-            //     Dispatcher.Invoke(() => {
-            //         this.TB_YAxis.Text = s;
-            //     });
-            // });
-            // //z轴 ZAxis
-            // MemoryDllUtils.BindToUI<float>(TRainerHelper.ZAxis, delegate(string s) {
-            //     Console.WriteLine($"z = {s}");
-            //     Dispatcher.Invoke(() => {
-            //         this.TB_ZAxis.Text = s;
-            //     });
-            // });
+            //z轴 ZAxis
+            MemoryDllUtils.BindToUI<decimal>(TRainerHelper.ZAxis, delegate(string s) {
+                bool success = int.TryParse(s, out int value);
+                Dispatcher.Invoke(() => {
+                    this.TB_ZAxis.Text = value.ToString();
+                });
+            });
             
             
             /*
@@ -161,22 +141,54 @@ namespace BoneTownHelperApplication.Pages {
             // 创建定时器，间隔为 1 秒
             _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(300.0);
+            double highJumpOld = -1, fastRunOld = -1;
+            double highJumpStep = this.Slider_High_Jump.TickFrequency, fastRunStep = this.Slider_Fast_Run.TickFrequency;
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
                 _isProcOpen = MemoryDllUtils.OpenProcess(TRainerHelper.ProcessName);
                 if (_isProcOpen) {
-                    //x轴 XAxis
-                    // float x = MemoryDllUtils.ReadFloat(TRainerHelper.XAxis);
-                    // //InvariantCulture: 美国英语（en-US）但独立于特定国家或地区，主要用于处理货币、日期、时间等文化敏感数据时避免因地区差异导致格式错误。
-                    // this.TB_XAxis.Text = x.ToString(CultureInfo.InvariantCulture);
-                    // //y轴 YAxis
-                    // float y = MemoryDllUtils.ReadFloat(TRainerHelper.YAxis);
-                    // this.TB_YAxis.Text = y.ToString(CultureInfo.InvariantCulture);
-                    //z轴 ZAxis
-                    float z = MemoryDllUtils.ReadFloat(TRainerHelper.ZAxis);
-                    // this.TB_ZAxis.Text = z.ToString(CultureInfo.InvariantCulture);
-                    this.TB_ZAxis.Text = ((int) z).ToString(CultureInfo.InvariantCulture);
+                    if (!_isTRainerOpen) return;
+                    //if先开游戏🎮并已修改, 再重新打开修改器
+                    if (highJumpOld < 0 && fastRunOld < 0) {
+                        highJumpOld = TRainerHelper.GetHighJump();
+                        fastRunOld = TRainerHelper.GetFastRun();
+                        this.Slider_High_Jump.Value = highJumpOld;
+                        this.Slider_Fast_Run.Value = fastRunOld;
+                        return;
+                    }
+                    /**
+                     * 为什么要在这儿获取值, 而不是在Slider的ValueChanged 事件中获取值呢? 因为Slider在拖动时更新值太快, 但又没有直接办法判断Slider是否正在拖动:
+                     * 鼠标🖱️/触摸是否已松开, 键盘⌨️是否结束🔚按下←→
+                     * IsMouseCaptureWithin: 鼠标是否在拖动
+                     * IsTouchCaptured: 是否触摸调整中
+                     * IsKeyboardFocused: 键盘操作「捕获状态」，只能通过「失去焦点」或「延迟」判断, 获取焦点后按←→能调整进度
+                     */
+                    //跳高效果
+                    double highJump = this.Slider_High_Jump.Value;
+                    if (Math.Abs(highJump - highJumpOld) > highJumpStep) {
+                        TRainerHelper.PlayClick();
+                        highJumpOld = highJump;
+                        isFreezeHighJump = highJump > 0;
+                        if (isFreezeHighJump) {
+                            isUnfreezeAll = false;
+                        }
+                        TRainerHelper.SetHighJump((float) highJump, isFreezeHighJump);
+                    }
+                    //快跑效果
+                    double fastRun = this.Slider_Fast_Run.Value;
+                    if (Math.Abs(fastRun - fastRunOld) > fastRunStep) {
+                        TRainerHelper.PlayClick();
+                        fastRunOld = fastRun;
+                        isFreezeFastRun = fastRun > 0;
+                        if (isFreezeFastRun) {
+                            isUnfreezeAll = false;
+                        }
+                        TRainerHelper.SetFastRun((float) fastRun, isFreezeFastRun);
+                    }
                 } else {
                     Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
+                    //2个Slider归0, 否则重开游戏🎮的时候会判断并设置值
+                    this.Slider_High_Jump.Value = 0.0;
+                    this.Slider_Fast_Run.Value = 0.0;
                     UnfreezeAll();
                 }
 
@@ -453,28 +465,6 @@ namespace BoneTownHelperApplication.Pages {
                 this.Image_Infinite_Health.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeHealth(isFreezeHealth);
                 if (isFreezeHealth) {
-                    isUnfreezeAll = false;
-                }
-                return;
-            }
-            //冻结跳高效果
-            if (name == this.Image_Freeze_High_Jump.Name) {
-                isFreezeHighJump = !isFreezeHighJump;
-                Uri uri = TRainerHelper.GetSwitchUri(isFreezeHighJump);
-                this.Image_Freeze_High_Jump.Source = new BitmapImage(uri);
-                TRainerHelper.FreezeHighJump(isFreezeHighJump);
-                if (isFreezeHighJump) {
-                    isUnfreezeAll = false;
-                }
-                return;
-            }
-            //冻结快跑效果
-            if (name == this.Image_Freeze_Fast_Run.Name) {
-                isFreezeFastRun = !isFreezeFastRun;
-                Uri uri = TRainerHelper.GetSwitchUri(isFreezeFastRun);
-                this.Image_Freeze_Fast_Run.Source = new BitmapImage(uri);
-                TRainerHelper.FreezeFastRun(isFreezeFastRun);
-                if (isFreezeFastRun) {
                     isUnfreezeAll = false;
                 }
                 return;
@@ -843,8 +833,8 @@ namespace BoneTownHelperApplication.Pages {
         private void UnfreezeAll() {
             if (isUnfreezeAll) return;
             TRainerHelper.FreezeHealth(false);
-            TRainerHelper.FreezeHighJump(false);
-            TRainerHelper.FreezeFastRun(false);
+            TRainerHelper.SetHighJump(0, false);
+            TRainerHelper.SetFastRun(0, false);
             TRainerHelper.FreezeClimax(false);
             TRainerHelper.LampLightSet(true, false, false);
             TRainerHelper.BrightnessSet(2, false, false);

@@ -34,7 +34,6 @@ namespace BoneTownHelperApplication.Utils {
                 // ProgressId = targetProcess.Id;
             } else {
                 // ProgressId = -1;
-                Console.WriteLine("目标进程未找到！");
             }
             return openProcess;
 
@@ -113,7 +112,7 @@ namespace BoneTownHelperApplication.Utils {
             return Memory.WriteMemory(code, "byte", value.ToString());
         }
 
-        /// TODO: 为什么 BindToUI<float> 的值都=0???
+        /// TODO: if是float类型, 要写成 decimal(TypeCode.Decimal), 为什么不是float(TypeCode.Single)???
         /// <summary>绑定地址值到UI, Bind memory addresses to UI elements</summary>
         /// <param name="address">value to write to address.</param>
         /// <returns></returns>

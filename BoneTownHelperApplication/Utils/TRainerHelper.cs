@@ -363,36 +363,64 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
-        /// 是否冻结跳高效果
+        /// 获取跳高效果
         /// </summary>
+        public static float GetHighJump() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Weed);
+        }
+
+        /// <summary>
+        /// 设置跳高效果
+        /// </summary>
+        /// <param name="height">高度[0~1]</param>
         /// <param name="isFreezeHighJump"></param>
-        public static void FreezeHighJump(bool isFreezeHighJump) {
+        public static void SetHighJump(float height, bool isFreezeHighJump) {
+            if (height > 1) {
+                height = 1;
+            } else if (height < 0) {
+                height = 0;
+            }
             if (isFreezeHighJump) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Weed, "float", 1f);
+                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Weed, "float", height);
                 if (isSuccess) {
                     PlayAng();
                 } else {
-                    Console.WriteLine("冻结跳高效果 失败!");
+                    Console.WriteLine("设置跳高效果 失败!");
                 }
             } else {
                 MemoryDllUtils.UnfreezeValue(Effect_Countdown_Weed);
+                MemoryDllUtils.WriteFloat(Effect_Countdown_Weed, height);
             }
         }
 
         /// <summary>
-        /// 是否冻结快跑效果
+        /// 获取快跑效果
         /// </summary>
+        public static float GetFastRun() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Crack);
+        }
+
+        /// <summary>
+        /// 设置快跑效果
+        /// </summary>
+        /// <param name="speed">速度[0~1]</param>
         /// <param name="isFreezeFastRun"></param>
-        public static void FreezeFastRun(bool isFreezeFastRun) {
+        public static void SetFastRun(float speed, bool isFreezeFastRun) {
+            if (speed > 1) {
+                speed = 1;
+            } else if (speed < 0) {
+                speed = 0;
+            }
             if (isFreezeFastRun) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Crack, "float", 1f);
+                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Crack, "float", speed);
                 if (isSuccess) {
                     PlayAng();
                 } else {
-                    Console.WriteLine("冻结快跑效果 失败!");
+                    Console.WriteLine("设置快跑效果 失败!");
                 }
             } else {
                 MemoryDllUtils.UnfreezeValue(Effect_Countdown_Crack);
+                MemoryDllUtils.WriteFloat(Effect_Countdown_Crack, speed);
             }
         }
 

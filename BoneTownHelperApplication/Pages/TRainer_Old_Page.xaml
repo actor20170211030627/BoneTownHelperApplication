@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       Height="Auto"
       Width="Auto">
-    
+
     <StackPanel Orientation="Vertical">
         <!--Top-->
         <DockPanel
@@ -122,14 +122,14 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             <Image
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.RowSpan="10"
                 Width="150"
                 Source="/Resources/Images/Bonetown_Side_Image(225x320).jpg" />
-            
+
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="2"
@@ -165,8 +165,8 @@
                 TextAlignment="Center"
                 Foreground="Red"
                 Text="加点设置&#x0A;(Setting+)" />
-            
-            
+
+
             <!--图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\mainCharacter -->
             <Image
                 Grid.Row="1"
@@ -195,8 +195,8 @@
                 Grid.Column="5"
                 Click="Btn_OnClick"
                 Content="+1000" />
-            
-            
+
+
             <!--图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\powerup -->
             <Image
                 Grid.Row="2"
@@ -541,7 +541,7 @@
                     ContentStringFormat="+{0}"
                     Click="Btn_OnClick" />
             </UniformGrid>
-            
+
             <Border
                 Grid.Row="12"
                 Grid.Column="1"
@@ -570,8 +570,8 @@
                 Grid.Column="5"
                 Click="Btn_OnClick"
                 Content="加到最大(add2Max)" />
-            
-            
+
+
             <Border
                 Grid.Row="13"
                 Grid.Column="1"
@@ -602,7 +602,7 @@
                 HorizontalAlignment="Left"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
-                
+
             <Image
                 Grid.Row="14"
                 Grid.Column="1"
@@ -612,17 +612,28 @@
                 Grid.Row="14"
                 Grid.Column="2"
                 TextAlignment="Center"
-                Text="冻结跳高效果&#x0A;(Freeze Jump)"
+                Text="跳高效果&#x0A;(High Jump)"
                 Margin="1" />
-            <Image
+            <Slider
+                Name="Slider_High_Jump"
                 Grid.Row="14"
                 Grid.Column="5"
-                Name="Image_Freeze_High_Jump"
-                Width="35" Height="Auto"
-                HorizontalAlignment="Left"
-                MouseLeftButtonDown="Btn_OnClick"
-                Source="/Resources/Images/icon_switch_lightyellow.png" />
-            
+                Height="Auto"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="14"
+                Grid.Column="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_High_Jump, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
             <Image
                 Grid.Row="15"
                 Grid.Column="1"
@@ -632,17 +643,28 @@
                 Grid.Row="15"
                 Grid.Column="2"
                 TextAlignment="Center"
-                Text="冻结快跑效果&#x0A;(Freeze Fast Run)"
+                Text="快跑效果&#x0A;(Fast Run)"
                 Margin="1" />
-            <Image
+            <Slider
+                Name="Slider_Fast_Run"
                 Grid.Row="15"
                 Grid.Column="5"
-                Name="Image_Freeze_Fast_Run"
-                Width="35" Height="Auto"
-                HorizontalAlignment="Left"
-                MouseLeftButtonDown="Btn_OnClick"
-                Source="/Resources/Images/icon_switch_lightyellow.png" />
-            
+                Height="Auto"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="15"
+                Grid.Column="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Fast_Run, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
             <Image
                 Grid.Row="16"
@@ -663,7 +685,7 @@
                 HorizontalAlignment="Left"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
-            
+
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
             <Image
                 Grid.Row="17"
@@ -686,7 +708,7 @@
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
         </Grid>
-        
+
         <DockPanel
             Background="LightSkyBlue"
             Margin="0 5 0 0"
@@ -746,7 +768,7 @@
             <!--         Content="开(Open)" -->
             <!--         Margin="5 5 0 5"/> -->
             <!-- </StackPanel> -->
-            
+
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
@@ -761,23 +783,23 @@
                     GroupName="Brightness"
                     Checked="Light_OnClick"
                     Content="晚上(Night)"
-                    Margin="5 5 0 5"/>
+                    Margin="5 5 0 5" />
                 <RadioButton
                     Name="RB_Brightness_Evening"
                     GroupName="Brightness"
                     Checked="Light_OnClick"
                     Content="傍晚(Evening)"
-                    Margin="5 5 0 5"/>
+                    Margin="5 5 0 5" />
                 <RadioButton
                     Name="RB_Brightness_Noon"
                     GroupName="Brightness"
                     Checked="Light_OnClick"
                     Content="白天(Noon)"
-                    Margin="5 5 0 5"/>
+                    Margin="5 5 0 5" />
             </StackPanel>
         </Grid>
-        
-        
+
+
         <TextBlock
             Foreground="White"
             Background="LightSkyBlue"
@@ -864,7 +886,7 @@
                     Name="TB_MissionaryBeach2FirmWoodForest"
                     TextAlignment="Center"
                     MouseLeftButtonDown="OnTeleportClick">
-                    
+
                     <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\map -->
                     <Image
                         Width="11" Height="Auto"
@@ -892,7 +914,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
@@ -943,7 +965,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
@@ -975,7 +997,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
@@ -1045,7 +1067,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="0"
@@ -1077,7 +1099,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="0"
@@ -1147,7 +1169,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
@@ -1218,7 +1240,7 @@
                 </TextBlock>
             </Border>
 
-            
+
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="0"
@@ -1272,10 +1294,10 @@
                 关键：添加 Mode=OneWay，因为 TextBlock 的 IsMouseOver 是只读的
                 否则报错: dOperationException: 无法对“System.Windows.Controls.TextBlock”类型的只读属性“IsMouseOver”进行 TwoWay 或 OneWayToSource 绑定。
                  -->
-            <Popup 
+            <Popup
                 IsOpen="{Binding ElementName=TB_Downtown_Angle, Path=IsMouseOver, Mode=OneWay}"
                 Placement="MousePoint"
-                PlacementTarget="{Binding ElementName=TB_Downtown_Angle}" 
+                PlacementTarget="{Binding ElementName=TB_Downtown_Angle}"
                 StaysOpen="True">
                 <Image
                     Width="180" Height="180"
@@ -1319,8 +1341,8 @@
                     去地图9<LineBreak />(to Map9)
                 </TextBlock>
             </Border>
-            
-            
+
+
             <TextBlock
                 Grid.Row="9"
                 Grid.Column="0"
