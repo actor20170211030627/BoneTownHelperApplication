@@ -8,6 +8,8 @@ namespace BoneTownHelperApplication.Utils {
         
         //沉溺进度条
         private const string Drown_ProgressBar = ModuleName + "+0x003035D8,0x3C,0x0,0x3C,0x10,0x180";
+        //加载的地图🗺️名称
+        private const string Map_Name          = ModuleName + "+0x002F19A8";
         //是否能淹死
         private const string Is_Drown_Deadable = ModuleName + "+0x00354318,0x2E0,0x454";
         //是否沉溺, Byte: 0, 1
@@ -131,10 +133,60 @@ namespace BoneTownHelperApplication.Utils {
         private static readonly long[] Ground_Green = { 0x00000000, 0x00000000, 0x00000000 };
         private static readonly long[] Ground_Purper = { 0x00000000, 0x00000000, 0x00000000 };
         private static readonly long[] Ground_Yellow = { 0x00000000, 0x00000000, 0x00000000 };
-        
+
+        //Map1传教士海滩          : Missionary Beach         : game/data/missions/Boardwalk.mis
+        // 沙滩酒吧              Sand Bar                   game/data/missions/BeachBar.mis  //酒吧
+        //Map2阔叶林              : Firm Wood Forest         : game/data/missions/Forest-Pigmy.mis
+        //Map3国土安全拖车公园    : Homeland Trailer Park    : game/data/missions/TrailerPark.mis
+        //乌兹的拖车            Uzi's Trailer              game/data/missions/TrailerInterior1.mis
+        //Map4加巴乔高地          : Gabacho Heights          : game/data/missions/downtownMinor.mis
+        //博恩维斯塔公寓        Bone Vista Apartments      game/data/missions/ApartmentBldg.mis  //Bonavista Apartments博纳维斯塔公寓
+        //Map5哈瓦那印第安人保留地: Havajo Indian Reservation: game/data/missions/Rez.mis
+        //Map6诺丁山              : Nobbing Hill             : game/data/missions/Residential.mis  //Residential adj.住宅区的,居民区的;家庭的,住宅的;
+        //家庭派对              House Party                game/data/missions/partyHouse.mis
+        //Map7蘑菇沼泽            : Mushroom Marsh           : game/data/missions/DrugForest.mis
+        //Map8骨头镇市中心        : Downtown BoneTown        : game/data/missions/downtownMajor.mis
+        //罗恩·托尔斯           Ron Towers                 game/data/missions/ronTowers.mis
+        //麝(shè)香丁字裤       Musky Thong                game/data/missions/ModernBar.mis    //现代酒吧
+        //电影院                Movie Theater              game/data/missions/movieTheater.mis
+        //开始播放电影          start the movie            game/data/missions/moviePlayer.mis  //播放电影��
+        //Map9男人岛              : Man Island               : game/data/missions/NeedleExterior.mis
+        //男人针塔              Man Needle                 game/data/missions/NeedleInterior.mis
+        //最终Boss                                         game/data/missions/FinalMission.mis
+        private static readonly string Map1_Name = "game/data/missions/Boardwalk.mis";
+        private static readonly string Map2_Name = "game/data/missions/Forest-Pigmy.mis";
+        private static readonly string Map3_Name = "game/data/missions/TrailerPark.mis";
+        private static readonly string Map4_Name = "game/data/missions/downtownMinor.mis";
+        private static readonly string Map5_Name = "game/data/missions/Rez.mis";
+        private static readonly string Map6_Name = "game/data/missions/Residential.mis";
+        private static readonly string Map7_Name = "game/data/missions/DrugForest.mis";
+        private static readonly string Map8_Name = "game/data/missions/downtownMajor.mis";
+        private static readonly string Map9_Name = "game/data/missions/NeedleExterior.mis";
+
+
+
         //是否播放Ang
         public static bool IsPlayAng = true;
 
+
+        /// <summary>
+        /// 获取当前是第几个Map
+        /// </summary>
+        /// <returns>-1, [1, 9]</returns>
+        public static int GetMapPosition() {
+            string mapName = MemoryDllUtils.ReadString(Map_Name, 37);
+            if (string.IsNullOrEmpty(mapName)) return -1;
+            if (mapName.Equals(Map1_Name, StringComparison.OrdinalIgnoreCase)) return 1;
+            if (mapName.Equals(Map2_Name, StringComparison.OrdinalIgnoreCase)) return 2;
+            if (mapName.Equals(Map3_Name, StringComparison.OrdinalIgnoreCase)) return 3;
+            if (mapName.Equals(Map4_Name, StringComparison.OrdinalIgnoreCase)) return 4;
+            if (mapName.Equals(Map5_Name, StringComparison.OrdinalIgnoreCase)) return 5;
+            if (mapName.Equals(Map6_Name, StringComparison.OrdinalIgnoreCase)) return 6;
+            if (mapName.Equals(Map7_Name, StringComparison.OrdinalIgnoreCase)) return 7;
+            if (mapName.Equals(Map8_Name, StringComparison.OrdinalIgnoreCase)) return 8;
+            if (mapName.Equals(Map9_Name, StringComparison.OrdinalIgnoreCase)) return 9;
+            return -1;
+        }
 
         public static void MoneyAdd() {
             int money = MemoryDllUtils.ReadInt(Money);
@@ -172,7 +224,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("大麻+100失败!");
+                Console.WriteLine("小块大麻Nug🍃+100失败!");
             }
         }
 
@@ -182,7 +234,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("蘑菇+100失败!");
+                Console.WriteLine("迷幻蘑菇🍄Shroom+100失败!");
             }
         }
 
@@ -192,7 +244,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("仙人掌+100失败!");
+                Console.WriteLine("乌羽玉仙人掌的干燥茎块(Peyote Button)🌵+100失败!");
             }
         }
 
@@ -202,7 +254,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("青蛙+100失败!");
+                Console.WriteLine("蟾蜍Toad🐸+100失败!");
             }
         }
 
@@ -212,7 +264,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("可卡因+100失败!");
+                Console.WriteLine("可卡因块(Rock)+100失败!");
             }
         }
 
@@ -291,7 +343,8 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="height">高度[0~1]</param>
         /// <param name="isFreezeHighJump"></param>
-        public static void SetHighJump(float height, bool isFreezeHighJump) {
+        /// <param name="isPlayAng"></param>
+        public static void SetHighJump(float height, bool isFreezeHighJump, bool isPlayAng) {
             if (height > 1) {
                 height = 1;
             } else if (height < 0) {
@@ -300,7 +353,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isFreezeHighJump) {
                 bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Weed, "float", height);
                 if (isSuccess) {
-                    PlayAng();
+                    if (isPlayAng) PlayAng();
                 } else {
                     Console.WriteLine("设置跳高效果 失败!");
                 }
@@ -322,7 +375,8 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="speed">速度[0~1]</param>
         /// <param name="isFreezeFastRun"></param>
-        public static void SetFastRun(float speed, bool isFreezeFastRun) {
+        /// <param name="isPlayAng"></param>
+        public static void SetFastRun(float speed, bool isFreezeFastRun, bool isPlayAng) {
             if (speed > 1) {
                 speed = 1;
             } else if (speed < 0) {
@@ -331,7 +385,7 @@ namespace BoneTownHelperApplication.Utils {
             if (isFreezeFastRun) {
                 bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Crack, "float", speed);
                 if (isSuccess) {
-                    PlayAng();
+                    if (isPlayAng) PlayAng();
                 } else {
                     Console.WriteLine("设置快跑效果 失败!");
                 }
@@ -382,7 +436,7 @@ namespace BoneTownHelperApplication.Utils {
                 if (isSuccess0 && isSuccess1 && isSuccess2) {
                     // PlayAng();
                 } else {
-                    Console.WriteLine("取消冻结潜水 失败!");
+                    Console.WriteLine("取消冻结 & 重置潜水 失败!");
                 }
             }
         }

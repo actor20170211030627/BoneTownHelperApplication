@@ -265,7 +265,7 @@
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="2"
-                Text="大麻(Nug):"
+                Text="小块大麻(Nug):"
                 Margin="1" />
             <TextBlock
                 Name="TB_Nug"
@@ -294,7 +294,7 @@
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="2"
-                Text="蘑菇(Shroom):"
+                Text="迷幻蘑菇(Shroom):"
                 Margin="1" />
             <TextBlock
                 Name="TB_Shroom"
@@ -323,7 +323,8 @@
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="2"
-                Text="仙人掌(Peyote):"
+                FontSize="8"
+                Text="乌羽玉仙人掌的干燥茎块&#x0A;(Peyote Button):"
                 Margin="1" />
             <TextBlock
                 Name="TB_Peyote"
@@ -352,7 +353,7 @@
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="2"
-                Text="青蛙(Frog):"
+                Text="蟾蜍(Toad):"
                 Margin="1" />
             <TextBlock
                 Name="TB_Frog"
@@ -381,7 +382,7 @@
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="2"
-                Text="可卡因(Crack):"
+                Text="可卡因块(Rock):"
                 Margin="1" />
             <TextBlock
                 Name="TB_Crack"
@@ -811,7 +812,7 @@
             Padding="5"
             Margin="0 5 0 0"
             Text="在地图上瞬移(teleport on map):" />
-        <Grid>
+        <Grid Name="Grid_Teleport">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
 

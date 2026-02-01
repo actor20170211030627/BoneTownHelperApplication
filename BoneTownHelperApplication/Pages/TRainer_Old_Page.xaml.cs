@@ -76,43 +76,47 @@ namespace BoneTownHelperApplication.Pages {
                     this.TB_Whiskey.Text = s;
                 });
             });
-            //大麻
+            //大麻Weed🍃
             MemoryDllUtils.BindToUI<int>(TRainerHelper.Weed, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Nug.Text = s;
                 });
             });
-            //迷幻蘑菇Shroom
+            //迷幻蘑菇🍄Shroom
             MemoryDllUtils.BindToUI<int>(TRainerHelper.Shroom, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Shroom.Text = s;
                 });
             });
-            //佩奥特掌（仙人掌的一种）Peyote
+            //乌羽玉仙人掌的干燥茎块(Peyote Button)🌵
             MemoryDllUtils.BindToUI<int>(TRainerHelper.Peyote, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Peyote.Text = s;
                 });
             });
-            //青蛙Frog
+            //蟾蜍Toad🐸
             MemoryDllUtils.BindToUI<int>(TRainerHelper.Frog, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Frog.Text = s;
                 });
             });
-            //强效可卡因Crack
+            //强效可卡因(Crack)
             MemoryDllUtils.BindToUI<int>(TRainerHelper.Crack, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Crack.Text = s;
                 });
             });
-            //z轴 ZAxis
-            MemoryDllUtils.BindToUI<decimal>(TRainerHelper.ZAxis, delegate(string s) {
-                bool success = int.TryParse(s, out int value);
-                Dispatcher.Invoke(() => {
-                    this.TB_ZAxis.Text = value.ToString();
+            //换地图后?loop就停下来了, 框架有问题?
+            if (false) {
+                //z轴 ZAxis
+                MemoryDllUtils.BindToUI<decimal>(TRainerHelper.ZAxis, delegate(string s) {
+                    bool success = float.TryParse(s, out float value);
+                    Console.WriteLine($"s = {s}, success = {success}, value = {value}");
+                    Dispatcher.Invoke(() => {
+                        this.TB_ZAxis.Text = ((int) value).ToString();
+                    });
                 });
-            });
+            }
             
             
             /*
@@ -147,6 +151,11 @@ namespace BoneTownHelperApplication.Pages {
                 _isProcOpen = MemoryDllUtils.OpenProcess(TRainerHelper.ProcessName);
                 if (_isProcOpen) {
                     if (!_isTRainerOpen) return;
+
+                    //z轴 ZAxis
+                    float zAxis = MemoryDllUtils.ReadFloat(TRainerHelper.ZAxis);
+                    this.TB_ZAxis.Text = ((int) zAxis).ToString();
+
                     //if先开游戏🎮并已修改, 再重新打开修改器
                     if (highJumpOld < 0 && fastRunOld < 0) {
                         highJumpOld = TRainerHelper.GetHighJump();
@@ -164,28 +173,44 @@ namespace BoneTownHelperApplication.Pages {
                      */
                     //跳高效果
                     double highJump = this.Slider_High_Jump.Value;
-                    if (Math.Abs(highJump - highJumpOld) > highJumpStep) {
+                    bool isHighJumpChanged = Math.Abs(highJump - highJumpOld) > highJumpStep;
+                    if (isHighJumpChanged) {
                         TRainerHelper.PlayClick();
                         highJumpOld = highJump;
+                    }
+                    if (false) {
+                        //防止换地图后冻结失效, 所以不管值有没有变化, 都调用
                         isFreezeHighJump = highJump > 0;
                         if (isFreezeHighJump) {
                             isUnfreezeAll = false;
                         }
-                        TRainerHelper.SetHighJump((float) highJump, isFreezeHighJump);
+                        TRainerHelper.SetHighJump((float) highJump, isFreezeHighJump, isHighJumpChanged);
+                    } else {
+                        //反正都是死循环, 就不用冻结了
+                        TRainerHelper.SetHighJump((float) highJump, false, isHighJumpChanged);
                     }
+
                     //快跑效果
                     double fastRun = this.Slider_Fast_Run.Value;
-                    if (Math.Abs(fastRun - fastRunOld) > fastRunStep) {
+                    bool isFastRunChanged = Math.Abs(fastRun - fastRunOld) > fastRunStep;
+                    if (isFastRunChanged) {
                         TRainerHelper.PlayClick();
                         fastRunOld = fastRun;
+                    }
+                    if (false) {
+                        //防止换地图后冻结失效, 所以不管值有没有变化, 都调用
                         isFreezeFastRun = fastRun > 0;
                         if (isFreezeFastRun) {
                             isUnfreezeAll = false;
                         }
-                        TRainerHelper.SetFastRun((float) fastRun, isFreezeFastRun);
+                        TRainerHelper.SetFastRun((float) fastRun, isFreezeFastRun, isFastRunChanged);
+                    } else {
+                        //反正都是死循环, 就不用冻结了
+                        TRainerHelper.SetFastRun((float) fastRun, false, isFastRunChanged);
                     }
                 } else {
                     Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
+                    highJumpOld = fastRunOld = 0;
                     //2个Slider归0, 否则重开游戏🎮的时候会判断并设置值
                     this.Slider_High_Jump.Value = 0.0;
                     this.Slider_Fast_Run.Value = 0.0;
@@ -194,6 +219,30 @@ namespace BoneTownHelperApplication.Pages {
 
                 this.Border_Running.Visibility = _isProcOpen ? Visibility.Visible : Visibility.Collapsed;
                 this.Border_Stopped.Visibility = _isProcOpen ? Visibility.Collapsed : Visibility.Visible;
+                
+                //设置传送Grid的显示/隐藏
+                int mapPosition = TRainerHelper.GetMapPosition();
+                SetGridElementVisibility(this.Grid_Teleport, 1, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 1, 5, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 2, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 2, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 3, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 4, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 4, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 4, 5, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 5, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 6, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 6, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 6, 5, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 7, 2, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 7, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 7, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 8, 2, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 8, 3, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 8, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 8, 5, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 9, 4, mapPosition);
+                SetGridElementVisibility(this.Grid_Teleport, 9, 5, mapPosition);
             };
             _dispatcherTimer.Start();
         }
@@ -389,27 +438,27 @@ namespace BoneTownHelperApplication.Pages {
                 TRainerHelper.WhiskeyAdd();
                 return;
             }
-            //大麻🍃
+            //大麻Weed🍃
             if (name == this.Btn_Nug.Name) {
                 TRainerHelper.NugAdd();
                 return;
             }
-            //蘑菇🍄
+            //迷幻蘑菇🍄Shroom
             if (name == this.Btn_Shroom.Name) {
                 TRainerHelper.ShroomAdd();
                 return;
             }
-            //仙人掌🌵
+            //乌羽玉仙人掌的干燥茎块(Peyote Button)🌵
             if (name == this.Btn_Peyote.Name) {
                 TRainerHelper.PeyoteAdd();
                 return;
             }
-            //青蛙🐸
+            //蟾蜍Toad🐸
             if (name == this.Btn_Frog.Name) {
                 TRainerHelper.FrogAdd();
                 return;
             }
-            //可卡因
+            //强效可卡因(Crack)
             if (name == this.Btn_Crack.Name) {
                 TRainerHelper.CrackAdd();
                 return;
@@ -828,13 +877,33 @@ namespace BoneTownHelperApplication.Pages {
         }
 
         /// <summary>
+        /// 设置Grid中行列对应的子元素的显示/隐藏
+        /// </summary>
+        /// <param name="grid">目标Grid</param>
+        /// <param name="rowIndex">行索引（从0开始）</param>
+        /// <param name="colIndex">列索引（从0开始）</param>
+        /// <param name="mapPosition">第几张地图</param>
+        private void SetGridElementVisibility(Grid grid, int rowIndex, int colIndex, int mapPosition) {
+            foreach (UIElement element in grid.Children) {
+                if (Grid.GetRow(element) == rowIndex && Grid.GetColumn(element) == colIndex) {
+                    if (mapPosition < 0) {
+                        element.Visibility = Visibility.Hidden;
+                    } else {
+                        element.Visibility = rowIndex == mapPosition ? Visibility.Visible : Visibility.Hidden;
+                    }
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
         /// 取消所有冻结
         /// </summary>
         private void UnfreezeAll() {
             if (isUnfreezeAll) return;
             TRainerHelper.FreezeHealth(false);
-            TRainerHelper.SetHighJump(0, false);
-            TRainerHelper.SetFastRun(0, false);
+            TRainerHelper.SetHighJump(0, false, false);
+            TRainerHelper.SetFastRun(0, false, false);
             TRainerHelper.FreezeClimax(false);
             TRainerHelper.LampLightSet(true, false, false);
             TRainerHelper.BrightnessSet(2, false, false);

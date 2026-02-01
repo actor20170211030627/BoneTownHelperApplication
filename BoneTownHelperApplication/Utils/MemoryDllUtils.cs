@@ -48,6 +48,23 @@ namespace BoneTownHelperApplication.Utils {
             // return targetProcess;
         }
 
+
+
+        /// <summary>读内存值byte</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <returns></returns>
+        public static int ReadByte(string code) {
+            return Memory.ReadByte(code);
+        }
+
+        /// <summary>将byte写入内存</summary>
+        /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="value">value to write to address.</param>
+        /// <returns>是否写入成功</returns>
+        public static bool WriteByte(string code, byte value) {
+            return Memory.WriteMemory(code, "byte", value.ToString());
+        }
+
         /// <summary>读内存值int</summary>
         /// <param name="moduleName">module名称, 例: wps.exe, xxx.dll</param>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
@@ -97,22 +114,28 @@ namespace BoneTownHelperApplication.Utils {
             return Memory.WriteMemory(code, "long", value.ToString());
         }
 
-        /// <summary>读内存值byte</summary>
+        /// <summary>读内存值String</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
+        /// <param name="length">length of bytes to read (OPTIONAL)</param>
         /// <returns></returns>
-        public static int ReadByte(string code) {
-            return Memory.ReadByte(code);
+        public static string ReadString(string code, int length = 32 /*0x20*/) {
+            return Memory.ReadString(code: code, length: length);
         }
 
-        /// <summary>将byte写入内存</summary>
+        /// <summary>将String写入内存</summary>
         /// <param name="code">address, module + pointer + offset, module + offset OR label in .ini file.</param>
         /// <param name="value">value to write to address.</param>
         /// <returns>是否写入成功</returns>
-        public static bool WriteByte(string code, byte value) {
-            return Memory.WriteMemory(code, "byte", value.ToString());
+        public static bool WriteString(string code, string value) {
+            return Memory.WriteMemory(code, "string", value);
         }
 
-        /// TODO: if是float类型, 要写成 decimal(TypeCode.Decimal), 为什么不是float(TypeCode.Single)???
+
+
+        /// TODO:
+        /// 1. if是float类型, 要写成 decimal(TypeCode.Decimal), 为什么不是float(TypeCode.Single)???
+        /// 2. 换地图后, float的loop就可能停下来, 框架有问题?
+        ///
         /// <summary>绑定地址值到UI, Bind memory addresses to UI elements</summary>
         /// <param name="address">value to write to address.</param>
         /// <returns></returns>
