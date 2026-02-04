@@ -229,15 +229,15 @@ namespace BoneTownHelperApplication.Utils {
         //Map9男人岛              : Man Island               : game/data/missions/NeedleExterior.mis
         //男人针塔              Man Needle                 game/data/missions/NeedleInterior.mis
         //最终Boss                                         game/data/missions/FinalMission.mis
-        private static readonly string Map1_Name = "game/data/missions/Boardwalk.mis";
-        private static readonly string Map2_Name = "game/data/missions/Forest-Pigmy.mis";
-        private static readonly string Map3_Name = "game/data/missions/TrailerPark.mis";
-        private static readonly string Map4_Name = "game/data/missions/downtownMinor.mis";
-        private static readonly string Map5_Name = "game/data/missions/Rez.mis";
-        private static readonly string Map6_Name = "game/data/missions/Residential.mis";
-        private static readonly string Map7_Name = "game/data/missions/DrugForest.mis";
-        private static readonly string Map8_Name = "game/data/missions/downtownMajor.mis";
-        private static readonly string Map9_Name = "game/data/missions/NeedleExterior.mis";
+        public static readonly string Map1_Name = "game/data/missions/Boardwalk.mis";
+        public static readonly string Map2_Name = "game/data/missions/Forest-Pigmy.mis";
+        public static readonly string Map3_Name = "game/data/missions/TrailerPark.mis";
+        public static readonly string Map4_Name = "game/data/missions/downtownMinor.mis";
+        public static readonly string Map5_Name = "game/data/missions/Rez.mis";
+        public static readonly string Map6_Name = "game/data/missions/Residential.mis";
+        public static readonly string Map7_Name = "game/data/missions/DrugForest.mis";
+        public static readonly string Map8_Name = "game/data/missions/downtownMajor.mis";
+        public static readonly string Map9_Name = "game/data/missions/NeedleExterior.mis";
 
 
 
@@ -723,10 +723,16 @@ namespace BoneTownHelperApplication.Utils {
         /// minDegree = 1.49568E-05(0.0000149568 ‌), degreeI = 930803445
         /// maxDegree =             6.283183,           degreeI = 1086918614
         /// </summary>
-        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0°~360°)</returns>
+        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
         private static float GetDegreePersonFront() {
             return MemoryDllUtils.ReadFloat(DegreePersonFront);
         }
+        
+        /// <summary>
+        /// 设置人物朝向 (从N开始, N右侧最小, N左侧最大)
+        /// </summary>
+        /// <param name="degree">弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</param>
+        /// <returns></returns>
         private static bool SetDegreePersonFront(float degree) {
             return MemoryDllUtils.WriteFloat(DegreePersonFront, degree);
         }
@@ -734,7 +740,7 @@ namespace BoneTownHelperApplication.Utils {
         /// <summary>
         /// 获取鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
         /// </summary>
-        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0°~360°)</returns>
+        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
         private static float GetDegreeMouseLeftRight() {
             return MemoryDllUtils.ReadFloat(DegreeMouseLeftRight);
         }

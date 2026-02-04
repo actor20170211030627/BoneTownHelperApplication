@@ -39,6 +39,8 @@ namespace BoneTownHelperApplication.Utils {
         
         //人物朝向的角度
         private const string DegreePersonFront  = ModuleName + "+0x00354318,0x2E0,0x7F4";
+        //鼠标上下移动的角度
+        private const string DegreeMouseUpDown = ModuleName + "+0x00354318,0xA4,0x3A4";
         //鼠标左右移动的角度
         private const string DegreeMouseLeftRight = ModuleName + "+0x00354318,0xA4,0x3AC";
         
@@ -115,6 +117,9 @@ namespace BoneTownHelperApplication.Utils {
         //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
         public static readonly float[] CoordinateDownTown2NobbingHill = TRainerHelper.CoordinateDownTown2NobbingHill;
 
+        //Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点
+        public static readonly float[] CoordinateDownTown2HomelandTrailerPark = { -388.4f, -955.0f, 608.755f };
+
         //Map9(Man Island 曼岛)→高塔入口(Man Needle)
         public static readonly float[] CoordinateManIsland_ManNeedle = TRainerHelper.CoordinateManIsland_ManNeedle;
 
@@ -134,34 +139,16 @@ namespace BoneTownHelperApplication.Utils {
         private static readonly long[] Ground_Purper = { 0x00000000, 0x00000000, 0x00000000 };
         private static readonly long[] Ground_Yellow = { 0x00000000, 0x00000000, 0x00000000 };
 
-        //Map1传教士海滩          : Missionary Beach         : game/data/missions/Boardwalk.mis
-        // 沙滩酒吧              Sand Bar                   game/data/missions/BeachBar.mis  //酒吧
-        //Map2阔叶林              : Firm Wood Forest         : game/data/missions/Forest-Pigmy.mis
-        //Map3国土安全拖车公园    : Homeland Trailer Park    : game/data/missions/TrailerPark.mis
-        //乌兹的拖车            Uzi's Trailer              game/data/missions/TrailerInterior1.mis
-        //Map4加巴乔高地          : Gabacho Heights          : game/data/missions/downtownMinor.mis
-        //博恩维斯塔公寓        Bone Vista Apartments      game/data/missions/ApartmentBldg.mis  //Bonavista Apartments博纳维斯塔公寓
-        //Map5哈瓦那印第安人保留地: Havajo Indian Reservation: game/data/missions/Rez.mis
-        //Map6诺丁山              : Nobbing Hill             : game/data/missions/Residential.mis  //Residential adj.住宅区的,居民区的;家庭的,住宅的;
-        //家庭派对              House Party                game/data/missions/partyHouse.mis
-        //Map7蘑菇沼泽            : Mushroom Marsh           : game/data/missions/DrugForest.mis
-        //Map8骨头镇市中心        : Downtown BoneTown        : game/data/missions/downtownMajor.mis
-        //罗恩·托尔斯           Ron Towers                 game/data/missions/ronTowers.mis
-        //麝(shè)香丁字裤       Musky Thong                game/data/missions/ModernBar.mis    //现代酒吧
-        //电影院                Movie Theater              game/data/missions/movieTheater.mis
-        //开始播放电影          start the movie            game/data/missions/moviePlayer.mis  //播放电影��
-        //Map9男人岛              : Man Island               : game/data/missions/NeedleExterior.mis
-        //男人针塔              Man Needle                 game/data/missions/NeedleInterior.mis
-        //最终Boss                                         game/data/missions/FinalMission.mis
-        private static readonly string Map1_Name = "game/data/missions/Boardwalk.mis";
-        private static readonly string Map2_Name = "game/data/missions/Forest-Pigmy.mis";
-        private static readonly string Map3_Name = "game/data/missions/TrailerPark.mis";
-        private static readonly string Map4_Name = "game/data/missions/downtownMinor.mis";
-        private static readonly string Map5_Name = "game/data/missions/Rez.mis";
-        private static readonly string Map6_Name = "game/data/missions/Residential.mis";
-        private static readonly string Map7_Name = "game/data/missions/DrugForest.mis";
-        private static readonly string Map8_Name = "game/data/missions/downtownMajor.mis";
-        private static readonly string Map9_Name = "game/data/missions/NeedleExterior.mis";
+        //地图🗺️名称
+        private static readonly string Map1_Name = TRainerHelper.Map1_Name;
+        private static readonly string Map2_Name = TRainerHelper.Map2_Name;
+        private static readonly string Map3_Name = TRainerHelper.Map3_Name;
+        private static readonly string Map4_Name = TRainerHelper.Map4_Name;
+        private static readonly string Map5_Name = TRainerHelper.Map5_Name;
+        private static readonly string Map6_Name = TRainerHelper.Map6_Name;
+        private static readonly string Map7_Name = TRainerHelper.Map7_Name;
+        private static readonly string Map8_Name = TRainerHelper.Map8_Name;
+        private static readonly string Map9_Name = TRainerHelper.Map9_Name;
 
 
 
@@ -604,15 +591,16 @@ namespace BoneTownHelperApplication.Utils {
         /// 瞬移到坐标
         /// </summary>
         /// <param name="coordinate"></param>
-        public static void Teleport(float[] coordinate, string failureStr) {
+        public static bool Teleport(float[] coordinate, string failureStr) {
             bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, coordinate[0]);
             bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, coordinate[1]);
             bool isSuccessZ = MemoryDllUtils.WriteFloat(ZAxis, coordinate[2]);
             if (isSuccessX && isSuccessY && isSuccessZ) {
                 PlayAng();
-            } else {
-                Console.WriteLine(failureStr);
+                return true;
             }
+            Console.WriteLine(failureStr);
+            return false;
         }
 
 
@@ -633,16 +621,39 @@ namespace BoneTownHelperApplication.Utils {
 
         
         
-        private static bool SetDegreePersonFront(float degree) {
+        /// <summary>
+        /// 设置人物朝向 (从N开始, N右侧最小, N左侧最大)
+        /// </summary>
+        /// <param name="degree">弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</param>
+        /// <returns></returns>
+        public static bool SetDegreePersonFront(float degree) {
             return MemoryDllUtils.WriteFloat(DegreePersonFront, degree);
         }
 
         /// <summary>
         /// 获取鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
         /// </summary>
-        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0°~360°)</returns>
+        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
         private static float GetDegreeMouseLeftRight() {
             return MemoryDllUtils.ReadFloat(DegreeMouseLeftRight);
+        }
+        
+        /// <summary>
+        /// 设置鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
+        /// </summary>
+        /// <param name="degree">弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</param>
+        /// <returns></returns>
+        public static bool SetDegreeMouseLeftRight(float degree) {
+            return MemoryDllUtils.WriteFloat(DegreeMouseLeftRight, degree);
+        }
+        
+        /// <summary>
+        /// 设置鼠标上下旋转角度 (弧度:±π/2.136, 角度:±84.27°), 为了防止视角卡死(万向节锁)而设定的常见安全限制)
+        /// </summary>
+        /// <param name="degree">弧度: (-π/2.136 ~ π/2.136), 不是角度: (-84.27° ~ 84.27°)</param>
+        /// <returns></returns>
+        public static bool SetDegreeMouseUpDown(float degree) {
+            return MemoryDllUtils.WriteFloat(DegreeMouseUpDown, degree);
         }
         
         

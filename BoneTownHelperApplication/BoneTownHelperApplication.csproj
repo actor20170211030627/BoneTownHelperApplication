@@ -89,6 +89,7 @@
           <DependentUpon>TRainer_Old_Page.xaml</DependentUpon>
         </Compile>
         <Compile Include="Utils\MemoryDllUtils.cs" />
+        <Compile Include="Utils\MessageBoxUtils.cs" />
         <Compile Include="Utils\SoundPlayerUtils.cs" />
         <Compile Include="Utils\TRainerEditionHelper.cs" />
         <Compile Include="Utils\TRainerHelper.cs" />

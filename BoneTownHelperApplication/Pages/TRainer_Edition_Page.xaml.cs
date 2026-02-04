@@ -239,6 +239,8 @@ namespace BoneTownHelperApplication.Pages {
                 SetGridElementVisibility(this.Grid_Teleport, 8, 3, mapPosition);
                 SetGridElementVisibility(this.Grid_Teleport, 8, 4, mapPosition);
                 SetGridElementVisibility(this.Grid_Teleport, 8, 5, mapPosition);
+                //Edition重置版, 多1个隐藏传送点
+                SetGridElementVisibility(this.Grid_Teleport, 8, 6, mapPosition);
                 SetGridElementVisibility(this.Grid_Teleport, 9, 4, mapPosition);
                 SetGridElementVisibility(this.Grid_Teleport, 9, 5, mapPosition);
             };
@@ -655,6 +657,29 @@ namespace BoneTownHelperApplication.Pages {
             //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
             if (name == this.TB_DownTown2NobbingHill.Name) {
                 TRainerEditionHelper.Teleport(TRainerEditionHelper.CoordinateDownTown2NobbingHill, "Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                return;
+            }
+            //Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点
+            if (name == this.TB_DownTown2HomelandTrailerPark.Name) {
+                if (!isDiving) {
+                    MessageBoxResult result = MessageBoxUtils.NewMessageBox(
+                            "隐藏点在水下, 请先打开'潜水'功能!\nThe hidden spot is underwater, Pls turn on the 'Diving' function first!"
+                        ).SetCaption("提示Tips")
+                        .SetButton(MessageBoxButton.OK)
+                        .SetButtonOk("去设置\n(Go2Set)")
+                        .SetIcon(MessageBoxImage.Warning)
+                        .SetDefaultResult(MessageBoxResult.Yes)
+                        .Show();
+                    return;
+                }
+
+                string failureStr = "Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!";
+                bool isSuccess0 = TRainerEditionHelper.Teleport(TRainerEditionHelper.CoordinateDownTown2HomelandTrailerPark, failureStr);
+                bool isSuccess1 = TRainerEditionHelper.SetDegreeMouseUpDown(1.470796347f);
+                bool isSuccess2 = TRainerEditionHelper.SetDegreeMouseLeftRight(0f);
+                bool isSuccess3 = TRainerEditionHelper.SetDegreePersonFront(0f);
+                if (isSuccess0 && isSuccess1 && isSuccess2 && isSuccess3) {
+                } else Console.WriteLine($"{failureStr}: isSuccess0 = {isSuccess0}, isSuccess1 = {isSuccess1}, isSuccess2 = {isSuccess2}, isSuccess3 = {isSuccess3}");
                 return;
             }
             

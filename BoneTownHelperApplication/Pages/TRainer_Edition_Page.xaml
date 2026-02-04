@@ -837,6 +837,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBlock
@@ -1342,6 +1343,28 @@
                         Width="12" Height="Auto"
                         Source="/Resources/Images/BlueStarYellowPoint.png" />
                     去地图9<LineBreak />(to Map9)
+                </TextBlock>
+            </Border>
+            <Border
+                Height="Auto"
+                Width="Auto"
+                Grid.Row="8"
+                Grid.Column="6"
+                Margin="1 1 0 0"
+                BorderThickness="0.5"
+                BorderBrush="Black"
+                Background="LightGray">
+                <TextBlock
+                    Name="TB_DownTown2HomelandTrailerPark"
+                    VerticalAlignment="Center"
+                    TextAlignment="Center"
+                    FontSize="8"
+                    MouseLeftButtonDown="OnTeleportClick">
+                    <Image
+                        Width="8" Height="Auto"
+                        Margin="0 2 0 0"
+                        Source="/Resources/Images/GoldArrow.png" />
+                    去地图3(隐藏点)<LineBreak />(to Map3,Hidden spot)
                 </TextBlock>
             </Border>
 
