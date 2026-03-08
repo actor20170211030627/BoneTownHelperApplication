@@ -78,7 +78,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20260201 & v1.3.0\n" +
+                                       "7.版本 20260308 & v1.4.0\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
                                        "Shift + ~ \t\t     : Old version game open the console (you can switch the mouse out of the game interface)\n" +
@@ -102,7 +102,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20260201 & v1.3.0";
+                                       "7.Version 20260308 & v1.4.0";
 
         public const string StrBrightness = "亮度修改说明:\n" +
                                             "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +

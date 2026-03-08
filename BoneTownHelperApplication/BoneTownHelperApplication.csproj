@@ -82,16 +82,22 @@
         <Compile Include="Pages\MainPage.xaml.cs">
           <DependentUpon>MainPage.xaml</DependentUpon>
         </Compile>
-        <Compile Include="Pages\TRainer_Edition_Page.xaml.cs">
-          <DependentUpon>TRainer_Edition_Page.xaml</DependentUpon>
+        <Compile Include="Pages\TRainer_Edition_QQ_Group_32_Page.xaml.cs">
+          <DependentUpon>TRainer_Edition_QQ_Group_32_Page.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Pages\TRainer_Edition_XD_Game_Page.xaml.cs">
+          <DependentUpon>TRainer_Edition_XD_Game_Page.xaml</DependentUpon>
         </Compile>
         <Compile Include="Pages\TRainer_Old_Page.xaml.cs">
           <DependentUpon>TRainer_Old_Page.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Utils\Md5Utils.cs" />
         <Compile Include="Utils\MemoryDllUtils.cs" />
         <Compile Include="Utils\MessageBoxUtils.cs" />
+        <Compile Include="Utils\ProcessUtils.cs" />
         <Compile Include="Utils\SoundPlayerUtils.cs" />
-        <Compile Include="Utils\TRainerEditionHelper.cs" />
+        <Compile Include="Utils\TRainerEditionQQGroup32Helper.cs" />
+        <Compile Include="Utils\TRainerEditionXDGameHelper.cs" />
         <Compile Include="Utils\TRainerHelper.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
@@ -106,7 +112,8 @@
             <SubType>Code</SubType>
         </Compile>
         <Page Include="Pages\MainPage.xaml" />
-        <Page Include="Pages\TRainer_Edition_Page.xaml" />
+        <Page Include="Pages\TRainer_Edition_QQ_Group_32_Page.xaml" />
+        <Page Include="Pages\TRainer_Edition_XD_Game_Page.xaml" />
         <Page Include="Pages\TRainer_Old_Page.xaml" />
     </ItemGroup>
     <ItemGroup>
@@ -130,6 +137,11 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
+      <Resource Include="Resources\Images\Steam_256x256x8BPP.png" />
+      <Resource Include="Resources\Images\03_qq_symbol-1-250x300.png" />
+      <Resource Include="Resources\Images\QQ_Group_BaiduPan_Download_2Files.png" />
+      <Resource Include="Resources\Images\XD_Download_4Files.png" />
+      <Resource Include="Resources\Images\xd.ico" />
       <Resource Include="Resources\Images\DrownBezel.png" />
       <Resource Include="Resources\Images\StaminaTIP.png" />
       <Resource Include="Resources\Images\icon_fast_run.png" />

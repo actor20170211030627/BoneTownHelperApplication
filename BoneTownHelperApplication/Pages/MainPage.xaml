@@ -13,6 +13,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,47 +26,152 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Foreground="White"
-            Background="LightSkyBlue"
-            FontSize="13"
-            Padding="5"
-            VerticalAlignment="Center"
-            Text=" 选择骨头镇版本(Select Bonetown version):" />
+             Grid.Row="0"
+             Grid.Column="0"
+             Grid.ColumnSpan="3"
+             Foreground="White"
+             Background="LightSkyBlue"
+             FontSize="13"
+             Padding="5"
+             Text="请先打开游戏(Pls start game first):" />
         
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Padding="0 20 0 20"
+            Text="&#160;&#160;或( or )" />
+        
+        <Border
+            Height="Auto"
+            Width="Auto"
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            Grid.ColumnSpan="3">
+            <TextBlock
+                Foreground="MediumVioletRed"
+                Background="LightGray"
+                MouseLeftButtonDown="OnMouseLeftButtonDown"
+                FontSize="13"
+                Padding="5"
+                Text="手动选择骨头镇版本(Select Bonetown version)" />
+        </Border>
+        
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
             Margin="5 2 0 0"
             Text="1." />
         <TextBlock
-            Grid.Row="1"
+            Grid.Row="3"
             Grid.Column="1"
             Margin="2 2 0 0"
             MinWidth="400"
-            Text="骨头镇 英文版_老版本&#x0A;(BoneTown old version)" />
+            Text="骨头镇 老版本 (英文版)&#x0A;(BoneTown old version)" />
         <Button
             Name="Btn_Old_Version"
-            Grid.Row="1"
+            Grid.Row="3"
             Grid.Column="2"
             Content="选择(Go)"
             Click="OnVersionSelectClick" />
         
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="4"
             Grid.Column="0"
-            Margin="5 5 0 0"
+            Margin="5 10 0 0"
             Text="2." />
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="4"
             Grid.Column="1"
-            Margin="2 5 0 0"
-            Text="骨头镇 英文版_重置版&#x0A;(BoneTown The Second Coming Edition)" />
+            Name="TB_XD"
+            Margin="2 5 0 0">
+            骨头镇 重置版 (英文版)&#160;&#160;(在
+            <Image
+                Width="18" Height="Auto"
+                Source="/Resources/Images/xd.ico" />xdgame下载)<LineBreak />
+            (BoneTown The Second Coming Edition, Download at xdgame)
+            </TextBlock>
         <Button
-            Name="Btn_Second_Coming_Edition"
-            Grid.Row="2"
+            Name="Btn_Second_Coming_Edition_XD"
+            Grid.Row="4"
+            Grid.Column="2"
+            Margin="0 5 0 0"
+            Content="选择(Go)"
+            Click="OnVersionSelectClick" />
+        <!-- 
+                关键：添加 Mode=OneWay，因为 TextBlock 的 IsMouseOver 是只读的
+                否则报错: dOperationException: 无法对“System.Windows.Controls.TextBlock”类型的只读属性“IsMouseOver”进行 TwoWay 或 OneWayToSource 绑定。
+                 -->
+        <Popup
+            IsOpen="{Binding ElementName=TB_XD, Path=IsMouseOver, Mode=OneWay}"
+            Placement="MousePoint"
+            PlacementTarget="{Binding ElementName=TB_XD}"
+            StaysOpen="True">
+            <Image
+                Width="300" Height="Auto"
+                Source="/Resources/Images/XD_Download_4Files.png" />
+        </Popup>
+        
+        
+        
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="0"
+            Margin="5 10 0 0"
+            Text="3." />
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="1"
+            Name="TB_QQ_Group"
+            Margin="2 5 0 0">
+            骨头镇 重置版 (英文版)&#160;&#160;(在
+            <Image
+                Width="15" Height="Auto"
+                Source="/Resources/Images/03_qq_symbol-1-250x300.png" />q群下载)<LineBreak />
+            (BoneTown The Second Coming Edition, Download at QQ group)
+        </TextBlock>
+        <Button
+            Name="Btn_Second_Coming_Edition_QQ_Group"
+            Grid.Row="5"
+            Grid.Column="2"
+            Margin="0 5 0 0"
+            Content="选择(Go)"
+            Click="OnVersionSelectClick" />
+        <!-- 
+                关键：添加 Mode=OneWay，因为 TextBlock 的 IsMouseOver 是只读的
+                否则报错: dOperationException: 无法对“System.Windows.Controls.TextBlock”类型的只读属性“IsMouseOver”进行 TwoWay 或 OneWayToSource 绑定。
+                 -->
+        <Popup
+            IsOpen="{Binding ElementName=TB_QQ_Group, Path=IsMouseOver, Mode=OneWay}"
+            Placement="MousePoint"
+            PlacementTarget="{Binding ElementName=TB_QQ_Group}"
+            StaysOpen="True">
+            <Image
+                Width="250" Height="Auto"
+                Source="/Resources/Images/QQ_Group_BaiduPan_Download_2Files.png" />
+        </Popup>
+        
+        
+        
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            Margin="5 10 0 0"
+            Text="4." />
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="1"
+            Margin="2 5 0 0">
+            骨头镇 重置版 (英文版)&#160;&#160;(在
+            <Image
+                Width="15" Height="Auto"
+                Source="/Resources/Images/Steam_256x256x8BPP.png" />Steam正版下载)<LineBreak />
+            (BoneTown The Second Coming Edition, Download at Steam)
+        </TextBlock>
+        <Button
+            Name="Btn_Second_Coming_Edition_Steam"
+            Grid.Row="6"
             Grid.Column="2"
             Margin="0 5 0 0"
             Content="选择(Go)"

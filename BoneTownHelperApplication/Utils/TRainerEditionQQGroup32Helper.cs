@@ -2,50 +2,50 @@
 using Memory;
 
 namespace BoneTownHelperApplication.Utils {
-    public static class TRainerEditionHelper {
-        public const string ProcessName = TRainerHelper.ProcessName;
-        private const string ModuleName = TRainerHelper.ModuleName;
+    public static class TRainerEditionQQGame32Helper {
+        public const string ProcessName = "BoneTown32";
+        public const string ModuleName = "BoneTown32.exe";
         
         //沉溺进度条
-        private const string Drown_ProgressBar = ModuleName + "+0x003035D8,0x3C,0x0,0x3C,0x10,0x180";
+        private const string Drown_ProgressBar = ModuleName + "+0x00339C6C,0x50,0x0,0x50,0x10,0x50,0x0,0xA0";
         //加载的地图🗺️名称
-        private const string Map_Name          = ModuleName + "+0x002F19A8";
+        private const string Map_Name          = ModuleName + "+0x00326080";
         //是否能淹死
-        private const string Is_Drown_Deadable = ModuleName + "+0x00354318,0x2E0,0x454";
+        private const string Is_Drown_Deadable = ModuleName + "+0x00357F38,0x148,0x481";
         //是否沉溺, Byte: 0, 1
-        private const string Is_Drown_Byte = ModuleName + "+0x00354318,0x2E0,0x455";
+        private const string Is_Drown_Byte = ModuleName + "+0x00357F38,0x148,0x482";
 
-        private const string Balls_Sexy_Progress = ModuleName + "+0x00354318,0x2E0,0x474";
-        private const string Balls_Sexy_Count    = ModuleName + "+0x00354318,0x2E0,0x478";
+        private const string Balls_Sexy_Progress = ModuleName + "+0x00357F38,0x148,0x4A0";
+        private const string Balls_Sexy_Count    = ModuleName + "+0x00357F38,0x148,0x4A4";
 
-        private const string Health = ModuleName + "+0x00354318,0x2E0,0x470";
-        private const string Effect_Countdown_Weed = ModuleName + "+0x00354318,0x2E0,0x5DC";
-        private const string Effect_Countdown_Crack = ModuleName + "+0x00354318,0x2E0,0x5EC";
-        private const string Effect_Climax = ModuleName + "+0x00354318,0x2E0,0x834";
+        private const string Health = ModuleName + "+0x00357F38,0x148,0x49C";
+        private const string Effect_Countdown_Weed = ModuleName + "+0x00357F38,0x148,0x638";
+        private const string Effect_Countdown_Crack = ModuleName + "+0x00357F38,0x148,0x648";
+        private const string Effect_Climax = ModuleName + "+0x00357F38,0x148,0x898";
         
-        public const string Money = ModuleName + "+0x00354318,0xA4,0x54,0x47C";
+        public const string Money = ModuleName + "+0x00357F38,0x148,0x4A8";
         
-        public const string Beer    = ModuleName + "+0x00354318,0xA4,0x54,0x5B8";
-        public const string Whiskey = ModuleName + "+0x00354318,0xA4,0x54,0x5BC";
-        public const string Weed    = ModuleName + "+0x00354318,0xA4,0x54,0x5C0";
-        public const string Shroom  = ModuleName + "+0x00354318,0x2E0,0x5C4";
-        public const string Peyote  = ModuleName + "+0x00354318,0x2E0,0x5C8";
-        public const string Frog    = ModuleName + "+0x00354318,0x2E0,0x5CC";
-        public const string Crack   = ModuleName + "+0x00354318,0x2E0,0x5D0";
+        public const string Beer    = ModuleName + "+0x00357F38,0x148,0x614";
+        public const string Whiskey = ModuleName + "+0x00357F38,0x148,0x618";
+        public const string Weed    = ModuleName + "+0x00357F38,0x148,0x61C";
+        public const string Shroom  = ModuleName + "+0x00357F38,0x148,0x620";
+        public const string Peyote  = ModuleName + "+0x00357F38,0x148,0x624";
+        public const string Frog    = ModuleName + "+0x00357F38,0x148,0x628";
+        public const string Crack   = ModuleName + "+0x00357F38,0x148,0x62C";
         
-        public const string XAxis   = ModuleName + "+0x00354318,0x2E0,0x7E8";
-        public const string YAxis   = ModuleName + "+0x00354318,0x2E0,0x7EC";
-        public const string ZAxis   = ModuleName + "+0x00354318,0x2E0,0x7F0";
+        public const string XAxis   = ModuleName + "+0x00357F38,0x148,0x84C";
+        public const string YAxis   = ModuleName + "+0x00357F38,0x148,0x850";
+        public const string ZAxis   = ModuleName + "+0x00357F38,0x148,0x854";
         
         //人物朝向的角度
-        private const string DegreePersonFront  = ModuleName + "+0x00354318,0x2E0,0x7F4";
+        private const string DegreePersonFront  = ModuleName + "+0x00357F38,0x148,0x858";
         //鼠标上下移动的角度
-        private const string DegreeMouseUpDown = ModuleName + "+0x00354318,0xA4,0x3A4";
+        private const string DegreeMouseUpDown = ModuleName + "+0x00381E0C,0xBC,0x3BC";
         //鼠标左右移动的角度
-        private const string DegreeMouseLeftRight = ModuleName + "+0x00354318,0xA4,0x3AC";
+        private const string DegreeMouseLeftRight = ModuleName + "+0x00381E0C,0xBC,0x3C4";
         
         //灯光
-        private const string LampLight = ModuleName + "+0x00454DD4,0x34";
+        private const string LampLight = ModuleName + "+0x00483640,0x48";
         
         //环境亮度
         private const string Brightness_Ground_Green2 = ModuleName + "+0x???,0x??";
@@ -118,7 +118,7 @@ namespace BoneTownHelperApplication.Utils {
         public static readonly float[] CoordinateDownTown2NobbingHill = TRainerHelper.CoordinateDownTown2NobbingHill;
 
         //Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点
-        public static readonly float[] CoordinateDownTown2HomelandTrailerPark = { -388.4f, -955.0f, 608.755f };
+        public static readonly float[] CoordinateDownTown2HomelandTrailerPark = TRainerEditionXDGameHelper.CoordinateDownTown2HomelandTrailerPark;
 
         //Map9(Man Island 曼岛)→高塔入口(Man Needle)
         public static readonly float[] CoordinateManIsland_ManNeedle = TRainerHelper.CoordinateManIsland_ManNeedle;
@@ -502,88 +502,6 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="isFreeze">是否冻结值</param>
         public static void BrightnessSet(int position, bool isFreeze, bool isPlayAng) {
             //TODO: 没有地址, 先屏蔽
-            if (true) {
-                return;
-            }
-            bool isSuccess;
-            if (isFreeze) {
-                //一直闪, 应该是修改间隔25ms还是太久了
-                bool isSuccess0 = MemoryDllUtils.FreezeValue(Brightness_Ground_Green2, "long", Ground_Green2[position]);
-                bool isSuccess1 = MemoryDllUtils.FreezeValue(Brightness_Ground_Purper2, "long", Ground_Purper2[position]);
-                bool isSuccess2 = MemoryDllUtils.FreezeValue(Brightness_Ground_Yellow2, "long", Ground_Yellow2[position]);
-                bool isSuccess3 = MemoryDllUtils.FreezeValue(Brightness_Ground_Green, "long", Ground_Green[position]);
-                bool isSuccess4 = MemoryDllUtils.FreezeValue(Brightness_Ground_Purper, "long", Ground_Purper[position]);
-                bool isSuccess5 = MemoryDllUtils.FreezeValue(Brightness_Ground_Yellow, "long", Ground_Yellow[position]);
-                isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
-            } else {
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Green2);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Purper2);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Yellow2);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Green);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Purper);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Yellow);
-                bool isSuccess0 = MemoryDllUtils.WriteLong(Brightness_Ground_Green2, Ground_Green2[position]);
-                bool isSuccess1 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper2, Ground_Purper2[position]);
-                bool isSuccess2 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow2, Ground_Yellow2[position]);
-                bool isSuccess3 = MemoryDllUtils.WriteLong(Brightness_Ground_Green, Ground_Green[position]);
-                bool isSuccess4 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper, Ground_Purper[position]);
-                bool isSuccess5 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow, Ground_Yellow[position]);
-                isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
-            }
-            if (isSuccess) {
-                if (isPlayAng) PlayAng();
-            } else {
-                Console.WriteLine("环境亮度设置 失败!");
-            }
-        }
-        public static void BrightnessSet2(int position) {
-            bool isSuccess;
-            // byte[] lpBuffer = new byte[4];
-            // int nSize = 8;
-            // lpBuffer = BitConverter.GetBytes(Convert.ToInt64(write));
-            byte[] lpBuffer = BitConverter.GetBytes(Ground_Green2[position]);
-            UIntPtr code1 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Green2, "");
-            if (code1 == UIntPtr.Zero || code1.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer2 = BitConverter.GetBytes(Ground_Purper2[position]);
-            UIntPtr code2 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Purper2, "");
-            if (code2 == UIntPtr.Zero || code2.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer3 = BitConverter.GetBytes(Ground_Yellow2[position]);
-            UIntPtr code3 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Yellow2, "");
-            if (code3 == UIntPtr.Zero || code3.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer4 = BitConverter.GetBytes(Ground_Green[position]);
-            UIntPtr code4 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Green, "");
-            if (code4 == UIntPtr.Zero || code4.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer5 = BitConverter.GetBytes(Ground_Purper[position]);
-            UIntPtr code5 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Purper, "");
-            if (code5 == UIntPtr.Zero || code5.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer6 = BitConverter.GetBytes(Ground_Yellow[position]);
-            UIntPtr code6 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Yellow, "");
-            if (code6 == UIntPtr.Zero || code6.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
-
-            isSuccess = true;
-            
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("环境亮度设置 失败!");
-            }
         }
 
 
@@ -591,6 +509,7 @@ namespace BoneTownHelperApplication.Utils {
         /// 瞬移到坐标
         /// </summary>
         /// <param name="coordinate"></param>
+        /// <param name="failureStr"></param>
         public static bool Teleport(float[] coordinate, string failureStr) {
             bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, coordinate[0]);
             bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, coordinate[1]);
