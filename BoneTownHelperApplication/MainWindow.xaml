@@ -5,14 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoneTownHelperApplication"
         mc:Ignorable="d"
-        Title="骨头镇修改器(Bonetown TRainer)-actor2015(v1.4.0)"
+        Title="骨头镇修改器(Bonetown TRainer)-actor2015(v1.5.0)"
         Height="Auto"
         Width="Auto"
         Background="White"
         SizeToContent="WidthAndHeight"
         Icon="Resources/Images/Angle.png">
-    <ScrollViewer>
-        <!-- 右侧内容区域 -->
+
+    <!-- 外层套 ScrollViewer -->
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <!-- 右侧内容区域
+        VerticalContentAlignment="Stretch"  //让高页面能撑满高度、正常滚动
+        VerticalAlignment="Top"             //让矮页面强制贴在顶部，不垂直居中
+        -->
         <Frame
             x:Name="ContentFrame"
             NavigationUIVisibility="Hidden" />

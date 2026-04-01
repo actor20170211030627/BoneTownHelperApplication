@@ -11,7 +11,7 @@ namespace BoneTownHelperApplication.Utils {
         //沉溺进度条
         private const string Drown_ProgressBar = ModuleName + "+0x002E3CB0,0x3C,0x0,0x3C,0xC,0x180";
         //加载的地图🗺️名称
-        private const string Map_Name          = ModuleName + "+0x00532328,0x14,0x4,0x4,0x4,0x10";
+        private const string Map_Name          = ModuleName + "+0x002D8270,0x3C,0xE34,0x14,0x414,0xFD0";
         //是否能淹死
         private const string Is_Drown_Deadable = ModuleName + "+0x00532A28,0x2B8,0x451";
         //是否沉溺, Byte: 0, 1
@@ -26,6 +26,8 @@ namespace BoneTownHelperApplication.Utils {
         private const string Effect_Climax = ModuleName + "+0x00532A28,0x2B8,0x808";
 
         public const string Money = ModuleName + "+0x00532A28,0x2B8,0x478";
+        
+        private const string Clothing_Health = ModuleName + "+0x00532A28,0x2B8,0x47C";
         
         public const string Beer    = ModuleName + "+0x00532A28,0x2B8,0x5A0";
         public const string Whiskey = ModuleName + "+0x00532A28,0x2B8,0x5A4";
@@ -47,13 +49,20 @@ namespace BoneTownHelperApplication.Utils {
         //灯光
         private const string LampLight = ModuleName + "+0x00633CC4,0x34";
         
+        private const string pauseDaylight = ModuleName + "+0x00633D9C,0x8";
         //环境亮度
+        private const string Brightness_SkyEdge_Inner_Green_Light = ModuleName + "+0x002EA2BC,0x2AC";
+        private const string Brightness_SkyEdge_Inner_Blue_Light = ModuleName + "+0x002EA2BC,0x2B0";
+        private const string Brightness_SkyEdge_Inner_Yellow_Light = ModuleName + "+0x002EA2BC,0x2B4";
+        private const string Brightness_SkyEdge_Light = ModuleName + "+0x002EBC88,0x0,0x218";
+        private const string Brightness_SkyEdge_Color = ModuleName + "+0x002EBC88,0x0,0xD64";
         private const string Brightness_Ground_Green2 = ModuleName + "+0x00633D9C,0x14,0x1C8";
         private const string Brightness_Ground_Purper2 = ModuleName + "+0x00633D9C,0x14,0x1CC";
         private const string Brightness_Ground_Yellow2 = ModuleName + "+0x00633D9C,0x14,0x1D0";
         private const string Brightness_Ground_Green = ModuleName + "+0x00633D9C,0x14,0x1D4";
         private const string Brightness_Ground_Purper = ModuleName + "+0x00633D9C,0x14,0x1D8";
         private const string Brightness_Ground_Yellow = ModuleName + "+0x00633D9C,0x14,0x1DC";
+        private const string Brightness_Object_Light = ModuleName + "+0x00633FF0,0x30";
 
 
         public const string StrAbout = "游戏操作说明:\n" +
@@ -78,7 +87,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20260308 & v1.4.0\n" +
+                                       "7.版本 20260401 & v1.5.0\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
                                        "Shift + ~ \t\t     : Old version game open the console (you can switch the mouse out of the game interface)\n" +
@@ -102,7 +111,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20260308 & v1.4.0";
+                                       "7.Version 20260401 & v1.5.0";
 
         public const string StrBrightness = "亮度修改说明:\n" +
                                             "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +
@@ -203,12 +212,18 @@ namespace BoneTownHelperApplication.Utils {
         /// Ground_Yellow               3E99999A    3E800000    3F000000
         /// </summary>
         public static readonly long[] LampBrightness = { 0x00000000, 0x3F800000 };
-        private static readonly long[] Ground_Green2 = { 0x3DF5C28F, 0x3F19999A, 0x3F333333 };
-        private static readonly long[] Ground_Purper2 = { 0x3E428F5C, 0x3F0CCCCD, 0x3F333333 };
-        private static readonly long[] Ground_Yellow2 = { 0x3F266666, 0x3F0CCCCD, 0x3F266666 };
-        private static readonly long[] Ground_Green = { 0x3D75C28F, 0x3EE66666, 0x3F19999A };
-        private static readonly long[] Ground_Purper = { 0x3DE147AE, 0x3E4CCCCD, 0x3F19999A };
-        private static readonly long[] Ground_Yellow = { 0x3E99999A, 0x3E800000, 0x3F000000 };
+        private static readonly long[] SkyEdge_Inner_Green_Light  = { 0x3F266666, 0x3EE66666, 0x3EE66666, 0x00000000, 0x3E4CDBE0, 0x3EB33333 };
+        private static readonly long[] SkyEdge_Inner_Blue_Light   = { 0x3F266666, 0x3E6B851F, 0x3E6B851F, 0x00000000, 0x3E4CD2D5, 0x3E851EB8 };
+        private static readonly long[] SkyEdge_Inner_Yellow_Light = { 0x3F59999A, 0x3F000000, 0x3F000000, 0x3DCCCCCD, 0x3ECCC341, 0x3E570A3D };
+        private static readonly long[] SkyEdge_Light              = { 0x3F800000, 0x3F400000, 0x3F400000, 0x00000000, 0x3E8025AF, 0x3F800000 };
+        private static readonly long[] SkyEdge_Color              = { 0xFFD9A6A6, 0xFF803B73, 0xFF803B73, 0xFF1A0000, 0xFF663434, 0xFF36435A };
+        private static readonly long[] Ground_Green2              = { 0x3F333333, 0x3F19999A, 0x3F19999A, 0x3DF5C28F, 0x3E4CD6DA, 0x3E99999A };
+        private static readonly long[] Ground_Purper2             = { 0x3F333333, 0x3F0CCCCD, 0x3EB33333, 0x3E428F5C, 0x3E999EA0, 0x3ECCCCCD };
+        private static readonly long[] Ground_Yellow2             = { 0x3F266666, 0x3F0CCCCD, 0x3EB33333, 0x3F266666, 0x3F000283, 0x3F19999A };
+        private static readonly long[] Ground_Green               = { 0x3F19999A, 0x3EE66666, 0x3EE66666, 0x3D75C28F, 0x3DCD3B57, 0x3F266666 };
+        private static readonly long[] Ground_Purper              = { 0x3F19999A, 0x3E4CCCCD, 0x3E4CCCCD, 0x3DE147AE, 0x3E4CF2FD, 0x3F147AE1 };
+        private static readonly long[] Ground_Yellow              = { 0x3F000000, 0x3E800000, 0x3E800000, 0x3E99999A, 0x3E999595, 0x3E6147AE };
+        private static readonly long[] Object_Light               = { 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x39C8FA21, 0x3F800000 };
 
         //Map1传教士海滩          : Missionary Beach         : game/data/missions/Boardwalk.mis
         // 沙滩酒吧              Sand Bar                   game/data/missions/BeachBar.mis  //酒吧
@@ -253,8 +268,8 @@ namespace BoneTownHelperApplication.Utils {
         /// 获取当前是第几个Map
         /// </summary>
         /// <returns>-1, [1, 9]</returns>
-        public static int GetMapPosition() {
-            string mapName = MemoryDllUtils.ReadString(Map_Name, 37);
+        public static int GetMapPosition(string code = Map_Name) {
+            string mapName = MemoryDllUtils.ReadString(code, 37);
             if (string.IsNullOrEmpty(mapName)) return -1;
             if (mapName.Equals(Map1_Name, StringComparison.OrdinalIgnoreCase)) return 1;
             if (mapName.Equals(Map2_Name, StringComparison.OrdinalIgnoreCase)) return 2;
@@ -268,49 +283,49 @@ namespace BoneTownHelperApplication.Utils {
             return -1;
         }
 
-        public static void MoneyAdd() {
-            int money = MemoryDllUtils.ReadInt(Money);
-            bool isSuccess = MemoryDllUtils.WriteInt(Money, money + 1000);
+        public static void MoneyAdd(string code = Money) {
+            int money = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, money + 1000);
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("钱+1000失败!");
+                Console.WriteLine("钱💰+1000失败!");
             }
         }
 
-        public static void BeerAdd() {
-            int beer = MemoryDllUtils.ReadInt(Beer);
-            bool isSuccess = MemoryDllUtils.WriteInt(Beer, beer + 100);
+        public static void BeerAdd(string code = Beer) {
+            int beer = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, beer + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("啤酒+100失败!");
+                Console.WriteLine("啤酒🍺+100失败!");
             }
         }
 
-        public static void WhiskeyAdd() {
-            int whiskey = MemoryDllUtils.ReadInt(Whiskey);
-            bool isSuccess = MemoryDllUtils.WriteInt(Whiskey, whiskey + 100);
+        public static void WhiskeyAdd(string code = Whiskey) {
+            int whiskey = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, whiskey + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("威士忌+100失败!");
+                Console.WriteLine("威士忌🥃+100失败!");
             }
         }
 
-        public static void NugAdd() {
-            int nug = MemoryDllUtils.ReadInt(Weed);
-            bool isSuccess = MemoryDllUtils.WriteInt(Weed, nug + 100);
+        public static void NugAdd(string code = Weed) {
+            int nug = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, nug + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
-                Console.WriteLine("大麻Weed🍃+100失败!");
+                Console.WriteLine("大麻Weed/小块大麻Nug🍃+100失败!");
             }
         }
 
-        public static void ShroomAdd() {
-            int shroom = MemoryDllUtils.ReadInt(Shroom);
-            bool isSuccess = MemoryDllUtils.WriteInt(Shroom, shroom + 100);
+        public static void ShroomAdd(string code = Shroom) {
+            int shroom = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, shroom + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -318,9 +333,9 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
-        public static void PeyoteAdd() {
-            int peyote = MemoryDllUtils.ReadInt(Peyote);
-            bool isSuccess = MemoryDllUtils.WriteInt(Peyote, peyote + 100);
+        public static void PeyoteAdd(string code = Peyote) {
+            int peyote = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, peyote + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -328,9 +343,9 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
-        public static void FrogAdd() {
-            int frog = MemoryDllUtils.ReadInt(Frog);
-            bool isSuccess = MemoryDllUtils.WriteInt(Frog, frog + 100);
+        public static void FrogAdd(string code = Frog) {
+            int frog = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, frog + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -338,9 +353,9 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
-        public static void CrackAdd() {
-            int crack = MemoryDllUtils.ReadInt(Crack);
-            bool isSuccess = MemoryDllUtils.WriteInt(Crack, crack + 100);
+        public static void CrackAdd(string code = Crack) {
+            int crack = MemoryDllUtils.ReadInt(code);
+            bool isSuccess = MemoryDllUtils.WriteInt(code, crack + 100);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -349,9 +364,9 @@ namespace BoneTownHelperApplication.Utils {
         }
 
 
-        public static void XAxisEdit(bool isEast, int value) {
-            float x = MemoryDllUtils.ReadFloat(XAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(XAxis, isEast ? x + value : x - value);
+        public static void XAxisEdit(bool isEast, int value, string code = XAxis) {
+            float x = MemoryDllUtils.ReadFloat(code);
+            bool isSuccess = MemoryDllUtils.WriteFloat(code, isEast ? x + value : x - value);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -359,9 +374,9 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
-        public static void YAxisEdit(bool isNorth, int value) {
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(YAxis, isNorth ? y + value : y - value);
+        public static void YAxisEdit(bool isNorth, int value, string code = YAxis) {
+            float y = MemoryDllUtils.ReadFloat(code);
+            bool isSuccess = MemoryDllUtils.WriteFloat(code, isNorth ? y + value : y - value);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -369,9 +384,9 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
-        public static void ZAxisEdit(bool isUp, int value) {
-            float z = MemoryDllUtils.ReadFloat(ZAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(ZAxis, isUp ? z + value : z - value);
+        public static void ZAxisEdit(bool isUp, int value, string code = ZAxis) {
+            float z = MemoryDllUtils.ReadFloat(code);
+            bool isSuccess = MemoryDllUtils.WriteFloat(code, isUp ? z + value : z - value);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -380,15 +395,15 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         //jj性感度加到最大
-        public static void BallsAdd210() {
+        public static void BallsAdd210(string sexyCount = Balls_Sexy_Count, string sexyProgress = Balls_Sexy_Progress) {
             //TODO: byte(9), 2bytes(10), int(10)实际都能写入成功, 但代码返回失败???
-            // bool isSuccess = MemoryDllUtils.WriteByte(Balls_Sexy_Count, 0xa);
-            bool isSuccess = MemoryDllUtils.WriteInt(Balls_Sexy_Count, 10);
+            // bool isSuccess = MemoryDllUtils.WriteByte(sexyCount, 0xa);
+            bool isSuccess = MemoryDllUtils.WriteInt(sexyCount, 10);
             if (!isSuccess) {
                 Console.WriteLine("jj性感度(Balls_Sexy_Count)加到最大(10)失败!");
                 return;
             }
-            isSuccess = MemoryDllUtils.WriteFloat(Balls_Sexy_Progress, 10f);
+            isSuccess = MemoryDllUtils.WriteFloat(sexyProgress, 10f);
             if (isSuccess) {
                 PlayAng();
             } else {
@@ -400,16 +415,16 @@ namespace BoneTownHelperApplication.Utils {
         /// 是否冻结无限健康
         /// </summary>
         /// <param name="isFreezeHealth"></param>
-        public static void FreezeHealth(bool isFreezeHealth) {
+        public static void FreezeHealth(bool isFreezeHealth, string code = Health) {
             if (isFreezeHealth) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Health, "float", 1f);
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", 1f);
                 if (isSuccess) {
                     PlayAng();
                 } else {
                     Console.WriteLine("冻结无限健康 失败!");
                 }
             } else {
-                MemoryDllUtils.UnfreezeValue(Health);
+                MemoryDllUtils.UnfreezeValue(code);
             }
         }
 
@@ -426,22 +441,22 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="height">高度[0~1]</param>
         /// <param name="isFreezeHighJump"></param>
         /// <param name="isPlayAng"></param>
-        public static void SetHighJump(float height, bool isFreezeHighJump, bool isPlayAng) {
+        public static void SetHighJump(float height, bool isFreezeHighJump, bool isPlayAng, string code = Effect_Countdown_Weed) {
             if (height > 1) {
                 height = 1;
             } else if (height < 0) {
                 height = 0;
             }
             if (isFreezeHighJump) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Weed, "float", height);
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", height);
                 if (isSuccess) {
                     if (isPlayAng) PlayAng();
                 } else {
                     Console.WriteLine("设置跳高效果 失败!");
                 }
             } else {
-                MemoryDllUtils.UnfreezeValue(Effect_Countdown_Weed);
-                MemoryDllUtils.WriteFloat(Effect_Countdown_Weed, height);
+                MemoryDllUtils.UnfreezeValue(code);
+                MemoryDllUtils.WriteFloat(code, height);
             }
         }
 
@@ -458,39 +473,55 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="speed">速度[0~1]</param>
         /// <param name="isFreezeFastRun"></param>
         /// <param name="isPlayAng"></param>
-        public static void SetFastRun(float speed, bool isFreezeFastRun, bool isPlayAng) {
+        public static void SetFastRun(float speed, bool isFreezeFastRun, bool isPlayAng, string code = Effect_Countdown_Crack) {
             if (speed > 1) {
                 speed = 1;
             } else if (speed < 0) {
                 speed = 0;
             }
             if (isFreezeFastRun) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Crack, "float", speed);
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", speed);
                 if (isSuccess) {
                     if (isPlayAng) PlayAng();
                 } else {
                     Console.WriteLine("设置快跑效果 失败!");
                 }
             } else {
-                MemoryDllUtils.UnfreezeValue(Effect_Countdown_Crack);
-                MemoryDllUtils.WriteFloat(Effect_Countdown_Crack, speed);
+                MemoryDllUtils.UnfreezeValue(code);
+                MemoryDllUtils.WriteFloat(code, speed);
             }
+        }
+
+        /// <summary>
+        /// 获取 Clothing_Health
+        /// </summary>
+        /// <returns></returns>
+        public static int GetClothing_Health() {
+            return MemoryDllUtils.ReadInt(Clothing_Health);
+        }
+        
+        /// <summary>
+        /// 写入 Clothing_Health, [-1, int.max]
+        /// </summary>
+        /// <param name="value"></param>
+        public static bool SetClothing_Health(int value) {
+            return MemoryDllUtils.WriteInt(Clothing_Health, value);
         }
 
         /// <summary>
         /// 冻结快感进度
         /// </summary>
         /// <param name="isFreezeClimax"></param>
-        public static void FreezeClimax(bool isFreezeClimax) {
+        public static void FreezeClimax(bool isFreezeClimax, string code = Effect_Climax) {
             if (isFreezeClimax) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Climax, "float", 1f);
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", 1f);
                 if (isSuccess) {
                     PlayAng();
                 } else {
                     Console.WriteLine("冻结快感进度 失败!");
                 }
             } else {
-                MemoryDllUtils.UnfreezeValue(Effect_Climax);
+                MemoryDllUtils.UnfreezeValue(code);
             }
         }
 
@@ -498,23 +529,24 @@ namespace BoneTownHelperApplication.Utils {
         /// 冻结潜水
         /// </summary>
         /// <param name="isFreezeDiving"></param>
-        public static void FreezeDiving(bool isFreezeDiving) {
+        public static void FreezeDiving(bool isFreezeDiving, string progress = Drown_ProgressBar,
+            string isDrownDeadable = Is_Drown_Deadable, string isDrownByte = Is_Drown_Byte) {
             if (isFreezeDiving) {
-                bool isSuccess0 = MemoryDllUtils.FreezeValue(Drown_ProgressBar, "long", 0);
-                bool isSuccess1 = MemoryDllUtils.FreezeValue(Is_Drown_Deadable, "byte", 0);
-                bool isSuccess2 = MemoryDllUtils.FreezeValue(Is_Drown_Byte, "byte", 0);
+                bool isSuccess0 = MemoryDllUtils.FreezeValue(progress, "long", 0);
+                bool isSuccess1 = MemoryDllUtils.FreezeValue(isDrownDeadable, "byte", 0);
+                bool isSuccess2 = MemoryDllUtils.FreezeValue(isDrownByte, "byte", 0);
                 if (isSuccess0 && isSuccess1 && isSuccess2) {
                     PlayAng();
                 } else {
                     Console.WriteLine("冻结潜水 失败!");
                 }
             } else {
-                MemoryDllUtils.UnfreezeValue(Drown_ProgressBar);
-                MemoryDllUtils.UnfreezeValue(Is_Drown_Deadable);
-                MemoryDllUtils.UnfreezeValue(Is_Drown_Byte);
-                bool isSuccess0 = MemoryDllUtils.WriteByte(Drown_ProgressBar, 0);
-                bool isSuccess1 = MemoryDllUtils.WriteByte(Is_Drown_Deadable, 0);   //重置, 否则可能会一下水就死
-                bool isSuccess2 = MemoryDllUtils.WriteByte(Is_Drown_Byte, 0);
+                MemoryDllUtils.UnfreezeValue(progress);
+                MemoryDllUtils.UnfreezeValue(isDrownDeadable);
+                MemoryDllUtils.UnfreezeValue(isDrownByte);
+                bool isSuccess0 = MemoryDllUtils.WriteByte(progress, 0);
+                bool isSuccess1 = MemoryDllUtils.WriteByte(isDrownDeadable, 0);   //重置, 否则可能会一下水就死
+                bool isSuccess2 = MemoryDllUtils.WriteByte(isDrownByte, 0);
                 if (isSuccess0 && isSuccess1 && isSuccess2) {
                     // PlayAng();
                 } else {
@@ -529,16 +561,17 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isRight"></param>
         /// <param name="value"></param>
-        public static void GoRightOrLeft(bool isRight, int value) {
-            float x = MemoryDllUtils.ReadFloat(XAxis);
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            // double degreePersonFront = GetDegreePersonFront();
-            float degreeMouseLeftRight = GetDegreeMouseLeftRight();
-            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
-            x = isRight ? x + (float)Math.Cos(degreeMouseLeftRight) * value : x - (float)Math.Cos(degreeMouseLeftRight) * value;
-            y = isRight ? y - (float)Math.Sin(degreeMouseLeftRight) * value : y + (float)Math.Sin(degreeMouseLeftRight) * value;
-            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
-            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
+        public static void GoRightOrLeft(bool isRight, int value, string codeX = XAxis, string codeY = YAxis,
+            string degreeMouseLeftRight = DegreeMouseLeftRight, string degreePersonFront = DegreePersonFront) {
+            float x = MemoryDllUtils.ReadFloat(codeX);
+            float y = MemoryDllUtils.ReadFloat(codeY);
+            // double degree = GetDegreePersonFront(degreePersonFront);
+            float degree = GetDegreeMouseLeftRight(degreeMouseLeftRight);
+            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degree, degreePersonFront);
+            x = isRight ? x + (float)Math.Cos(degree) * value : x - (float)Math.Cos(degree) * value;
+            y = isRight ? y - (float)Math.Sin(degree) * value : y + (float)Math.Sin(degree) * value;
+            bool isSuccessX = MemoryDllUtils.WriteFloat(codeX, x);
+            bool isSuccessY = MemoryDllUtils.WriteFloat(codeY, y);
             if (isSuccessX && isSuccessY) {
                 PlayAng();
             } else {
@@ -551,16 +584,17 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isFront"></param>
         /// <param name="value"></param>
-        public static void GoFrontOrBack(bool isFront, int value) {
-            float x = MemoryDllUtils.ReadFloat(XAxis);
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            // float degreePersonFront = GetDegreePersonFront();
-            float degreeMouseLeftRight = GetDegreeMouseLeftRight();
-            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
-            x = isFront ? x + (float)Math.Sin(degreeMouseLeftRight) * value : x - (float)Math.Sin(degreeMouseLeftRight) * value;
-            y = isFront ? y + (float)Math.Cos(degreeMouseLeftRight) * value : y - (float)Math.Cos(degreeMouseLeftRight) * value;
-            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
-            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
+        public static void GoFrontOrBack(bool isFront, int value, string codeX = XAxis, string codeY = YAxis,
+            string degreeMouseLeftRight = DegreeMouseLeftRight, string degreePersonFront = DegreePersonFront) {
+            float x = MemoryDllUtils.ReadFloat(codeX);
+            float y = MemoryDllUtils.ReadFloat(codeY);
+            // float degree = GetDegreePersonFront(degreePersonFront);
+            float degree = GetDegreeMouseLeftRight(degreeMouseLeftRight);
+            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degree, degreePersonFront);
+            x = isFront ? x + (float)Math.Sin(degree) * value : x - (float)Math.Sin(degree) * value;
+            y = isFront ? y + (float)Math.Cos(degree) * value : y - (float)Math.Cos(degree) * value;
+            bool isSuccessX = MemoryDllUtils.WriteFloat(codeX, x);
+            bool isSuccessY = MemoryDllUtils.WriteFloat(codeY, y);
             if (isSuccessX && isSuccessY) {
                 PlayAng();
             } else {
@@ -569,19 +603,31 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
+        /// 中止日/夜循环
+        /// </summary>
+        /// <param name="isPause">是否 中止日/夜循环</param>
+        /// <param name="isFreeze">是否冻结</param>
+        public static void PauseDaylight(bool isPause, bool isFreeze, bool isPlayAng, String address = pauseDaylight) {
+            bool isSuccess;
+            if (isFreeze) {
+                isSuccess = MemoryDllUtils.FreezeValue(address, "byte", isPause ? 1 : 0);
+            } else {
+                MemoryDllUtils.UnfreezeValue(address);
+                isSuccess = MemoryDllUtils.WriteByte(address, (byte)(isPause ? 1 : 0));
+            }
+            if (isSuccess) {
+                if (isPlayAng) PlayAng();
+            } else {
+                Console.WriteLine("中止日/夜循环 失败!");
+            }
+        }
+
+        /// <summary>
         /// 灯光设置
         /// </summary>
         /// <param name="isOpen">是否打开</param>
-        /// <param name="isFreeze">是否冻结值</param>
-        public static void LampLightSet(bool isOpen, bool isFreeze, bool isPlayAng) {
-            bool isSuccess;
-            if (isFreeze) {
-                //一直闪, 应该是修改间隔25ms还是太久了
-                isSuccess = MemoryDllUtils.FreezeValue(LampLight, "long", LampBrightness[isOpen ? 1 : 0]);
-            } else {
-                MemoryDllUtils.UnfreezeValue(LampLight);
-                isSuccess = MemoryDllUtils.WriteLong(LampLight, LampBrightness[isOpen ? 1 : 0]);
-            }
+        public static void LampLightSet(bool isOpen, bool isPlayAng, string address = LampLight) {
+            bool isSuccess = MemoryDllUtils.WriteLong(address, LampBrightness[isOpen ? 1 : 0]);
             if (isSuccess) {
                 if (isPlayAng) PlayAng();
             } else {
@@ -593,87 +639,66 @@ namespace BoneTownHelperApplication.Utils {
         /// <summary>
         /// 环境亮度设置
         /// </summary>
-        /// <param name="position">第几个亮度[0~2]</param>
-        /// <param name="isFreeze">是否冻结值</param>
-        public static void BrightnessSet(int position, bool isFreeze, bool isPlayAng) {
-            bool isSuccess;
-            if (isFreeze) {
-                //一直闪, 应该是修改间隔25ms还是太久了
-                bool isSuccess0 = MemoryDllUtils.FreezeValue(Brightness_Ground_Green2, "long", Ground_Green2[position]);
-                bool isSuccess1 = MemoryDllUtils.FreezeValue(Brightness_Ground_Purper2, "long", Ground_Purper2[position]);
-                bool isSuccess2 = MemoryDllUtils.FreezeValue(Brightness_Ground_Yellow2, "long", Ground_Yellow2[position]);
-                bool isSuccess3 = MemoryDllUtils.FreezeValue(Brightness_Ground_Green, "long", Ground_Green[position]);
-                bool isSuccess4 = MemoryDllUtils.FreezeValue(Brightness_Ground_Purper, "long", Ground_Purper[position]);
-                bool isSuccess5 = MemoryDllUtils.FreezeValue(Brightness_Ground_Yellow, "long", Ground_Yellow[position]);
-                isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
-            } else {
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Green2);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Purper2);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Yellow2);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Green);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Purper);
-                MemoryDllUtils.UnfreezeValue(Brightness_Ground_Yellow);
-                bool isSuccess0 = MemoryDllUtils.WriteLong(Brightness_Ground_Green2, Ground_Green2[position]);
-                bool isSuccess1 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper2, Ground_Purper2[position]);
-                bool isSuccess2 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow2, Ground_Yellow2[position]);
-                bool isSuccess3 = MemoryDllUtils.WriteLong(Brightness_Ground_Green, Ground_Green[position]);
-                bool isSuccess4 = MemoryDllUtils.WriteLong(Brightness_Ground_Purper, Ground_Purper[position]);
-                bool isSuccess5 = MemoryDllUtils.WriteLong(Brightness_Ground_Yellow, Ground_Yellow[position]);
-                isSuccess = isSuccess0 && isSuccess1&& isSuccess2 && isSuccess3 && isSuccess4 && isSuccess5;
-            }
+        /// <param name="position">第几个亮度[0~5]</param>
+        public static void BrightnessSet(int position, bool isPlayAng,
+            String sigl = Brightness_SkyEdge_Inner_Green_Light,
+            String sibl = Brightness_SkyEdge_Inner_Blue_Light,
+            String siyl = Brightness_SkyEdge_Inner_Yellow_Light,
+            String sl = Brightness_SkyEdge_Light, String sc = Brightness_SkyEdge_Color,
+            String gg2 = Brightness_Ground_Green2, String gp2 = Brightness_Ground_Purper2, String gy2 = Brightness_Ground_Yellow2,
+            String gg = Brightness_Ground_Green, String gp = Brightness_Ground_Purper, String gy = Brightness_Ground_Yellow,
+            String ol = Brightness_Object_Light
+            ) {
+            bool isSuccess00 = MemoryDllUtils.WriteLong(sigl, SkyEdge_Inner_Green_Light[position]);
+            bool isSuccess01 = MemoryDllUtils.WriteLong(sibl, SkyEdge_Inner_Blue_Light[position]);
+            bool isSuccess02 = MemoryDllUtils.WriteLong(siyl, SkyEdge_Inner_Yellow_Light[position]);
+            bool isSuccess10 = MemoryDllUtils.WriteLong(sl, SkyEdge_Light[position]);
+            bool isSuccess11 = MemoryDllUtils.WriteLong(sc, SkyEdge_Color[position]);
+            bool isSuccess20 = MemoryDllUtils.WriteLong(gg2, Ground_Green2[position]);
+            bool isSuccess21 = MemoryDllUtils.WriteLong(gp2, Ground_Purper2[position]);
+            bool isSuccess22 = MemoryDllUtils.WriteLong(gy2, Ground_Yellow2[position]);
+            bool isSuccess23 = MemoryDllUtils.WriteLong(gg, Ground_Green[position]);
+            bool isSuccess24 = MemoryDllUtils.WriteLong(gp, Ground_Purper[position]);
+            bool isSuccess25 = MemoryDllUtils.WriteLong(gy, Ground_Yellow[position]);
+            bool isSuccess30 = MemoryDllUtils.WriteLong(ol, Object_Light[position]);
+            bool isSuccess = isSuccess00 && isSuccess01 && isSuccess02 &&
+                             isSuccess10 && isSuccess11 &&
+                             isSuccess20 && isSuccess21  && isSuccess22 && isSuccess23 && isSuccess24 && isSuccess25 &&
+                             isSuccess30;
             if (isSuccess) {
                 if (isPlayAng) PlayAng();
             } else {
                 Console.WriteLine("环境亮度设置 失败!");
             }
         }
-        public static void BrightnessSet2(int position) {
-            bool isSuccess;
-            // byte[] lpBuffer = new byte[4];
-            // int nSize = 8;
-            // lpBuffer = BitConverter.GetBytes(Convert.ToInt64(write));
-            byte[] lpBuffer = BitConverter.GetBytes(Ground_Green2[position]);
-            UIntPtr code1 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Green2, "");
-            if (code1 == UIntPtr.Zero || code1.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
 
-            byte[] lpBuffer2 = BitConverter.GetBytes(Ground_Purper2[position]);
-            UIntPtr code2 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Purper2, "");
-            if (code2 == UIntPtr.Zero || code2.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer3 = BitConverter.GetBytes(Ground_Yellow2[position]);
-            UIntPtr code3 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Yellow2, "");
-            if (code3 == UIntPtr.Zero || code3.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer4 = BitConverter.GetBytes(Ground_Green[position]);
-            UIntPtr code4 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Green, "");
-            if (code4 == UIntPtr.Zero || code4.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer5 = BitConverter.GetBytes(Ground_Purper[position]);
-            UIntPtr code5 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Purper, "");
-            if (code5 == UIntPtr.Zero || code5.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
-
-            byte[] lpBuffer6 = BitConverter.GetBytes(Ground_Yellow[position]);
-            UIntPtr code6 = MemoryDllUtils.Memory.GetCode(Brightness_Ground_Yellow, "");
-            if (code6 == UIntPtr.Zero || code6.ToUInt64() < 65536UL /*0x010000*/)
-                return /*false*/;
-            Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
-
-            isSuccess = true;
-            
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("环境亮度设置 失败!");
+        // private static long _sigl0 = long.MaxValue;
+        private static long _sigl0 = long.MinValue;
+        /// <summary>
+        /// 打印某个时间段内的最后值
+        /// </summary>
+        public static void PrintBrightnesses() {
+            int sigl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Inner_Green_Light);
+            if (sigl == 0) return;
+            if (sigl > _sigl0) {
+                _sigl0 = sigl;
+                int sibl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Inner_Blue_Light);
+                int siyl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Inner_Yellow_Light);
+                int sl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Light);
+                int sc = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Color);
+                int ll = MemoryDllUtils.ReadInt(LampLight);
+                int gg2 = MemoryDllUtils.ReadInt(Brightness_Ground_Green2);
+                int gp2 = MemoryDllUtils.ReadInt(Brightness_Ground_Purper2);
+                int gy2 = MemoryDllUtils.ReadInt(Brightness_Ground_Yellow2);
+                int gg = MemoryDllUtils.ReadInt(Brightness_Ground_Green);
+                int gp = MemoryDllUtils.ReadInt(Brightness_Ground_Purper);
+                int gy = MemoryDllUtils.ReadInt(Brightness_Ground_Yellow);
+                int ol = MemoryDllUtils.ReadInt(Brightness_Object_Light);
+                Console.WriteLine($"sigl={sigl:X4}, sibl={sibl:X4}, siyl={siyl:X4}" + 
+                                  $" sl={sl:X4}, sc={sc:X4}, ll={ll:X4}, " +
+                                  $"gg2={gg2:X4}, gp2={gp2:X4}, gy2={gy2:X4}, " +
+                                  $"gg={gg:X4}, gp={gp:X4}, gy={gy:X4} " +
+                                  $"ol={ol:X4}");
             }
         }
 
@@ -682,15 +707,16 @@ namespace BoneTownHelperApplication.Utils {
         /// 瞬移到坐标
         /// </summary>
         /// <param name="coordinate"></param>
-        public static void Teleport(float[] coordinate, string failureStr) {
-            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, coordinate[0]);
-            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, coordinate[1]);
-            bool isSuccessZ = MemoryDllUtils.WriteFloat(ZAxis, coordinate[2]);
+        public static bool Teleport(float[] coordinate, string failureStr, string codeX = XAxis, string codeY = YAxis, string codeZ = ZAxis) {
+            bool isSuccessX = MemoryDllUtils.WriteFloat(codeX, coordinate[0]);
+            bool isSuccessY = MemoryDllUtils.WriteFloat(codeY, coordinate[1]);
+            bool isSuccessZ = MemoryDllUtils.WriteFloat(codeZ, coordinate[2]);
             if (isSuccessX && isSuccessY && isSuccessZ) {
                 PlayAng();
-            } else {
-                Console.WriteLine(failureStr);
+                return true;
             }
+            Console.WriteLine(failureStr);
+            return false;
         }
 
 
@@ -724,8 +750,8 @@ namespace BoneTownHelperApplication.Utils {
         /// maxDegree =             6.283183,           degreeI = 1086918614
         /// </summary>
         /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
-        private static float GetDegreePersonFront() {
-            return MemoryDllUtils.ReadFloat(DegreePersonFront);
+        private static float GetDegreePersonFront(string code = DegreePersonFront) {
+            return MemoryDllUtils.ReadFloat(code);
         }
         
         /// <summary>
@@ -733,16 +759,16 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="degree">弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</param>
         /// <returns></returns>
-        private static bool SetDegreePersonFront(float degree) {
-            return MemoryDllUtils.WriteFloat(DegreePersonFront, degree);
+        public static bool SetDegreePersonFront(float degree, string code = DegreePersonFront) {
+            return MemoryDllUtils.WriteFloat(code, degree);
         }
 
         /// <summary>
         /// 获取鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
         /// </summary>
         /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
-        private static float GetDegreeMouseLeftRight() {
-            return MemoryDllUtils.ReadFloat(DegreeMouseLeftRight);
+        private static float GetDegreeMouseLeftRight(string code = DegreeMouseLeftRight) {
+            return MemoryDllUtils.ReadFloat(code);
         }
 
 

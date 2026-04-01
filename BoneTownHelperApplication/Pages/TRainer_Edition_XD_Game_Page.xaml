@@ -173,7 +173,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="Auto" Height="20"
-                Source="/Resources/Images/money_split.png" />
+                Source="/Resources/Images/money_dollar.png" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="2"
@@ -604,21 +604,52 @@
                 HorizontalAlignment="Left"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
-
+            
             <Image
                 Grid.Row="14"
                 Grid.Column="1"
                 Width="Auto" Height="20"
-                Source="/Resources/Images/icon_jump.png" />
+                Source="/Resources/Images/FightBuff.png" />
             <TextBlock
                 Grid.Row="14"
+                Grid.Column="2"
+                TextAlignment="Center"
+                Text="攻击力&#x0A;(FightBuff)"
+                Margin="1" />
+            <Slider
+                Name="Slider_FightBuff"
+                Grid.Row="14"
+                Grid.Column="5"
+                Height="Auto"
+                VerticalAlignment="Center"
+                Maximum="299"
+                Minimum="-1"
+                Value="-1"
+                TickFrequency="1"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="14"
+                Grid.Column="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_FightBuff, Path=Value}"
+                ContentStringFormat="{}{0:N0}" />
+            
+            <Image
+                Grid.Row="15"
+                Grid.Column="1"
+                Width="Auto" Height="20"
+                Source="/Resources/Images/icon_jump.png" />
+            <TextBlock
+                Grid.Row="15"
                 Grid.Column="2"
                 TextAlignment="Center"
                 Text="跳高效果&#x0A;(High Jump)"
                 Margin="1" />
             <Slider
                 Name="Slider_High_Jump"
-                Grid.Row="14"
+                Grid.Row="15"
                 Grid.Column="5"
                 Height="Auto"
                 VerticalAlignment="Center"
@@ -628,7 +659,7 @@
                 TickFrequency="0.01"
                 IsMoveToPointEnabled="True" />
             <Label
-                Grid.Row="14"
+                Grid.Row="15"
                 Grid.Column="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -637,19 +668,19 @@
                 ContentStringFormat="{}{0:P0}" />
 
             <Image
-                Grid.Row="15"
+                Grid.Row="16"
                 Grid.Column="1"
                 Width="Auto" Height="20"
                 Source="/Resources/Images/icon_fast_run.png" />
             <TextBlock
-                Grid.Row="15"
+                Grid.Row="16"
                 Grid.Column="2"
                 TextAlignment="Center"
                 Text="快跑效果&#x0A;(Fast Run)"
                 Margin="1" />
             <Slider
                 Name="Slider_Fast_Run"
-                Grid.Row="15"
+                Grid.Row="16"
                 Grid.Column="5"
                 Height="Auto"
                 VerticalAlignment="Center"
@@ -659,7 +690,7 @@
                 TickFrequency="0.01"
                 IsMoveToPointEnabled="True" />
             <Label
-                Grid.Row="15"
+                Grid.Row="16"
                 Grid.Column="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -669,18 +700,18 @@
 
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
             <Image
-                Grid.Row="16"
+                Grid.Row="17"
                 Grid.Column="1"
                 Width="Auto" Height="20"
                 Source="/Resources/Images/StaminaTIP.png" />
             <TextBlock
-                Grid.Row="16"
+                Grid.Row="17"
                 Grid.Column="2"
                 TextAlignment="Center"
                 Text="冻结快感进度&#x0A;(Freeze Climax)"
                 Margin="1" />
             <Image
-                Grid.Row="16"
+                Grid.Row="17"
                 Grid.Column="5"
                 Name="Image_Freeze_Climax"
                 Width="35" Height="Auto"
@@ -690,19 +721,19 @@
 
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
             <Image
-                Grid.Row="17"
+                Grid.Row="18"
                 Grid.Column="1"
                 Stretch="Fill"
                 Width="Auto" Height="15"
                 Source="/Resources/Images/DrownBezel.png" />
             <TextBlock
-                Grid.Row="17"
+                Grid.Row="18"
                 Grid.Column="2"
                 TextAlignment="Center"
                 Text="潜水&#x0A;(Diving able)"
                 Margin="1" />
             <Image
-                Grid.Row="17"
+                Grid.Row="18"
                 Grid.Column="5"
                 Name="Image_Diving"
                 Width="35" Height="Auto"
@@ -721,13 +752,14 @@
                 FontSize="13"
                 Padding="5"
                 VerticalAlignment="Center"
-                Text=" 亮度(Light):" />
+                Text=" 亮度设置(Light Setting), 中止日/夜循环(pauseDaylight):" />
             <Image
-                Name="Image_Question_Mark"
-                Width="20" Height="Auto"
+                Name="Image_Pause_Daylight"
+                Width="35" Height="Auto"
+                Margin="5 0 0 0"
                 HorizontalAlignment="Left"
-                MouseLeftButtonDown="Btn_OnClick"
-                Source="/Resources/Images/question_mark_red.png" />
+                MouseLeftButtonDown="Light_OnClick"
+                Source="/Resources/Images/icon_switch_lightyellow.png" />
         </DockPanel>
         <Grid>
             <Grid.RowDefinitions>
@@ -754,40 +786,21 @@
                 HorizontalAlignment="Left"
                 MouseLeftButtonDown="Light_OnClick"
                 Source="/Resources/Images/icon_switch_green2.png" />
-            <!-- <StackPanel -->
-            <!--     Grid.Row="0" -->
-            <!--     Grid.Column="1" -->
-            <!--     Orientation="Horizontal"> -->
-            <!--     <RadioButton -->
-            <!--         Name="RB_Lamp_Close" -->
-            <!--         GroupName="Lamp" -->
-            <!--         Checked="Light_OnClick" -->
-            <!--         Content="关(Close)" -->
-            <!--         Margin="5 5 0 5"/> -->
-            <!--     <RadioButton -->
-            <!--         Name="RB_Lamp_Open" -->
-            <!--         GroupName="Lamp" -->
-            <!--         Checked="Light_OnClick" -->
-            <!--         Content="开(Open)" -->
-            <!--         Margin="5 5 0 5"/> -->
-            <!-- </StackPanel> -->
 
             <TextBlock
-                Visibility="Collapsed"
                 Grid.Row="1"
                 Grid.Column="0"
                 Text="亮度(Brightness):"
                 Margin="1" />
             <StackPanel
-                Visibility="Collapsed"
                 Grid.Row="1"
                 Grid.Column="1"
                 Orientation="Horizontal">
                 <RadioButton
-                    Name="RB_Brightness_Night"
+                    Name="RB_Brightness_Daytime"
                     GroupName="Brightness"
                     Checked="Light_OnClick"
-                    Content="晚上(Night)"
+                    Content="白昼(Daytime)"
                     Margin="5 5 0 5" />
                 <RadioButton
                     Name="RB_Brightness_Evening"
@@ -796,10 +809,28 @@
                     Content="傍晚(Evening)"
                     Margin="5 5 0 5" />
                 <RadioButton
-                    Name="RB_Brightness_Noon"
+                    Name="RB_Brightness_Dusk"
                     GroupName="Brightness"
                     Checked="Light_OnClick"
-                    Content="白天(Noon)"
+                    Content="黄昏(Dusk)"
+                    Margin="5 5 0 5" />
+                <RadioButton
+                    Name="RB_Brightness_Midnight"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="午夜(Midnight)"
+                    Margin="5 5 0 5" />
+                <RadioButton
+                    Name="RB_Brightness_Dawn"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="拂晓(Dawn)"
+                    Margin="5 5 0 5" />
+                <RadioButton
+                    Name="RB_Brightness_Morning"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="黎明(Morning)"
                     Margin="5 5 0 5" />
             </StackPanel>
         </Grid>

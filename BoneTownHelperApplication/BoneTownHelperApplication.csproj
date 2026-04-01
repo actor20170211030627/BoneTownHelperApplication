@@ -137,6 +137,8 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
+      <Resource Include="Resources\Images\FightBuff.png" />
+      <Resource Include="Resources\Images\money_dollar.png" />
       <Resource Include="Resources\Images\Steam_256x256x8BPP.png" />
       <Resource Include="Resources\Images\03_qq_symbol-1-250x300.png" />
       <Resource Include="Resources\Images\QQ_Group_BaiduPan_Download_2Files.png" />
@@ -146,7 +148,6 @@
       <Resource Include="Resources\Images\StaminaTIP.png" />
       <Resource Include="Resources\Images\icon_fast_run.png" />
       <Resource Include="Resources\Images\icon_jump.png" />
-      <Resource Include="Resources\Images\question_mark_red.png" />
       <None Include="Assets\Bonetown.ico" />
       <Resource Include="Resources\Images\Powermove.png" />
       <Resource Include="Resources\Images\RonJEntrance.png" />
@@ -165,9 +166,6 @@
       <Resource Include="Resources\Medias\ang.wav" />
       <Resource Include="Resources\Medias\deactivate.wav" />
       <Resource Include="Resources\Images\north_south.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Images\money_split.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Resource>
       <Resource Include="Resources\Images\PwrICONCrackSM.png">

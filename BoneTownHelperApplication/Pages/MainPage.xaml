@@ -42,21 +42,15 @@
             Padding="0 20 0 20"
             Text="&#160;&#160;或( or )" />
         
-        <Border
-            Height="Auto"
-            Width="Auto"
+        <TextBlock
             Grid.Row="2"
             Grid.Column="0"
-            HorizontalAlignment="Left"
-            Grid.ColumnSpan="3">
-            <TextBlock
-                Foreground="MediumVioletRed"
-                Background="LightGray"
-                MouseLeftButtonDown="OnMouseLeftButtonDown"
-                FontSize="13"
-                Padding="5"
-                Text="手动选择骨头镇版本(Select Bonetown version)" />
-        </Border>
+            Grid.ColumnSpan="3"
+            Foreground="White"
+            Background="LightSkyBlue"
+            FontSize="13"
+            Padding="5"
+            Text="手动选择骨头镇版本(Select Bonetown version):" />
         
         <TextBlock
             Grid.Row="3"

@@ -128,11 +128,6 @@ namespace BoneTownHelperApplication.Pages {
             }
         }
 
-        //手动选择骨头镇版本(Select Bonetown version)
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            Console.WriteLine("手动选择骨头镇版本(Select Bonetown version)");
-        }
-
 
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e) {

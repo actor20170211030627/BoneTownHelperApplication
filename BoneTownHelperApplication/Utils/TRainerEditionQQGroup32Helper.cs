@@ -1,5 +1,4 @@
 ﻿using System;
-using Memory;
 
 namespace BoneTownHelperApplication.Utils {
     public static class TRainerEditionQQGame32Helper {
@@ -24,7 +23,9 @@ namespace BoneTownHelperApplication.Utils {
         private const string Effect_Climax = ModuleName + "+0x00357F38,0x148,0x898";
         
         public const string Money = ModuleName + "+0x00357F38,0x148,0x4A8";
-        
+
+        private const string Clothing_Health = ModuleName + "+0x00357F38,0x148,0x4AC";
+
         public const string Beer    = ModuleName + "+0x00357F38,0x148,0x614";
         public const string Whiskey = ModuleName + "+0x00357F38,0x148,0x618";
         public const string Weed    = ModuleName + "+0x00357F38,0x148,0x61C";
@@ -47,18 +48,23 @@ namespace BoneTownHelperApplication.Utils {
         //灯光
         private const string LampLight = ModuleName + "+0x00483640,0x48";
         
+        private const string pauseDaylight = ModuleName + "+0x00687E9C,0x8";
         //环境亮度
-        private const string Brightness_Ground_Green2 = ModuleName + "+0x???,0x??";
-        private const string Brightness_Ground_Purper2 = ModuleName + "+0x???,0x??";
-        private const string Brightness_Ground_Yellow2 = ModuleName + "+0x???,0x??";
-        private const string Brightness_Ground_Green = ModuleName + "+0x???,0x??";
-        private const string Brightness_Ground_Purper = ModuleName + "+0x???,0x??";
-        private const string Brightness_Ground_Yellow = ModuleName + "+0x???,0x??";
+        private const string Brightness_SkyEdge_Inner_Green_Light = ModuleName + "+0x003530A4,0x2C0";
+        private const string Brightness_SkyEdge_Inner_Blue_Light = ModuleName + "+0x003530A4,0x2C4";
+        private const string Brightness_SkyEdge_Inner_Yellow_Light = ModuleName + "+0x003530A4,0x2C8";
+        private const string Brightness_SkyEdge_Light = ModuleName + "+0x003378FC,0x0,0x230";
+        private const string Brightness_SkyEdge_Color = ModuleName + "+0x003378FC,0x0,0xD7C";
+        private const string Brightness_Ground_Green2 = ModuleName + "+0x00687E9C,0x14,0x1E0";
+        private const string Brightness_Ground_Purper2 = ModuleName + "+0x00687E9C,0x14,0x1E4";
+        private const string Brightness_Ground_Yellow2 = ModuleName + "+0x00687E9C,0x14,0x1E8";
+        private const string Brightness_Ground_Green = ModuleName + "+0x00687E9C,0x14,0x1EC";
+        private const string Brightness_Ground_Purper = ModuleName + "+0x00687E9C,0x14,0x1F0";
+        private const string Brightness_Ground_Yellow = ModuleName + "+0x00687E9C,0x14,0x1F4";
+        private const string Brightness_Object_Light = ModuleName + "+0x00688204,0x60";
 
 
         public const string StrAbout = TRainerHelper.StrAbout;
-
-        public const string StrBrightness = TRainerHelper.StrBrightness;
 
         //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
         public static readonly float[] CoordinateMissionaryBeach2FirmWoodForest = TRainerHelper.CoordinateMissionaryBeach2FirmWoodForest;
@@ -127,33 +133,16 @@ namespace BoneTownHelperApplication.Utils {
         public static readonly float[] CoordinateManIsland2DownTown = TRainerHelper.CoordinateManIsland2DownTown;
 
 
-        /// <summary>
-        ///                             大晚上亮度   傍晚亮度   大白天亮度
-        /// 下方参数没搞, CE上修改了也没效果, 不知道啥原因???
-        /// </summary>
-        private static readonly long[] LampBrightness = TRainerHelper.LampBrightness;
-        private static readonly long[] Ground_Green2 = { 0x00000000, 0x00000000, 0x00000000 };
-        private static readonly long[] Ground_Purper2 = { 0x00000000, 0x00000000, 0x00000000 };
-        private static readonly long[] Ground_Yellow2 = { 0x00000000, 0x00000000, 0x00000000 };
-        private static readonly long[] Ground_Green = { 0x00000000, 0x00000000, 0x00000000 };
-        private static readonly long[] Ground_Purper = { 0x00000000, 0x00000000, 0x00000000 };
-        private static readonly long[] Ground_Yellow = { 0x00000000, 0x00000000, 0x00000000 };
-
-        //地图🗺️名称
-        private static readonly string Map1_Name = TRainerHelper.Map1_Name;
-        private static readonly string Map2_Name = TRainerHelper.Map2_Name;
-        private static readonly string Map3_Name = TRainerHelper.Map3_Name;
-        private static readonly string Map4_Name = TRainerHelper.Map4_Name;
-        private static readonly string Map5_Name = TRainerHelper.Map5_Name;
-        private static readonly string Map6_Name = TRainerHelper.Map6_Name;
-        private static readonly string Map7_Name = TRainerHelper.Map7_Name;
-        private static readonly string Map8_Name = TRainerHelper.Map8_Name;
-        private static readonly string Map9_Name = TRainerHelper.Map9_Name;
-
-
-
+        // 原来的变量 → 改成属性，赋值时自动触发同步
+        private static bool _isPlayAng = true;
         //是否播放Ang
-        public static bool IsPlayAng = true;
+        public static bool IsPlayAng{
+            get => _isPlayAng;
+            set {
+                _isPlayAng = value;
+                TRainerHelper.IsPlayAng = value;
+            }
+        }
 
 
         /// <summary>
@@ -161,144 +150,49 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <returns>-1, [1, 9]</returns>
         public static int GetMapPosition() {
-            string mapName = MemoryDllUtils.ReadString(Map_Name, 37);
-            if (string.IsNullOrEmpty(mapName)) return -1;
-            if (mapName.Equals(Map1_Name, StringComparison.OrdinalIgnoreCase)) return 1;
-            if (mapName.Equals(Map2_Name, StringComparison.OrdinalIgnoreCase)) return 2;
-            if (mapName.Equals(Map3_Name, StringComparison.OrdinalIgnoreCase)) return 3;
-            if (mapName.Equals(Map4_Name, StringComparison.OrdinalIgnoreCase)) return 4;
-            if (mapName.Equals(Map5_Name, StringComparison.OrdinalIgnoreCase)) return 5;
-            if (mapName.Equals(Map6_Name, StringComparison.OrdinalIgnoreCase)) return 6;
-            if (mapName.Equals(Map7_Name, StringComparison.OrdinalIgnoreCase)) return 7;
-            if (mapName.Equals(Map8_Name, StringComparison.OrdinalIgnoreCase)) return 8;
-            if (mapName.Equals(Map9_Name, StringComparison.OrdinalIgnoreCase)) return 9;
-            return -1;
+            return TRainerHelper.GetMapPosition(Map_Name);
         }
 
         public static void MoneyAdd() {
-            int money = MemoryDllUtils.ReadInt(Money);
-            bool isSuccess = MemoryDllUtils.WriteInt(Money, money + 1000);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("钱+1000失败!");
-            }
+            TRainerHelper.MoneyAdd(Money);
         }
 
         public static void BeerAdd() {
-            int beer = MemoryDllUtils.ReadInt(Beer);
-            bool isSuccess = MemoryDllUtils.WriteInt(Beer, beer + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("啤酒+100失败!");
-            }
+            TRainerHelper.BeerAdd(Beer);
         }
 
         public static void WhiskeyAdd() {
-            int whiskey = MemoryDllUtils.ReadInt(Whiskey);
-            bool isSuccess = MemoryDllUtils.WriteInt(Whiskey, whiskey + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("威士忌+100失败!");
-            }
+            TRainerHelper.WhiskeyAdd(Whiskey);
         }
 
         public static void NugAdd() {
-            int nug = MemoryDllUtils.ReadInt(Weed);
-            bool isSuccess = MemoryDllUtils.WriteInt(Weed, nug + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("小块大麻Nug🍃+100失败!");
-            }
+            TRainerHelper.NugAdd(Weed);
         }
 
         public static void ShroomAdd() {
-            int shroom = MemoryDllUtils.ReadInt(Shroom);
-            bool isSuccess = MemoryDllUtils.WriteInt(Shroom, shroom + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("迷幻蘑菇🍄Shroom+100失败!");
-            }
+            TRainerHelper.ShroomAdd(Shroom);
         }
 
         public static void PeyoteAdd() {
-            int peyote = MemoryDllUtils.ReadInt(Peyote);
-            bool isSuccess = MemoryDllUtils.WriteInt(Peyote, peyote + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("乌羽玉仙人掌的干燥茎块(Peyote Button)🌵+100失败!");
-            }
+            TRainerHelper.PeyoteAdd(Peyote);
         }
 
         public static void FrogAdd() {
-            int frog = MemoryDllUtils.ReadInt(Frog);
-            bool isSuccess = MemoryDllUtils.WriteInt(Frog, frog + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("蟾蜍Toad🐸+100失败!");
-            }
+            TRainerHelper.FrogAdd(Frog);
         }
 
         public static void CrackAdd() {
-            int crack = MemoryDllUtils.ReadInt(Crack);
-            bool isSuccess = MemoryDllUtils.WriteInt(Crack, crack + 100);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("可卡因块(Rock)+100失败!");
-            }
+            TRainerHelper.CrackAdd(Crack);
         }
 
-
-        public static void XAxisEdit(bool isEast, int value) {
-            float x = MemoryDllUtils.ReadFloat(XAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(XAxis, isEast ? x + value : x - value);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine(isEast ? "向东+5失败!" : "向西+5失败!");
-            }
-        }
-
-        public static void YAxisEdit(bool isNorth, int value) {
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(YAxis, isNorth ? y + value : y - value);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine(isNorth ? "向北+5失败!" : "向南+5失败!");
-            }
-        }
 
         public static void ZAxisEdit(bool isUp, int value) {
-            float z = MemoryDllUtils.ReadFloat(ZAxis);
-            bool isSuccess = MemoryDllUtils.WriteFloat(ZAxis, isUp ? z + value : z - value);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine(isUp ? "高度+5失败!" : "高度-5失败!");
-            }
+            TRainerHelper.ZAxisEdit(isUp, value, ZAxis);
         }
 
         //jj性感度加到最大
         public static void BallsAdd210() {
-            bool isSuccess = MemoryDllUtils.WriteInt(Balls_Sexy_Count, 10);
-            if (!isSuccess) {
-                Console.WriteLine("jj性感度(Balls_Sexy_Count)加到最大(10)失败!");
-                return;
-            }
-            isSuccess = MemoryDllUtils.WriteFloat(Balls_Sexy_Progress, 10f);
-            if (isSuccess) {
-                PlayAng();
-            } else {
-                Console.WriteLine("jj性感进度(Balls_Sexy_Progress)加到最大(10)失败!");
-            }
+            TRainerHelper.BallsAdd210(Balls_Sexy_Count, Balls_Sexy_Progress);
         }
 
         /// <summary>
@@ -306,16 +200,7 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isFreezeHealth"></param>
         public static void FreezeHealth(bool isFreezeHealth) {
-            if (isFreezeHealth) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Health, "float", 1f);
-                if (isSuccess) {
-                    PlayAng();
-                } else {
-                    Console.WriteLine("冻结无限健康 失败!");
-                }
-            } else {
-                MemoryDllUtils.UnfreezeValue(Health);
-            }
+            TRainerHelper.FreezeHealth(isFreezeHealth, Health);
         }
 
         /// <summary>
@@ -332,22 +217,7 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="isFreezeHighJump"></param>
         /// <param name="isPlayAng"></param>
         public static void SetHighJump(float height, bool isFreezeHighJump, bool isPlayAng) {
-            if (height > 1) {
-                height = 1;
-            } else if (height < 0) {
-                height = 0;
-            }
-            if (isFreezeHighJump) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Weed, "float", height);
-                if (isSuccess) {
-                    if (isPlayAng) PlayAng();
-                } else {
-                    Console.WriteLine("设置跳高效果 失败!");
-                }
-            } else {
-                MemoryDllUtils.UnfreezeValue(Effect_Countdown_Weed);
-                MemoryDllUtils.WriteFloat(Effect_Countdown_Weed, height);
-            }
+            TRainerHelper.SetHighJump(height, isFreezeHighJump, isPlayAng, Effect_Countdown_Weed);
         }
 
         /// <summary>
@@ -364,22 +234,23 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="isFreezeFastRun"></param>
         /// <param name="isPlayAng"></param>
         public static void SetFastRun(float speed, bool isFreezeFastRun, bool isPlayAng) {
-            if (speed > 1) {
-                speed = 1;
-            } else if (speed < 0) {
-                speed = 0;
-            }
-            if (isFreezeFastRun) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Countdown_Crack, "float", speed);
-                if (isSuccess) {
-                    if (isPlayAng) PlayAng();
-                } else {
-                    Console.WriteLine("设置快跑效果 失败!");
-                }
-            } else {
-                MemoryDllUtils.UnfreezeValue(Effect_Countdown_Crack);
-                MemoryDllUtils.WriteFloat(Effect_Countdown_Crack, speed);
-            }
+            TRainerHelper.SetFastRun(speed, isFreezeFastRun, isPlayAng, Effect_Countdown_Crack);
+        }
+
+        /// <summary>
+        /// 获取 Clothing_Health
+        /// </summary>
+        /// <returns></returns>
+        public static int GetClothing_Health() {
+            return MemoryDllUtils.ReadInt(Clothing_Health);
+        }
+        
+        /// <summary>
+        /// 写入 Clothing_Health, [-1, int.max]
+        /// </summary>
+        /// <param name="value"></param>
+        public static bool SetClothing_Health(int value) {
+            return MemoryDllUtils.WriteInt(Clothing_Health, value);
         }
 
         /// <summary>
@@ -387,16 +258,7 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isFreezeClimax"></param>
         public static void FreezeClimax(bool isFreezeClimax) {
-            if (isFreezeClimax) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(Effect_Climax, "float", 1f);
-                if (isSuccess) {
-                    PlayAng();
-                } else {
-                    Console.WriteLine("冻结快感进度 失败!");
-                }
-            } else {
-                MemoryDllUtils.UnfreezeValue(Effect_Climax);
-            }
+            TRainerHelper.FreezeClimax(isFreezeClimax, Effect_Climax);
         }
 
         /// <summary>
@@ -404,28 +266,7 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isFreezeDiving"></param>
         public static void FreezeDiving(bool isFreezeDiving) {
-            if (isFreezeDiving) {
-                bool isSuccess0 = MemoryDllUtils.FreezeValue(Drown_ProgressBar, "long", 0);
-                bool isSuccess1 = MemoryDllUtils.FreezeValue(Is_Drown_Deadable, "byte", 0);
-                bool isSuccess2 = MemoryDllUtils.FreezeValue(Is_Drown_Byte, "byte", 0);
-                if (isSuccess0 && isSuccess1 && isSuccess2) {
-                    PlayAng();
-                } else {
-                    Console.WriteLine("冻结潜水 失败!");
-                }
-            } else {
-                MemoryDllUtils.UnfreezeValue(Drown_ProgressBar);
-                MemoryDllUtils.UnfreezeValue(Is_Drown_Deadable);
-                MemoryDllUtils.UnfreezeValue(Is_Drown_Byte);
-                bool isSuccess0 = MemoryDllUtils.WriteByte(Drown_ProgressBar, 0);
-                bool isSuccess1 = MemoryDllUtils.WriteByte(Is_Drown_Deadable, 0);   //重置, 否则可能会一下水就死
-                bool isSuccess2 = MemoryDllUtils.WriteByte(Is_Drown_Byte, 0);
-                if (isSuccess0 && isSuccess1 && isSuccess2) {
-                    // PlayAng();
-                } else {
-                    Console.WriteLine("取消冻结 & 重置潜水 失败!");
-                }
-            }
+            TRainerHelper.FreezeDiving(isFreezeDiving, Drown_ProgressBar, Is_Drown_Deadable, Is_Drown_Byte);
         }
 
 
@@ -435,20 +276,7 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="isRight"></param>
         /// <param name="value"></param>
         public static void GoRightOrLeft(bool isRight, int value) {
-            float x = MemoryDllUtils.ReadFloat(XAxis);
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            // double degreePersonFront = GetDegreePersonFront();
-            float degreeMouseLeftRight = GetDegreeMouseLeftRight();
-            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
-            x = isRight ? x + (float)Math.Cos(degreeMouseLeftRight) * value : x - (float)Math.Cos(degreeMouseLeftRight) * value;
-            y = isRight ? y - (float)Math.Sin(degreeMouseLeftRight) * value : y + (float)Math.Sin(degreeMouseLeftRight) * value;
-            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
-            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
-            if (isSuccessX && isSuccessY) {
-                PlayAng();
-            } else {
-                Console.WriteLine(isRight ? "人物向右平移失败!" : "人物向左平移失败!");
-            }
+            TRainerHelper.GoRightOrLeft(isRight, value, XAxis, YAxis, DegreeMouseLeftRight, DegreePersonFront);
         }
 
         /// <summary>
@@ -457,51 +285,38 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="isFront"></param>
         /// <param name="value"></param>
         public static void GoFrontOrBack(bool isFront, int value) {
-            float x = MemoryDllUtils.ReadFloat(XAxis);
-            float y = MemoryDllUtils.ReadFloat(YAxis);
-            // float degreePersonFront = GetDegreePersonFront();
-            float degreeMouseLeftRight = GetDegreeMouseLeftRight();
-            bool isSetDegreePersonFrontSuccess = SetDegreePersonFront(degreeMouseLeftRight);
-            x = isFront ? x + (float)Math.Sin(degreeMouseLeftRight) * value : x - (float)Math.Sin(degreeMouseLeftRight) * value;
-            y = isFront ? y + (float)Math.Cos(degreeMouseLeftRight) * value : y - (float)Math.Cos(degreeMouseLeftRight) * value;
-            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, x);
-            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, y);
-            if (isSuccessX && isSuccessY) {
-                PlayAng();
-            } else {
-                Console.WriteLine(isFront ? "人物向前平移失败!" : "人物向后平移失败!");
-            }
+            TRainerHelper.GoFrontOrBack(isFront, value, XAxis, YAxis, DegreeMouseLeftRight, DegreePersonFront);
+        }
+
+        /// <summary>
+        /// 中止日/夜循环
+        /// </summary>
+        /// <param name="isPause">是否 中止日/夜循环</param>
+        /// <param name="isFreeze">是否冻结</param>
+        public static void PauseDaylight(bool isPause, bool isFreeze, bool isPlayAng) {
+            TRainerHelper.PauseDaylight(isPause, isFreeze, isPlayAng, pauseDaylight);
         }
 
         /// <summary>
         /// 灯光设置
         /// </summary>
         /// <param name="isOpen">是否打开</param>
-        /// <param name="isFreeze">是否冻结值</param>
-        public static void LampLightSet(bool isOpen, bool isFreeze, bool isPlayAng) {
-            bool isSuccess;
-            if (isFreeze) {
-                //一直闪, 应该是修改间隔25ms还是太久了
-                isSuccess = MemoryDllUtils.FreezeValue(LampLight, "long", LampBrightness[isOpen ? 1 : 0]);
-            } else {
-                MemoryDllUtils.UnfreezeValue(LampLight);
-                isSuccess = MemoryDllUtils.WriteLong(LampLight, LampBrightness[isOpen ? 1 : 0]);
-            }
-            if (isSuccess) {
-                if (isPlayAng) PlayAng();
-            } else {
-                Console.WriteLine("灯光亮度设置 失败!");
-            }
+        public static void LampLightSet(bool isOpen, bool isPlayAng) {
+            TRainerHelper.LampLightSet(isOpen, isPlayAng, LampLight);
         }
 
 
         /// <summary>
         /// 环境亮度设置
         /// </summary>
-        /// <param name="position">第几个亮度[0~2]</param>
-        /// <param name="isFreeze">是否冻结值</param>
-        public static void BrightnessSet(int position, bool isFreeze, bool isPlayAng) {
-            //TODO: 没有地址, 先屏蔽
+        /// <param name="position">第几个亮度[0~5]</param>
+        public static void BrightnessSet(int position, bool isPlayAng) {
+            TRainerHelper.BrightnessSet(position, isPlayAng,
+                Brightness_SkyEdge_Inner_Green_Light, Brightness_SkyEdge_Inner_Blue_Light, Brightness_SkyEdge_Inner_Yellow_Light,
+                Brightness_SkyEdge_Light, Brightness_SkyEdge_Color,
+                Brightness_Ground_Green2, Brightness_Ground_Purper2, Brightness_Ground_Yellow2,
+                Brightness_Ground_Green, Brightness_Ground_Purper, Brightness_Ground_Yellow,
+                Brightness_Object_Light);
         }
 
 
@@ -511,15 +326,7 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="coordinate"></param>
         /// <param name="failureStr"></param>
         public static bool Teleport(float[] coordinate, string failureStr) {
-            bool isSuccessX = MemoryDllUtils.WriteFloat(XAxis, coordinate[0]);
-            bool isSuccessY = MemoryDllUtils.WriteFloat(YAxis, coordinate[1]);
-            bool isSuccessZ = MemoryDllUtils.WriteFloat(ZAxis, coordinate[2]);
-            if (isSuccessX && isSuccessY && isSuccessZ) {
-                PlayAng();
-                return true;
-            }
-            Console.WriteLine(failureStr);
-            return false;
+            return TRainerHelper.Teleport(coordinate, failureStr, XAxis, YAxis, ZAxis);
         }
 
 
@@ -546,17 +353,9 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="degree">弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</param>
         /// <returns></returns>
         public static bool SetDegreePersonFront(float degree) {
-            return MemoryDllUtils.WriteFloat(DegreePersonFront, degree);
+            return TRainerHelper.SetDegreePersonFront(degree, DegreePersonFront);
         }
 
-        /// <summary>
-        /// 获取鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
-        /// </summary>
-        /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
-        private static float GetDegreeMouseLeftRight() {
-            return MemoryDllUtils.ReadFloat(DegreeMouseLeftRight);
-        }
-        
         /// <summary>
         /// 设置鼠标左右旋转角度 (从N开始, N右侧最小, N左侧最大)
         /// </summary>

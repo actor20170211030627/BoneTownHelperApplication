@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using BoneTownHelperApplication.Pages;
 
 namespace BoneTownHelperApplication {
@@ -10,6 +11,12 @@ namespace BoneTownHelperApplication {
 
         public MainWindow() {
             InitializeComponent();
+            //给Window设置高度(this.Height)设置无用, 会被Page高度撑开, 要设置 ScrollViewer的高度
+            //WorkArea: 获取当前屏幕可用高度（排除任务栏，推荐）
+            //★★★ 但是★★★ 可以给Window设置 MaxHeight ...
+            this.MaxHeight = SystemParameters.WorkArea.Height / 4 * 3;
+            // this.ScrollViewer.MaxHeight = SystemParameters.WorkArea.Height / 4 * 3;
+            
             //导航历史
             // this.ContentFrame.JournalOwnership = JournalOwnership.Automatic;
             

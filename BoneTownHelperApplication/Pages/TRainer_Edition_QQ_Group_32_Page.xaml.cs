@@ -19,6 +19,8 @@ namespace BoneTownHelperApplication.Pages {
         private bool _isProcOpen = false;
         //修改器是否激活
         private bool _isTRainerOpen = true;
+        //中止日/夜循环
+        private bool _isPauseDaylight = false;
         //灯光是否打开
         private bool _isLampOpen = true;
         //是否冻结无限健康
@@ -115,23 +117,15 @@ namespace BoneTownHelperApplication.Pages {
                     });
                 });
             }
-            
-            
-            /*
-             * 监听按键: 只能在窗口获取焦点时才管用
-             */
-            if (false) {
-                this.KeyDown += delegate(object sender, KeyEventArgs e) {
-                    // 判断是否同时按下了Ctrl键和S键
-                    if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control) {
-                        // 执行你的保存逻辑
-                        MessageBox.Show("保存命令被触发！");
-            
-                        // 标记事件为已处理，防止继续传递
-                        e.Handled = true;
-                    }
-                };
-            }
+
+            //攻击力
+            this.Slider_FightBuff.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                //回调频率太快, 播放声音过于密集
+                // TRainerEditionQQGame32Helper.PlayClick();
+                TRainerEditionQQGame32Helper.SetClothing_Health((int) ((Slider)sender).Value);
+            };
         }
         
         private void MyPage_Loaded(object sender, RoutedEventArgs e) {
@@ -153,6 +147,9 @@ namespace BoneTownHelperApplication.Pages {
                     //z轴 ZAxis
                     float zAxis = MemoryDllUtils.ReadFloat(TRainerEditionQQGame32Helper.ZAxis);
                     this.TB_ZAxis.Text = ((int) zAxis).ToString();
+
+                    //攻击力
+                    this.Slider_FightBuff.Value = TRainerEditionQQGame32Helper.GetClothing_Health();
 
                     //if先开游戏🎮并已修改, 再重新打开修改器
                     if (highJumpOld < 0 && fastRunOld < 0) {
@@ -411,11 +408,6 @@ namespace BoneTownHelperApplication.Pages {
             //关于
             if (name == this.Btn_About.Name) {
                 MessageBox.Show(TRainerEditionQQGame32Helper.StrAbout, "说明(explain):");
-                return;
-            }
-            //问号❓️❔️
-            if (name == this.Image_Question_Mark.Name) {
-                MessageBox.Show(TRainerEditionQQGame32Helper.StrBrightness, "亮度修改说明(Brightness explain):");
                 return;
             }
 
@@ -703,200 +695,62 @@ namespace BoneTownHelperApplication.Pages {
             if (!_isTRainerOpen) return;
 
             if (sender is Image image) {
-                //先停止掉以前的线程, 否则以前的线程也一直在修改值, 就会n多个线程在改值, 快速闪动!!!
-                isStartEditLamp = false;
                 string nameImage = image.Name;
+                if (nameImage == this.Image_Pause_Daylight.Name) {
+                    _isPauseDaylight = !_isPauseDaylight;
+                    Uri uri = TRainerEditionQQGame32Helper.GetSwitchUri(_isPauseDaylight);
+                    this.Image_Pause_Daylight.Source = new BitmapImage(uri);
+                    TRainerEditionQQGame32Helper.PauseDaylight(_isPauseDaylight, true, true);
+                    isUnfreezeAll = false;
+                    return;
+                }
                 if (nameImage == this.Image_Lamp_State.Name) {
                     _isLampOpen = !_isLampOpen;
                     Uri uri = TRainerEditionQQGame32Helper.GetSwitchUri(_isLampOpen);
                     this.Image_Lamp_State.Source = new BitmapImage(uri);
-
-                    if (false) {
-                        //CPU占用非常高, 50%左右, 线程没有写对???
-                        isStartEditLamp = true;
-                        StartEditLamp();
-                    } else {
-                        TRainerEditionQQGame32Helper.LampLightSet(_isLampOpen, true, true);
-                    }
-                    isUnfreezeAll = false;
+                    TRainerEditionQQGame32Helper.LampLightSet(_isLampOpen, true);
+                    return;
                 }
                 return;
             }
             
             if (!(sender is System.Windows.Controls.Control control)) return;
-            //先停止掉以前的线程, 否则以前的线程也一直在修改值, 就会n多个线程在改值, 快速闪动!!!
-            isStartEditBrightness = false;
             
             string name = control.Name;
 
-            //环境亮度设置
-            if (name == this.RB_Brightness_Night.Name) {
-                if (false) {
-                    editBrightnessPosition = 0;
-                    isStartEditBrightness = true;
-                    StartEditBrightness();
-                } else {
-                    TRainerEditionQQGame32Helper.BrightnessSet(0, false, true);
-                }
-                // isUnFreezeAll = false;
+            /**
+             * 环境亮度设置
+             */
+            //白昼(Daytime)
+            if (name == this.RB_Brightness_Daytime.Name) {
+                TRainerEditionQQGame32Helper.BrightnessSet(0, true);
                 return;
             }
+            //傍晚(Evening)
             if (name == this.RB_Brightness_Evening.Name) {
-                if (false) {
-                    editBrightnessPosition = 1;
-                    isStartEditBrightness = true;
-                    StartEditBrightness();
-                } else {
-                    TRainerEditionQQGame32Helper.BrightnessSet(1, false, true);
-                }
-                // isUnFreezeAll = false;
+                TRainerEditionQQGame32Helper.BrightnessSet(1, true);
                 return;
             }
-            if (name == this.RB_Brightness_Noon.Name) {
-                if (false) {
-                    editBrightnessPosition = 2;
-                    isStartEditBrightness = true;
-                    StartEditBrightness();
-                } else {
-                    TRainerEditionQQGame32Helper.BrightnessSet(2, false, true);
-                }
-                // isUnFreezeAll = false;
+            //黄昏(Dusk)
+            if (name == this.RB_Brightness_Dusk.Name) {
+                TRainerEditionQQGame32Helper.BrightnessSet(2, true);
                 return;
             }
-        }
-
-        private bool isStartEditLamp = false, isStartEditBrightness = false;
-        private int editBrightnessPosition = 0;
-        private void StartEditLamp() {
-            Task.Factory.StartNew((Action)(() => {
-                while (isStartEditLamp) {
-                    if (!_isProcOpen) return;
-                    if (!_isTRainerOpen) return;
-                    //1~2ms
-                    TRainerEditionQQGame32Helper.LampLightSet(_isLampOpen, false, false);
-                    // Thread.Sleep(1);    //1~10都会闪动
-                }
-            }));
-            TRainerEditionQQGame32Helper.PlayAng();
-        }
-        //都会闪动
-        private void StartEditBrightness() {
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         //1~8ms                                 参2=false, 也会一直闪动
-            //         TRainerEditionHelper.BrightnessSet(editBrightnessPosition, false);
-            //         // TRainerEditionHelper.BrightnessSet2(editBrightnessPosition);
-            //         Thread.Sleep(10);
-            //     }
-            // }));
-            // return;
-            
-            
-            // UIntPtr code1 = MemoryDllUtils.Memory.GetCode(TRainerEditionHelper.Brightness_Ground_Green2, "");
-            // if (code1 == UIntPtr.Zero || code1.ToUInt64() < 65536UL /*0x010000*/)
-            //     return /*false*/;
-            // UIntPtr code2 = MemoryDllUtils.Memory.GetCode(TRainerEditionHelper.Brightness_Ground_Purper2, "");
-            // if (code2 == UIntPtr.Zero || code2.ToUInt64() < 65536UL /*0x010000*/)
-            //     return /*false*/;
-            // UIntPtr code3 = MemoryDllUtils.Memory.GetCode(TRainerEditionHelper.Brightness_Ground_Yellow2, "");
-            // if (code3 == UIntPtr.Zero || code3.ToUInt64() < 65536UL /*0x010000*/)
-            //     return /*false*/;
-            // UIntPtr code4 = MemoryDllUtils.Memory.GetCode(TRainerEditionHelper.Brightness_Ground_Green, "");
-            // if (code4 == UIntPtr.Zero || code4.ToUInt64() < 65536UL /*0x010000*/)
-            //     return /*false*/;
-            // UIntPtr code5 = MemoryDllUtils.Memory.GetCode(TRainerEditionHelper.Brightness_Ground_Purper, "");
-            // if (code5 == UIntPtr.Zero || code5.ToUInt64() < 65536UL /*0x010000*/)
-            //     return /*false*/;
-            // UIntPtr code6 = MemoryDllUtils.Memory.GetCode(TRainerEditionHelper.Brightness_Ground_Yellow, "");
-            // if (code6 == UIntPtr.Zero || code6.ToUInt64() < 65536UL /*0x010000*/)
-            //     return /*false*/;
-
-            //也是一直闪动
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer = BitConverter.GetBytes(TRainerEditionHelper.Ground_Green2[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
-            //
-            //         byte[] lpBuffer2 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Purper2[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
-            //
-            //         byte[] lpBuffer3 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Yellow2[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
-            //
-            //         byte[] lpBuffer4 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Green[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
-            //
-            //         byte[] lpBuffer5 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Purper[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
-            //
-            //         byte[] lpBuffer6 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Yellow[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
-            //         
-            //         // Thread.Sleep(15);
-            //     }
-            // }));
-            
-            
-            //下方分成6个线程执行, 也是一直闪动!
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer = BitConverter.GetBytes(TRainerEditionHelper.Ground_Green2[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code1, lpBuffer, (UIntPtr) 8, IntPtr.Zero);
-            //     }
-            // }));
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer2 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Purper2[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code2, lpBuffer2, (UIntPtr) 8, IntPtr.Zero);
-            //     }
-            // }));
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer3 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Yellow2[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code3, lpBuffer3, (UIntPtr) 8, IntPtr.Zero);
-            //     }
-            // }));
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer4 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Green[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code4, lpBuffer4, (UIntPtr) 8, IntPtr.Zero);
-            //     }
-            // }));
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer5 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Purper[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code5, lpBuffer5, (UIntPtr) 8, IntPtr.Zero);
-            //     }
-            // }));
-            // Task.Factory.StartNew((Action)(() => {
-            //     while (isStartEditBrightness) {
-            //         if (!_isProcOpen) return;
-            //         if (!_isTRainerOpen) return;
-            //         
-            //         byte[] lpBuffer6 = BitConverter.GetBytes(TRainerEditionHelper.Ground_Yellow[editBrightnessPosition]);
-            //         Imps.WriteProcessMemory(MemoryDllUtils.Memory.mProc.Handle, code6, lpBuffer6, (UIntPtr) 8, IntPtr.Zero);
-            //     }
-            // }));
+            //午夜(Midnight)
+            if (name == this.RB_Brightness_Midnight.Name) {
+                TRainerEditionQQGame32Helper.BrightnessSet(3, true);
+                return;
+            }
+            //拂晓(Dawn)
+            if (name == this.RB_Brightness_Dawn.Name) {
+                TRainerEditionQQGame32Helper.BrightnessSet(4, true);
+                return;
+            }
+            //黎明(Morning)
+            if (name == this.RB_Brightness_Morning.Name) {
+                TRainerEditionQQGame32Helper.BrightnessSet(5, true);
+                return;
+            }
         }
 
         /// <summary>
@@ -928,8 +782,7 @@ namespace BoneTownHelperApplication.Pages {
             TRainerEditionQQGame32Helper.SetHighJump(0, false, false);
             TRainerEditionQQGame32Helper.SetFastRun(0, false, false);
             TRainerEditionQQGame32Helper.FreezeClimax(false);
-            TRainerEditionQQGame32Helper.LampLightSet(true, false, false);
-            TRainerEditionQQGame32Helper.BrightnessSet(2, false, false);
+            TRainerEditionQQGame32Helper.PauseDaylight(false, false, false);
             TRainerEditionQQGame32Helper.FreezeDiving(false);
             isUnfreezeAll = true;
         }
@@ -937,9 +790,6 @@ namespace BoneTownHelperApplication.Pages {
         // 页面卸载时执行 - 这是主要的方法
         private void MyPage_Unloaded(object sender, RoutedEventArgs e) {
             Console.WriteLine("页面卸载 - 在这里清理资源");
-            
-            isStartEditLamp = false;
-            isStartEditBrightness = false;
             
             m_GlobalHook.KeyUp -= GlobalHookKeyUp;
             //It is recommened to dispose it
