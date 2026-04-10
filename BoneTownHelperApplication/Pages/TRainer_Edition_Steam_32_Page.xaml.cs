@@ -11,7 +11,7 @@ using Gma.System.MouseKeyHook;
 using MessageBox = System.Windows.MessageBox;
 
 namespace BoneTownHelperApplication.Pages {
-    public partial class TRainer_Edition_XD_Game_Page : Page {
+    public partial class TRainer_Edition_Steam_32_Page : Page {
         
         //进程是否打开
         private bool _isProcOpen = false;
@@ -45,7 +45,7 @@ namespace BoneTownHelperApplication.Pages {
 
         private IKeyboardMouseEvents m_GlobalHook;
 
-        public TRainer_Edition_XD_Game_Page() {
+        public TRainer_Edition_Steam_32_Page() {
             InitializeComponent();
             
             this.Loaded += MyPage_Loaded;  // 订阅Loaded事件
@@ -62,7 +62,7 @@ namespace BoneTownHelperApplication.Pages {
             
 
             //钱Money
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Money, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Money, delegate(string s) {
                 // Console.WriteLine($"钱Money: {s}");
                 // 使用 Dispatcher 切换到 UI 线程
                 Dispatcher.Invoke(() => {
@@ -70,43 +70,43 @@ namespace BoneTownHelperApplication.Pages {
                 });
             });
             //啤酒Beer
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Beer, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Beer, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Beer.Text = s;
                 });
             });
             //威士忌Whiskey
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Whiskey, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Whiskey, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Whiskey.Text = s;
                 });
             });
             //小块大麻Nug🍃
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Weed, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Weed, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Nug.Text = s;
                 });
             });
             //迷幻蘑菇🍄Shroom
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Shroom, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Shroom, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Shroom.Text = s;
                 });
             });
             //乌羽玉仙人掌的干燥茎块(Peyote Button)🌵
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Peyote, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Peyote, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Peyote.Text = s;
                 });
             });
             //蟾蜍Toad🐸
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Frog, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Frog, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Frog.Text = s;
                 });
             });
             //可卡因块(Rock)
-            MemoryDllUtils.BindToUI<int>(TRainerEditionXDGameHelper.Crack, delegate(string s) {
+            MemoryDllUtils.BindToUI<int>(TRainerEditionSteam32Helper.Crack, delegate(string s) {
                 Dispatcher.Invoke(() => {
                     this.TB_Crack.Text = s;
                 });
@@ -124,11 +124,11 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
-                if (isFromUser) TRainerEditionXDGameHelper.SetBallsSize((float) ((Slider)sender).Value);
+                if (isFromUser) TRainerEditionSteam32Helper.SetBallsSize((float) ((Slider)sender).Value);
             };
             //攻击力
             this.Slider_FightBuff.ValueChanged += (sender, args) => {
@@ -139,11 +139,11 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
-                if (isFromUser) TRainerEditionXDGameHelper.SetClothing_Health((int) ((Slider)sender).Value);
+                if (isFromUser) TRainerEditionSteam32Helper.SetClothing_Health((int) ((Slider)sender).Value);
             };
             //跳高
             this.Slider_High_Jump.ValueChanged += (sender, args) => {
@@ -154,7 +154,7 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
@@ -162,7 +162,7 @@ namespace BoneTownHelperApplication.Pages {
                     float value = (float)((Slider)sender).Value;
                     isFreezeHighJump = value > 0;
                     if (isFreezeHighJump) isUnfreezeAll = false;
-                    TRainerEditionXDGameHelper.SetJumpHigher(value, isFreezeHighJump, false);
+                    TRainerEditionSteam32Helper.SetJumpHigher(value, isFreezeHighJump, false);
                 }
             };
             //护盾
@@ -174,7 +174,7 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
@@ -182,7 +182,7 @@ namespace BoneTownHelperApplication.Pages {
                     float value = (float)((Slider)sender).Value;
                     isFreezeShield = value > 0;
                     if (isFreezeShield) isUnfreezeAll = false;
-                    TRainerEditionXDGameHelper.SetShield(value, isFreezeShield, false);
+                    TRainerEditionSteam32Helper.SetShield(value, isFreezeShield, false);
                 }
             };
             //隐身
@@ -194,7 +194,7 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
@@ -202,7 +202,7 @@ namespace BoneTownHelperApplication.Pages {
                     float value = (float)((Slider)sender).Value;
                     isFreezeInvisible = value > 0;
                     if (isFreezeInvisible) isUnfreezeAll = false;
-                    TRainerEditionXDGameHelper.SetInvisible(value, isFreezeInvisible, false);
+                    TRainerEditionSteam32Helper.SetInvisible(value, isFreezeInvisible, false);
                 }
             };
             //撞飞
@@ -214,7 +214,7 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
@@ -222,7 +222,7 @@ namespace BoneTownHelperApplication.Pages {
                     float value = (float)((Slider)sender).Value;
                     isFreezeDamageTouches = value > 0;
                     if (isFreezeDamageTouches) isUnfreezeAll = false;
-                    TRainerEditionXDGameHelper.SetDamageTouches(value, isFreezeDamageTouches, false);
+                    TRainerEditionSteam32Helper.SetDamageTouches(value, isFreezeDamageTouches, false);
                 }
             };
             //快跑🏃‍♀️
@@ -234,7 +234,7 @@ namespace BoneTownHelperApplication.Pages {
                 if (timeStamp - clickTime > 300L) {
                     clickTime = timeStamp;
                     //避免回调频率太快, 播放声音过于密集
-                    TRainerEditionXDGameHelper.PlayClick();
+                    TRainerEditionSteam32Helper.PlayClick();
                 }
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
@@ -242,7 +242,7 @@ namespace BoneTownHelperApplication.Pages {
                     float value = (float)((Slider)sender).Value;
                     isFreezeFastRun = value > 0;
                     if (isFreezeFastRun) isUnfreezeAll = false;
-                    TRainerEditionXDGameHelper.SetFastRun(value, isFreezeFastRun, false);
+                    TRainerEditionSteam32Helper.SetFastRun(value, isFreezeFastRun, false);
                 }
             };
         }
@@ -256,29 +256,31 @@ namespace BoneTownHelperApplication.Pages {
             // 创建定时器，间隔为 1 秒
             _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(300.0);
+            double highJumpOld = -1, fastRunOld = -1;
+            double highJumpStep = this.Slider_High_Jump.TickFrequency, fastRunStep = this.Slider_Fast_Run.TickFrequency;
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
-                _isProcOpen = MemoryDllUtils.OpenProcess(TRainerEditionXDGameHelper.ProcessName);
+                _isProcOpen = MemoryDllUtils.OpenProcess(TRainerEditionSteam32Helper.ProcessName);
                 if (_isProcOpen) {
                     if (!_isTRainerOpen) return;
 
                     //z轴 ZAxis
-                    float zAxis = MemoryDllUtils.ReadFloat(TRainerEditionXDGameHelper.ZAxis);
+                    float zAxis = MemoryDllUtils.ReadFloat(TRainerEditionSteam32Helper.ZAxis);
                     this.TB_ZAxis.Text = ((int) zAxis).ToString();
 
                     //jj性感度
-                    this.Slider_Balls_Size.Value = TRainerEditionXDGameHelper.GetBallsSize();
+                    this.Slider_Balls_Size.Value = TRainerEditionSteam32Helper.GetBallsSize();
                     //攻击力
-                    this.Slider_FightBuff.Value = TRainerEditionXDGameHelper.GetClothing_Health();
+                    this.Slider_FightBuff.Value = TRainerEditionSteam32Helper.GetClothing_Health();
                     //跳高
-                    this.Slider_High_Jump.Value = TRainerEditionXDGameHelper.GetHighJump();
+                    this.Slider_High_Jump.Value = TRainerEditionSteam32Helper.GetHighJump();
                     //护盾
-                    this.Slider_Shield.Value = TRainerEditionXDGameHelper.GetShield();
+                    this.Slider_Shield.Value = TRainerEditionSteam32Helper.GetShield();
                     //隐身
-                    this.Slider_Invisible.Value = TRainerEditionXDGameHelper.GetInvisible();
+                    this.Slider_Invisible.Value = TRainerEditionSteam32Helper.GetInvisible();
                     //撞飞
-                    this.Slider_Damage_Touches.Value = TRainerEditionXDGameHelper.GetDamageTouches();
+                    this.Slider_Damage_Touches.Value = TRainerEditionSteam32Helper.GetDamageTouches();
                     //快跑🏃‍♀️
-                    this.Slider_Fast_Run.Value = TRainerEditionXDGameHelper.GetFastRun();
+                    this.Slider_Fast_Run.Value = TRainerEditionSteam32Helper.GetFastRun();
                 } else {
                     // Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
                     UnfreezeAll();
@@ -288,7 +290,7 @@ namespace BoneTownHelperApplication.Pages {
                 this.Border_Stopped.Visibility = _isProcOpen ? Visibility.Collapsed : Visibility.Visible;
                 
                 //设置传送Grid的显示/隐藏
-                int mapPosition = TRainerEditionXDGameHelper.GetMapPosition();
+                int mapPosition = TRainerEditionSteam32Helper.GetMapPosition();
                 SetGridElementVisibility(this.Grid_Teleport, 1, 4, mapPosition);
                 SetGridElementVisibility(this.Grid_Teleport, 1, 5, mapPosition);
                 SetGridElementVisibility(this.Grid_Teleport, 2, 3, mapPosition);
@@ -347,54 +349,54 @@ namespace BoneTownHelperApplication.Pages {
             Action actionMoney = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.MoneyAdd();
+                TRainerEditionSteam32Helper.MoneyAdd();
             };
             Action actionBeer = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.BeerAdd();
+                TRainerEditionSteam32Helper.BeerAdd();
             };
             Action actionWhiskey = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.WhiskeyAdd();
+                TRainerEditionSteam32Helper.WhiskeyAdd();
             };
             Action actionNug = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.NugAdd();
+                TRainerEditionSteam32Helper.NugAdd();
             };
             Action actionShroom = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.ShroomAdd();
+                TRainerEditionSteam32Helper.ShroomAdd();
             };
             Action actionPeyote = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.PeyoteAdd();
+                TRainerEditionSteam32Helper.PeyoteAdd();
             };
             Action actionFrog = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.FrogAdd();
+                TRainerEditionSteam32Helper.FrogAdd();
             };
             Action actionCrack = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                TRainerEditionXDGameHelper.CrackAdd();
+                TRainerEditionSteam32Helper.CrackAdd();
             };
             Action actionHeightAdd = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.ZAxisEdit(true, value);
+                TRainerEditionSteam32Helper.ZAxisEdit(true, value);
             };
             Action actionHeightMinus = () => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.ZAxisEdit(false, value);
+                TRainerEditionSteam32Helper.ZAxisEdit(false, value);
             };
 
             //3. Assign actions to key combinations
@@ -428,22 +430,22 @@ namespace BoneTownHelperApplication.Pages {
             
             if (e.KeyCode == Keys.Right) {  //东
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoRightOrLeft(true, value);
+                TRainerEditionSteam32Helper.GoRightOrLeft(true, value);
                 return;
             }
             if (e.KeyCode == Keys.Left) {   //西
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoRightOrLeft(false, value);
+                TRainerEditionSteam32Helper.GoRightOrLeft(false, value);
                 return;
             }
             if (e.KeyCode == Keys.Up) {     //北
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoFrontOrBack(true, value);
+                TRainerEditionSteam32Helper.GoFrontOrBack(true, value);
                 return;
             }
             if (e.KeyCode == Keys.Down) {   //南
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoFrontOrBack(false, value);
+                TRainerEditionSteam32Helper.GoFrontOrBack(false, value);
                 return;
             }
         }
@@ -451,27 +453,27 @@ namespace BoneTownHelperApplication.Pages {
 
         private void Btn_OnClick(object sender, RoutedEventArgs e) {
             
-            TRainerEditionXDGameHelper.PlayClick();
+            TRainerEditionSteam32Helper.PlayClick();
 
             if (!(sender is FrameworkElement fe)) return;
             string name = fe.Name;
             
             //播放Ang
             if (name == this.Image_Play_Ang.Name) {
-                TRainerEditionXDGameHelper.IsPlayAng = !TRainerEditionXDGameHelper.IsPlayAng;
-                Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(TRainerEditionXDGameHelper.IsPlayAng);
+                TRainerEditionSteam32Helper.IsPlayAng = !TRainerEditionSteam32Helper.IsPlayAng;
+                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(TRainerEditionSteam32Helper.IsPlayAng);
                 this.Image_Play_Ang.Source = new BitmapImage(uri);
-                if (TRainerEditionXDGameHelper.IsPlayAng) {
-                    TRainerEditionXDGameHelper.PlayAng();
+                if (TRainerEditionSteam32Helper.IsPlayAng) {
+                    TRainerEditionSteam32Helper.PlayAng();
                 }
                 return;
             }
             //激活修改器(TRainer activate)
             if (name == this.Image_TRainer_State.Name) {
                 _isTRainerOpen = !_isTRainerOpen;
-                Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(_isTRainerOpen);
+                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(_isTRainerOpen);
                 this.Image_TRainer_State.Source = new BitmapImage(uri);
-                TRainerEditionXDGameHelper.PlayActivate(_isTRainerOpen);
+                TRainerEditionSteam32Helper.PlayActivate(_isTRainerOpen);
                 if (!_isTRainerOpen) {
                     UnfreezeAll();
                 }
@@ -479,7 +481,7 @@ namespace BoneTownHelperApplication.Pages {
             }
             //关于
             if (name == this.Btn_About.Name) {
-                MessageBox.Show(TRainerEditionXDGameHelper.StrAbout, "说明(explain):");
+                MessageBox.Show(TRainerEditionSteam32Helper.StrAbout, "说明(explain):");
                 return;
             }
 
@@ -488,90 +490,90 @@ namespace BoneTownHelperApplication.Pages {
             
             //钱💰
             if (name == this.Btn_Money.Name) {
-                TRainerEditionXDGameHelper.MoneyAdd();
+                TRainerEditionSteam32Helper.MoneyAdd();
                 return;
             }
             
             //啤酒🍺
             if (name == this.Btn_Beer.Name) {
-                TRainerEditionXDGameHelper.BeerAdd();
+                TRainerEditionSteam32Helper.BeerAdd();
                 return;
             }
             //威士忌🤳
             if (name == this.Btn_Whiskey.Name) {
-                TRainerEditionXDGameHelper.WhiskeyAdd();
+                TRainerEditionSteam32Helper.WhiskeyAdd();
                 return;
             }
             //小块大麻Nug🍃
             if (name == this.Btn_Nug.Name) {
-                TRainerEditionXDGameHelper.NugAdd();
+                TRainerEditionSteam32Helper.NugAdd();
                 return;
             }
             //迷幻蘑菇🍄Shroom
             if (name == this.Btn_Shroom.Name) {
-                TRainerEditionXDGameHelper.ShroomAdd();
+                TRainerEditionSteam32Helper.ShroomAdd();
                 return;
             }
             //乌羽玉仙人掌的干燥茎块(Peyote Button)🌵
             if (name == this.Btn_Peyote.Name) {
-                TRainerEditionXDGameHelper.PeyoteAdd();
+                TRainerEditionSteam32Helper.PeyoteAdd();
                 return;
             }
             //蟾蜍Toad🐸
             if (name == this.Btn_Frog.Name) {
-                TRainerEditionXDGameHelper.FrogAdd();
+                TRainerEditionSteam32Helper.FrogAdd();
                 return;
             }
             //可卡因块(Rock)
             if (name == this.Btn_Crack.Name) {
-                TRainerEditionXDGameHelper.CrackAdd();
+                TRainerEditionSteam32Helper.CrackAdd();
                 return;
             }
             
             //东
             if (name == this.Btn_XAxis_Plus.Name) {
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoRightOrLeft(true, value);
+                TRainerEditionSteam32Helper.GoRightOrLeft(true, value);
                 return;
             }
             //西
             if (name == this.Btn_XAxis_Minus.Name) {
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoRightOrLeft(false, value);
+                TRainerEditionSteam32Helper.GoRightOrLeft(false, value);
                 return;
             }
             
             //北
             if (name == this.Btn_YAxis_Plus.Name) {
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoFrontOrBack(true, value);
+                TRainerEditionSteam32Helper.GoFrontOrBack(true, value);
                 return;
             }
             //南
             if (name == this.Btn_YAxis_Minus.Name) {
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.GoFrontOrBack(false, value);
+                TRainerEditionSteam32Helper.GoFrontOrBack(false, value);
                 return;
             }
             
             //高度+
             if (name == this.Btn_ZAxis_Plus.Name) {
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.ZAxisEdit(true, value);
+                TRainerEditionSteam32Helper.ZAxisEdit(true, value);
                 return;
             }
             //高度-
             if (name == this.Btn_ZAxis_Minus.Name) {
                 if (!(ComboBox_XYZDistance.SelectedValue is int value)) return;
-                TRainerEditionXDGameHelper.ZAxisEdit(false, value);
+                TRainerEditionSteam32Helper.ZAxisEdit(false, value);
                 return;
             }
             //无限健康
             if (name == this.Image_Infinite_Health.Name) {
                 isFreezeHealth = !isFreezeHealth;
-                Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(isFreezeHealth);
+                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(isFreezeHealth);
                 this.Image_Infinite_Health.Source = new BitmapImage(uri);
-                TRainerEditionXDGameHelper.FreezeHealth(isFreezeHealth);
+                TRainerEditionSteam32Helper.FreezeHealth(isFreezeHealth);
                 if (isFreezeHealth) {
                     isUnfreezeAll = false;
                 }
@@ -580,9 +582,9 @@ namespace BoneTownHelperApplication.Pages {
             //冻结快感进度
             if (name == this.Image_Freeze_Climax.Name) {
                 isFreezeClimax = !isFreezeClimax;
-                Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(isFreezeClimax);
+                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(isFreezeClimax);
                 this.Image_Freeze_Climax.Source = new BitmapImage(uri);
-                TRainerEditionXDGameHelper.FreezeClimax(isFreezeClimax);
+                TRainerEditionSteam32Helper.FreezeClimax(isFreezeClimax);
                 if (isFreezeClimax) {
                     isUnfreezeAll = false;
                 }
@@ -591,9 +593,9 @@ namespace BoneTownHelperApplication.Pages {
             //潜水
             if (name == this.Image_Diving.Name) {
                 isDiving = !isDiving;
-                Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(isDiving);
+                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(isDiving);
                 this.Image_Diving.Source = new BitmapImage(uri);
-                TRainerEditionXDGameHelper.FreezeDiving(isDiving);
+                TRainerEditionSteam32Helper.FreezeDiving(isDiving);
                 if (isDiving) {
                     isUnfreezeAll = false;
                 }
@@ -604,7 +606,7 @@ namespace BoneTownHelperApplication.Pages {
 
         private void OnTeleportClick(object sender, RoutedEventArgs e) {
 
-            TRainerEditionXDGameHelper.PlayClick();
+            TRainerEditionSteam32Helper.PlayClick();
 
             if (!_isProcOpen) return;
             if (!_isTRainerOpen) return;
@@ -614,108 +616,108 @@ namespace BoneTownHelperApplication.Pages {
 
             //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
             if (name == this.TB_MissionaryBeach2FirmWoodForest.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map1_to_Map2, "Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map1_to_Map2, "Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
                 return;
             }
             //Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地)
             if (name == this.TB_MissionaryBeach2GabachoHeights.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map1_to_Map4, "Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map1_to_Map4, "Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             
             //Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩)
             if (name == this.TB_FirmWoodForest2MissionaryBeach.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map2_to_Map1, "Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map2_to_Map1, "Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
                 return;
             }
             //Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园)
             if (name == this.TB_FirmWoodForest2HomelandTrailerPark.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map2_to_Map3, "Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map2_to_Map3, "Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!");
                 return;
             }
             
             //Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林)
             if (name == this.TB_HomelandTrailerPark2FirmWoodForest.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map3_to_Map2, "Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map3_to_Map2, "Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
                 return;
             }
 
             //Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩)
             if (name == this.TB_GabachoHeights2MissionaryBeach.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map4_to_Map1, "Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map4_to_Map1, "Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
                 return;
             }
             //Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)
             if (name == this.TB_GabachoHeights2HavajoIndianReservation.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map4_to_Map5, "Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map4_to_Map5, "Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地) 传送点失败!");
                 return;
             }
             //Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山)
             if (name == this.TB_GabachoHeights2NobbingHill.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map4_to_Map6, "Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map4_to_Map6, "Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
                 return;
             }
             
             
             //Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地)
             if (name == this.TB_HavajoIndianReservation2GabachoHeights.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map5_to_Map4, "Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map5_to_Map4, "Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             
             
             //Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心)
             if (name == this.TB_NobbingHill2DownTown.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map6_to_Map8, "Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map6_to_Map8, "Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心) 传送点失败!");
                 return;
             }
             //Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地)
             if (name == this.TB_NobbingHill2GabachoHeights.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map6_to_Map4, "Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map6_to_Map4, "Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             //Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽)
             if (name == this.TB_NobbingHill2MushroomMarsh.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map6_to_Map7, "Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map6_to_Map7, "Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽) 传送点失败!");
                 return;
             }
             
             
             //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan)
             if (name == this.TB_MushroomMarsh_Satan.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map7_to_Satan, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan) 失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map7_to_Satan, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan) 失败!");
                 return;
             }
             //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife)
             if (name == this.TB_MushroomMarsh_Satan_wife.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map7_to_SatanWife, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife) 失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map7_to_SatanWife, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife) 失败!");
                 return;
             }
             //Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山)
             if (name == this.TB_MushroomMarsh2NobbingHill.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map7_to_Map6, "Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山) 失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map7_to_Map6, "Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山) 失败!");
                 return;
             }
             
             
             //Map8(DownTown 市中心) RonJ大富翁
             if (name == this.TB_Downtown_RonJTowers.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map8_to_RonJEntrance, "瞬移到 Map8(DownTown 市中心) RonJ大富翁 失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map8_to_RonJEntrance, "瞬移到 Map8(DownTown 市中心) RonJ大富翁 失败!");
                 return;
             }
             //Map8(DownTown 市中心) 天使
             if (name == this.TB_Downtown_Angle.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map8_to_Angle, "瞬移到 Map8(DownTown 市中心) 天使 失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map8_to_Angle, "瞬移到 Map8(DownTown 市中心) 天使 失败!");
                 return;
             }
             //Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点
             if (name == this.TB_DownTown2ManIsland.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map8_to_Map9, "Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map8_to_Map9, "Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点失败!");
                 return;
             }
             //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
             if (name == this.TB_DownTown2NobbingHill.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map8_to_Map6, "Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map8_to_Map6, "Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
                 return;
             }
             //Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点
@@ -733,10 +735,10 @@ namespace BoneTownHelperApplication.Pages {
                 }
 
                 string failureStr = "Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!";
-                bool isSuccess0 = TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.CoordinateDownTown2HomelandTrailerPark, failureStr);
-                bool isSuccess1 = TRainerEditionXDGameHelper.SetDegreeMouseUpDown(1.470796347f);
-                bool isSuccess2 = TRainerEditionXDGameHelper.SetDegreeMouseLeftRight(0f);
-                bool isSuccess3 = TRainerEditionXDGameHelper.SetDegreePersonFront(0f);
+                bool isSuccess0 = TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.CoordinateDownTown2HomelandTrailerPark, failureStr);
+                bool isSuccess1 = TRainerEditionSteam32Helper.SetDegreeMouseUpDown(1.470796347f);
+                bool isSuccess2 = TRainerEditionSteam32Helper.SetDegreeMouseLeftRight(0f);
+                bool isSuccess3 = TRainerEditionSteam32Helper.SetDegreePersonFront(0f);
                 if (isSuccess0 && isSuccess1 && isSuccess2 && isSuccess3) {
                 } else Console.WriteLine($"{failureStr}: isSuccess0 = {isSuccess0}, isSuccess1 = {isSuccess1}, isSuccess2 = {isSuccess2}, isSuccess3 = {isSuccess3}");
                 return;
@@ -745,18 +747,18 @@ namespace BoneTownHelperApplication.Pages {
             
             //Map9(Man Island 曼岛)→高塔入口(Man Needle)
             if (name == this.TB_ManIsland2ManNeedle.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map9_to_ManNeedle, "Map9(Man Island 曼岛)→高塔入口(Man Needle) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map9_to_ManNeedle, "Map9(Man Island 曼岛)→高塔入口(Man Needle) 传送点失败!");
                 return;
             }
             //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
             if (name == this.TB_ManIsland2DownTown.Name) {
-                TRainerEditionXDGameHelper.Teleport(TRainerEditionXDGameHelper.Map9_to_Map8, "Map9(Man Island 曼岛)→Map8(DownTown 市中心) 传送点失败!");
+                TRainerEditionSteam32Helper.Teleport(TRainerEditionSteam32Helper.Map9_to_Map8, "Map9(Man Island 曼岛)→Map8(DownTown 市中心) 传送点失败!");
                 return;
             }
         }
 
         private void Light_OnClick(object sender, RoutedEventArgs e) {
-            TRainerEditionXDGameHelper.PlayClick();
+            TRainerEditionSteam32Helper.PlayClick();
             
             if (!_isProcOpen) return;
             if (!_isTRainerOpen) return;
@@ -765,17 +767,17 @@ namespace BoneTownHelperApplication.Pages {
                 string nameImage = image.Name;
                 if (nameImage == this.Image_Pause_Daylight.Name) {
                     _isPauseDaylight = !_isPauseDaylight;
-                    Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(_isPauseDaylight);
+                    Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(_isPauseDaylight);
                     this.Image_Pause_Daylight.Source = new BitmapImage(uri);
-                    TRainerEditionXDGameHelper.PauseDaylight(_isPauseDaylight, true, true);
+                    TRainerEditionSteam32Helper.PauseDaylight(_isPauseDaylight, true, true);
                     isUnfreezeAll = false;
                     return;
                 }
                 if (nameImage == this.Image_Lamp_State.Name) {
                     _isLampOpen = !_isLampOpen;
-                    Uri uri = TRainerEditionXDGameHelper.GetSwitchUri(_isLampOpen);
+                    Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(_isLampOpen);
                     this.Image_Lamp_State.Source = new BitmapImage(uri);
-                    TRainerEditionXDGameHelper.LampLightSet(_isLampOpen, true);
+                    TRainerEditionSteam32Helper.LampLightSet(_isLampOpen, true);
                     return;
                 }
                 return;
@@ -790,32 +792,32 @@ namespace BoneTownHelperApplication.Pages {
              */
             //黎明(Morning)
             if (name == this.RB_Brightness_Morning.Name) {
-                TRainerEditionXDGameHelper.BrightnessSet(0, true);
+                TRainerEditionSteam32Helper.BrightnessSet(0, true);
                 return;
             }
             //白昼(Daytime)
             if (name == this.RB_Brightness_Daytime.Name) {
-                TRainerEditionXDGameHelper.BrightnessSet(1, true);
+                TRainerEditionSteam32Helper.BrightnessSet(1, true);
                 return;
             }
             //傍晚(Evening)
             if (name == this.RB_Brightness_Evening.Name) {
-                TRainerEditionXDGameHelper.BrightnessSet(2, true);
+                TRainerEditionSteam32Helper.BrightnessSet(2, true);
                 return;
             }
             //黄昏(Dusk)
             if (name == this.RB_Brightness_Dusk.Name) {
-                TRainerEditionXDGameHelper.BrightnessSet(3, true);
+                TRainerEditionSteam32Helper.BrightnessSet(3, true);
                 return;
             }
             //午夜(Midnight)
             if (name == this.RB_Brightness_Midnight.Name) {
-                TRainerEditionXDGameHelper.BrightnessSet(4, true);
+                TRainerEditionSteam32Helper.BrightnessSet(4, true);
                 return;
             }
             //拂晓(Dawn)
             if (name == this.RB_Brightness_Dawn.Name) {
-                TRainerEditionXDGameHelper.BrightnessSet(5, true);
+                TRainerEditionSteam32Helper.BrightnessSet(5, true);
                 return;
             }
         }
@@ -845,15 +847,15 @@ namespace BoneTownHelperApplication.Pages {
         /// </summary>
         private void UnfreezeAll() {
             if (isUnfreezeAll) return;
-            TRainerEditionXDGameHelper.FreezeHealth(false);
-            TRainerEditionXDGameHelper.SetJumpHigher(0, false, false);
-            TRainerEditionXDGameHelper.SetShield(0, false, false);
-            TRainerEditionXDGameHelper.SetInvisible(0, false, false);
-            TRainerEditionXDGameHelper.SetDamageTouches(0, false, false);
-            TRainerEditionXDGameHelper.SetFastRun(0, false, false);
-            TRainerEditionXDGameHelper.FreezeClimax(false);
-            TRainerEditionXDGameHelper.PauseDaylight(false, false, false);
-            TRainerEditionXDGameHelper.FreezeDiving(false);
+            TRainerEditionSteam32Helper.FreezeHealth(false);
+            TRainerEditionSteam32Helper.SetJumpHigher(0, false, false);
+            TRainerEditionSteam32Helper.SetShield(0, false, false);
+            TRainerEditionSteam32Helper.SetInvisible(0, false, false);
+            TRainerEditionSteam32Helper.SetDamageTouches(0, false, false);
+            TRainerEditionSteam32Helper.SetFastRun(0, false, false);
+            TRainerEditionSteam32Helper.FreezeClimax(false);
+            TRainerEditionSteam32Helper.PauseDaylight(false, false, false);
+            TRainerEditionSteam32Helper.FreezeDiving(false);
             isUnfreezeAll = true;
         }
 

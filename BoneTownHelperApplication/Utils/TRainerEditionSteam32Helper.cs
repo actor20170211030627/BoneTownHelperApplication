@@ -1,70 +1,70 @@
 ﻿using System;
 
 namespace BoneTownHelperApplication.Utils {
-    public static class TRainerEditionQQGroup32Helper {
+    public static class TRainerEditionSteam32Helper {
         public const string ProcessName = "BoneTown32";
         private const string ModuleName = "BoneTown32.exe";
         
         //沉溺进度条
-        private const string Drown_ProgressBar = ModuleName + "+0x00339C6C,0x50,0x0,0x50,0x10,0x50,0x0,0xA0";
+        private const string Drown_ProgressBar = ModuleName + "+0x0046F54C,0x50,0x0,0x50,0x10,0x50,0x0,0xA0";
         //加载的地图🗺️名称
-        private const string Map_Name          = ModuleName + "+0x00326080";
+        private const string Map_Name          = ModuleName + "+0x45B7A0";
         //是否能淹死
-        private const string Is_Drown_Deadable = ModuleName + "+0x00357F38,0x148,0x481";
+        private const string Is_Drown_Deadable = ModuleName + "+0x0045DD38,0x20,0x4,0x481";
         //是否沉溺, Byte: 0, 1
-        private const string Is_Drown_Byte = ModuleName + "+0x00357F38,0x148,0x482";
+        private const string Is_Drown_Byte = ModuleName + "+0x0045DD38,0x20,0x4,0x482";
 
-        private const string Balls_Sexy_Progress = ModuleName + "+0x00357F38,0x148,0x4A0";
-        private const string Balls_Sexy_Count    = ModuleName + "+0x00357F38,0x148,0x4A4";
+        private const string Balls_Sexy_Progress = ModuleName + "+0x0045DD38,0x20,0x4,0x4A0";
+        private const string Balls_Sexy_Count    = ModuleName + "+0x0045DD38,0x20,0x4,0x4A4";
 
-        private const string Health = ModuleName + "+0x00357F38,0x148,0x49C";
-        private const string Effect_Countdown_Weed = ModuleName + "+0x00357F38,0x148,0x638";
-        private const string Effect_Countdown_Shroom = ModuleName + "+0x00357F38,0x148,0x63C";
-        private const string Effect_Countdown_Peyote = ModuleName + "+0x00357F38,0x148,0x640";
-        private const string Effect_Countdown_Toad = ModuleName + "+0x00357F38,0x148,0x644";
-        private const string Effect_Countdown_Crack = ModuleName + "+0x00357F38,0x148,0x648";
-        private const string Effect_Climax = ModuleName + "+0x00357F38,0x148,0x898";
+        private const string Health = ModuleName + "+0x0045DD38,0x20,0x4,0x49C";
+        private const string Effect_Countdown_Weed = ModuleName + "+0x0045DD38,0x20,0x4,0x638";
+        private const string Effect_Countdown_Shroom = ModuleName + "+0x0045DD38,0x20,0x4,0x63C";
+        private const string Effect_Countdown_Peyote = ModuleName + "+0x0045DD38,0x20,0x4,0x640";
+        private const string Effect_Countdown_Toad = ModuleName + "+0x0045DD38,0x20,0x4,0x644";
+        private const string Effect_Countdown_Crack = ModuleName + "+0x0045DD38,0x20,0x4,0x648";
+        private const string Effect_Climax = ModuleName + "+0x0045DD38,0x20,0x4,0x898";
         
-        public const string Money = ModuleName + "+0x00357F38,0x148,0x4A8";
+        public const string Money = ModuleName + "+0x0045DD38,0x20,0x4,0x4A8";
 
-        private const string Clothing_Health = ModuleName + "+0x00357F38,0x148,0x4AC";
+        private const string Clothing_Health = ModuleName + "+0x0045DD38,0x20,0x4,0x4AC";
 
-        public const string Beer    = ModuleName + "+0x00357F38,0x148,0x614";
-        public const string Whiskey = ModuleName + "+0x00357F38,0x148,0x618";
-        public const string Weed    = ModuleName + "+0x00357F38,0x148,0x61C";
-        public const string Shroom  = ModuleName + "+0x00357F38,0x148,0x620";
-        public const string Peyote  = ModuleName + "+0x00357F38,0x148,0x624";
-        public const string Frog    = ModuleName + "+0x00357F38,0x148,0x628";
-        public const string Crack   = ModuleName + "+0x00357F38,0x148,0x62C";
+        public const string Beer    = ModuleName + "+0x0045DD38,0x20,0x4,0x614";
+        public const string Whiskey = ModuleName + "+0x0045DD38,0x20,0x4,0x618";
+        public const string Weed    = ModuleName + "+0x0045DD38,0x20,0x4,0x61C";
+        public const string Shroom  = ModuleName + "+0x0045DD38,0x20,0x4,0x620";
+        public const string Peyote  = ModuleName + "+0x0045DD38,0x20,0x4,0x624";
+        public const string Frog    = ModuleName + "+0x0045DD38,0x20,0x4,0x628";
+        public const string Crack   = ModuleName + "+0x0045DD38,0x20,0x4,0x62C";
         
-        public const string XAxis   = ModuleName + "+0x00357F38,0x148,0x84C";
-        public const string YAxis   = ModuleName + "+0x00357F38,0x148,0x850";
-        public const string ZAxis   = ModuleName + "+0x00357F38,0x148,0x854";
+        public const string XAxis   = ModuleName + "+0x0045DD38,0x20,0x4,0x84C";
+        public const string YAxis   = ModuleName + "+0x0045DD38,0x20,0x4,0x850";
+        public const string ZAxis   = ModuleName + "+0x0045DD38,0x20,0x4,0x854";
         
         //人物朝向的角度
-        private const string DegreePersonFront  = ModuleName + "+0x00357F38,0x148,0x858";
+        private const string DegreePersonFront  = ModuleName + "+0x0045DD38,0x20,0x4,0x858";
         //鼠标上下移动的角度
-        private const string DegreeMouseUpDown = ModuleName + "+0x00381E0C,0xBC,0x3BC";
+        private const string DegreeMouseUpDown = ModuleName + "+0x004B77F4,0xBC,0x3BC";
         //鼠标左右移动的角度
-        private const string DegreeMouseLeftRight = ModuleName + "+0x00381E0C,0xBC,0x3C4";
+        private const string DegreeMouseLeftRight = ModuleName + "+0x004B77F4,0xBC,0x3C4";
         
         //灯光
-        private const string LampLight = ModuleName + "+0x00483640,0x48";
+        private const string LampLight = ModuleName + "+0x005B9028,0x48";
         
-        private const string pauseDaylight = ModuleName + "+0x00687E9C,0x8";
+        private const string pauseDaylight = ModuleName + "+0x007BD884,0x8";
         //环境亮度
-        private const string Brightness_SkyEdge_Inner_Green_Light = ModuleName + "+0x003530A4,0x2C0";
-        private const string Brightness_SkyEdge_Inner_Blue_Light = ModuleName + "+0x003530A4,0x2C4";
-        private const string Brightness_SkyEdge_Inner_Yellow_Light = ModuleName + "+0x003530A4,0x2C8";
-        private const string Brightness_SkyEdge_Light = ModuleName + "+0x003378FC,0x0,0x230";
-        private const string Brightness_SkyEdge_Color = ModuleName + "+0x003378FC,0x0,0xD7C";
-        private const string Brightness_Ground_Green2 = ModuleName + "+0x00687E9C,0x14,0x1E0";
-        private const string Brightness_Ground_Purper2 = ModuleName + "+0x00687E9C,0x14,0x1E4";
-        private const string Brightness_Ground_Yellow2 = ModuleName + "+0x00687E9C,0x14,0x1E8";
-        private const string Brightness_Ground_Green = ModuleName + "+0x00687E9C,0x14,0x1EC";
-        private const string Brightness_Ground_Purper = ModuleName + "+0x00687E9C,0x14,0x1F0";
-        private const string Brightness_Ground_Yellow = ModuleName + "+0x00687E9C,0x14,0x1F4";
-        private const string Brightness_Object_Light = ModuleName + "+0x00688204,0x60";
+        private const string Brightness_SkyEdge_Inner_Green_Light = ModuleName + "+0x00488A8C,0x2C0";
+        private const string Brightness_SkyEdge_Inner_Blue_Light = ModuleName + "+0x00488A8C,0x2C4";
+        private const string Brightness_SkyEdge_Inner_Yellow_Light = ModuleName + "+0x00488A8C,0x2C8";
+        private const string Brightness_SkyEdge_Light = ModuleName + "+0x007BD884,0x18,0x230";
+        private const string Brightness_SkyEdge_Color = ModuleName + "+0x007BD884,0x18,0xD7C";
+        private const string Brightness_Ground_Green2 = ModuleName + "+0x007BD884,0x14,0x1E0";
+        private const string Brightness_Ground_Purper2 = ModuleName + "+0x007BD884,0x14,0x1E4";
+        private const string Brightness_Ground_Yellow2 = ModuleName + "+0x007BD884,0x14,0x1E8";
+        private const string Brightness_Ground_Green = ModuleName + "+0x007BD884,0x14,0x1EC";
+        private const string Brightness_Ground_Purper = ModuleName + "+0x007BD884,0x14,0x1F0";
+        private const string Brightness_Ground_Yellow = ModuleName + "+0x007BD884,0x14,0x1F4";
+        private const string Brightness_Object_Light = ModuleName + "+0x007BDBEC,0x60";
 
 
         public const string StrAbout = TRainerHelper.StrAbout;

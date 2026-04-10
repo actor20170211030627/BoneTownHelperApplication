@@ -19,12 +19,12 @@ namespace BoneTownHelperApplication.Pages {
         private const string Md5_Stream_32   = "dc69f146ca1f901362b7efeeec9427e1";
         private const string Md5_Stream_64   = "0e49ac2c6d568498533805432a96b1d1";
 
-        private Frame contentFrame;
-        private DispatcherTimer _dispatcherTimer;
+        private readonly Frame _contentFrame;
+        private readonly DispatcherTimer _dispatcherTimer;
         
         public MainPage(Frame contentFrame) {
             InitializeComponent();
-            this.contentFrame = contentFrame;
+            this._contentFrame = contentFrame;
             
             this.Loaded += MyPage_Loaded;  // 订阅Loaded事件
             this.Unloaded += MyPage_Unloaded;  // 订阅Unloaded事件
@@ -32,9 +32,9 @@ namespace BoneTownHelperApplication.Pages {
             _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(600.0);
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
-                string processPath = ProcessUtils.GetProcessPath("BoneTown");
+                string processPath = ProcessUtils.GetProcessPath(TRainerHelper.ProcessName);
                 if (processPath == null) {
-                    processPath = ProcessUtils.GetProcessPath("BoneTown32");
+                    processPath = ProcessUtils.GetProcessPath(TRainerEditionQQGroup32Helper.ProcessName);
                 }
                 if (processPath == null) return;
                 //计算文件的MD5值
@@ -59,8 +59,10 @@ namespace BoneTownHelperApplication.Pages {
                             .Show();
                         break;
                     case Md5_Stream_32:
+                        Go2Steam_32();
+                        break;
                     case Md5_Stream_64:
-                        MessageBoxUtils.NewMessageBox("Steam正版游戏还没适配\nSteam version haven't support")
+                        MessageBoxUtils.NewMessageBox("请打开BoneTown32.exe(64位没适配)\nPls open BoneTown32.exe(64bit no support)")
                             .SetCaption("修改器提示(Trainer tips)")
                             .SetIcon(MessageBoxImage.Error)
                             .Show();
@@ -77,21 +79,27 @@ namespace BoneTownHelperApplication.Pages {
         }
 
         private void Go2OldVersion() {
-            contentFrame.Navigate(new TRainer_Old_Page());
+            _contentFrame.Navigate(new TRainer_Old_Page());
             //手动清理历史记录
-            contentFrame.NavigationService.RemoveBackEntry();
+            _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         private void Go2Xd_Game() {
-            contentFrame.Navigate(new TRainer_Edition_XD_Game_Page());
+            _contentFrame.Navigate(new TRainer_Edition_XD_Game_Page());
             //手动清理历史记录
-            contentFrame.NavigationService.RemoveBackEntry();
+            _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         private void Go2QQ_Group_32() {
-            contentFrame.Navigate(new TRainer_Edition_QQ_Group_32_Page());
+            _contentFrame.Navigate(new TRainer_Edition_QQ_Group_32_Page());
             //手动清理历史记录
-            contentFrame.NavigationService.RemoveBackEntry();
+            _contentFrame.NavigationService.RemoveBackEntry();
+        }
+
+        private void Go2Steam_32() {
+            _contentFrame.Navigate(new TRainer_Edition_Steam_32_Page());
+            //手动清理历史记录
+            _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         private void OnVersionSelectClick(object sender, RoutedEventArgs routedEventArgs) {
@@ -120,14 +128,16 @@ namespace BoneTownHelperApplication.Pages {
             }
             //在Steam正版下载
             if (name == this.Btn_Second_Coming_Edition_Steam.Name) {
-                MessageBoxUtils.NewMessageBox("Steam正版游戏还没适配(∵作者没买...)\nSteam version haven't support")
+                MessageBoxResult result = MessageBoxUtils.NewMessageBox("请确保打开的是BoneTown32.exe(64位没适配)\nPls ensure opened BoneTown32.exe(64bit no support)")
                     .SetCaption("修改器提示(Trainer tips)")
-                    .SetIcon(MessageBoxImage.Error)
+                    .SetIcon(MessageBoxImage.Warning)
                     .Show();
+                if (result == MessageBoxResult.OK) {
+                    Go2Steam_32();
+                }
                 return;
             }
         }
-
 
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e) {

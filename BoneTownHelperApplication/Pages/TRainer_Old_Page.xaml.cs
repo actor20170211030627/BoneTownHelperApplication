@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -28,6 +27,12 @@ namespace BoneTownHelperApplication.Pages {
         private bool isFreezeHealth = false;
         //冻结跳高效果
         private bool isFreezeHighJump = false;
+        //冻结护盾效果
+        private bool isFreezeShield = false;
+        //冻结隐身效果
+        private bool isFreezeInvisible = false;
+        //冻结撞飞效果
+        private bool isFreezeDamageTouches = false;
         //冻结快跑效果
         private bool isFreezeFastRun = false;
         //冻结快感进度
@@ -137,13 +142,143 @@ namespace BoneTownHelperApplication.Pages {
                 };
             }
 
+            long clickTime = 0L;
+            //jj性感度
+            this.Slider_Balls_Size.ValueChanged += (sender, args) => {
+                //Value: 0~10, F0：强制取整数，没有小数位
+                this.Label_Balls_Size.Content = $"{((Slider)sender).Value * 10:F0}%";
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) TRainerHelper.SetBallsSize((float) ((Slider)sender).Value);
+            };
             //攻击力
             this.Slider_FightBuff.ValueChanged += (sender, args) => {
                 if (!_isProcOpen) return;
                 if (!_isTRainerOpen) return;
-                //回调频率太快, 播放声音过于密集
-                // TRainerHelper.PlayClick();
-                TRainerHelper.SetClothing_Health((int) ((Slider)sender).Value);
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) TRainerHelper.SetClothing_Health((int) ((Slider)sender).Value);
+            };
+            //跳高
+            this.Slider_High_Jump.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                /**
+                 * 为何要判断???
+                 * 因为DispatcherTimer一直在设置, Slider这儿会回调, 而实际值一直在减少, 会导致Slider一直往下滑
+                 * 并且游戏中手动使用了物品后, DispatcherTimer中也会触发Slider值的改变, 导致值在Slider的ValueChanged中被冻结
+                 */
+                if (isFromUser) {
+                    float value = (float)((Slider)sender).Value;
+                    isFreezeHighJump = value > 0;
+                    if (isFreezeHighJump) isUnfreezeAll = false;
+                    TRainerHelper.SetJumpHigher(value, isFreezeHighJump, false);
+                }
+            };
+            //护盾
+            this.Slider_Shield.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) {
+                    float value = (float)((Slider)sender).Value;
+                    isFreezeShield = value > 0;
+                    if (isFreezeShield) isUnfreezeAll = false;
+                    TRainerHelper.SetShield(value, isFreezeShield, false);
+                }
+            };
+            //隐身
+            this.Slider_Invisible.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) {
+                    float value = (float)((Slider)sender).Value;
+                    isFreezeInvisible = value > 0;
+                    if (isFreezeInvisible) isUnfreezeAll = false;
+                    TRainerHelper.SetInvisible(value, isFreezeInvisible, false);
+                }
+            };
+            //撞飞
+            this.Slider_Damage_Touches.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) {
+                    float value = (float)((Slider)sender).Value;
+                    isFreezeDamageTouches = value > 0;
+                    if (isFreezeDamageTouches) isUnfreezeAll = false;
+                    TRainerHelper.SetDamageTouches(value, isFreezeDamageTouches, false);
+                }
+            };
+            //快跑🏃‍♀️
+            this.Slider_Fast_Run.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerHelper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) {
+                    float value = (float)((Slider)sender).Value;
+                    isFreezeFastRun = value > 0;
+                    if (isFreezeFastRun) isUnfreezeAll = false;
+                    TRainerHelper.SetFastRun(value, isFreezeFastRun, false);
+                }
             };
         }
         
@@ -156,8 +291,6 @@ namespace BoneTownHelperApplication.Pages {
             // 创建定时器，间隔为 1 秒
             _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(300.0);
-            double highJumpOld = -1, fastRunOld = -1;
-            double highJumpStep = this.Slider_High_Jump.TickFrequency, fastRunStep = this.Slider_Fast_Run.TickFrequency;
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
                 _isProcOpen = MemoryDllUtils.OpenProcess(TRainerHelper.ProcessName);
                 if (_isProcOpen) {
@@ -167,67 +300,22 @@ namespace BoneTownHelperApplication.Pages {
                     float zAxis = MemoryDllUtils.ReadFloat(TRainerHelper.ZAxis);
                     this.TB_ZAxis.Text = ((int) zAxis).ToString();
                     
+                    //jj性感度
+                    this.Slider_Balls_Size.Value = TRainerHelper.GetBallsSize();
                     //攻击力
                     this.Slider_FightBuff.Value = TRainerHelper.GetClothing_Health();
-
-                    //if先开游戏🎮并已修改, 再重新打开修改器
-                    if (highJumpOld < 0 && fastRunOld < 0) {
-                        highJumpOld = TRainerHelper.GetHighJump();
-                        fastRunOld = TRainerHelper.GetFastRun();
-                        this.Slider_High_Jump.Value = highJumpOld;
-                        this.Slider_Fast_Run.Value = fastRunOld;
-                        return;
-                    }
-                    /**
-                     * 为什么要在这儿获取值, 而不是在Slider的ValueChanged 事件中获取值呢? 因为Slider在拖动时更新值太快, 但又没有直接办法判断Slider是否正在拖动:
-                     * 鼠标🖱️/触摸是否已松开, 键盘⌨️是否结束🔚按下←→
-                     * IsMouseCaptureWithin: 鼠标是否在拖动
-                     * IsTouchCaptured: 是否触摸调整中
-                     * IsKeyboardFocused: 键盘操作「捕获状态」，只能通过「失去焦点」或「延迟」判断, 获取焦点后按←→能调整进度
-                     */
-                    //跳高效果
-                    double highJump = this.Slider_High_Jump.Value;
-                    bool isHighJumpChanged = Math.Abs(highJump - highJumpOld) > highJumpStep;
-                    if (isHighJumpChanged) {
-                        TRainerHelper.PlayClick();
-                        highJumpOld = highJump;
-                    }
-                    if (false) {
-                        //防止换地图后冻结失效, 所以不管值有没有变化, 都调用
-                        isFreezeHighJump = highJump > 0;
-                        if (isFreezeHighJump) {
-                            isUnfreezeAll = false;
-                        }
-                        TRainerHelper.SetHighJump((float) highJump, isFreezeHighJump, isHighJumpChanged);
-                    } else {
-                        //反正都是死循环, 就不用冻结了
-                        TRainerHelper.SetHighJump((float) highJump, false, isHighJumpChanged);
-                    }
-
-                    //快跑效果
-                    double fastRun = this.Slider_Fast_Run.Value;
-                    bool isFastRunChanged = Math.Abs(fastRun - fastRunOld) > fastRunStep;
-                    if (isFastRunChanged) {
-                        TRainerHelper.PlayClick();
-                        fastRunOld = fastRun;
-                    }
-                    if (false) {
-                        //防止换地图后冻结失效, 所以不管值有没有变化, 都调用
-                        isFreezeFastRun = fastRun > 0;
-                        if (isFreezeFastRun) {
-                            isUnfreezeAll = false;
-                        }
-                        TRainerHelper.SetFastRun((float) fastRun, isFreezeFastRun, isFastRunChanged);
-                    } else {
-                        //反正都是死循环, 就不用冻结了
-                        TRainerHelper.SetFastRun((float) fastRun, false, isFastRunChanged);
-                    }
+                    //跳高
+                    this.Slider_High_Jump.Value = TRainerHelper.GetHighJump();
+                    //护盾
+                    this.Slider_Shield.Value = TRainerHelper.GetShield();
+                    //隐身
+                    this.Slider_Invisible.Value = TRainerHelper.GetInvisible();
+                    //撞飞
+                    this.Slider_Damage_Touches.Value = TRainerHelper.GetDamageTouches();
+                    //快跑🏃‍♀️
+                    this.Slider_Fast_Run.Value = TRainerHelper.GetFastRun();
                 } else {
-                    Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
-                    highJumpOld = fastRunOld = 0;
-                    //2个Slider归0, 否则重开游戏🎮的时候会判断并设置值
-                    this.Slider_High_Jump.Value = 0.0;
-                    this.Slider_Fast_Run.Value = 0.0;
+                    // Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
                     UnfreezeAll();
                 }
 
@@ -511,20 +599,13 @@ namespace BoneTownHelperApplication.Pages {
                 TRainerHelper.ZAxisEdit(false, value);
                 return;
             }
-            //jj性感度加到最大
-            if (name == this.Btn_Balls_Max.Name) {
-                TRainerHelper.BallsAdd210();
-                return;
-            }
             //无限健康
             if (name == this.Image_Infinite_Health.Name) {
                 isFreezeHealth = !isFreezeHealth;
                 Uri uri = TRainerHelper.GetSwitchUri(isFreezeHealth);
                 this.Image_Infinite_Health.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeHealth(isFreezeHealth);
-                if (isFreezeHealth) {
-                    isUnfreezeAll = false;
-                }
+                if (isFreezeHealth) isUnfreezeAll = false;
                 return;
             }
             //冻结快感进度
@@ -533,9 +614,7 @@ namespace BoneTownHelperApplication.Pages {
                 Uri uri = TRainerHelper.GetSwitchUri(isFreezeClimax);
                 this.Image_Freeze_Climax.Source = new BitmapImage(uri);
                 TRainerHelper.FreezeClimax(isFreezeClimax);
-                if (isFreezeClimax) {
-                    isUnfreezeAll = false;
-                }
+                if (isFreezeClimax) isUnfreezeAll = false;
                 return;
             }
             //潜水
@@ -564,120 +643,120 @@ namespace BoneTownHelperApplication.Pages {
 
             //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
             if (name == this.TB_MissionaryBeach2FirmWoodForest.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateMissionaryBeach2FirmWoodForest, "Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map1_to_Map2, "Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
                 return;
             }
             //Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地)
             if (name == this.TB_MissionaryBeach2GabachoHeights.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateMissionaryBeach2GabachoHeights, "Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map1_to_Map4, "Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             
             //Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩)
             if (name == this.TB_FirmWoodForest2MissionaryBeach.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateFirmWoodForest2MissionaryBeach, "Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map2_to_Map1, "Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
                 return;
             }
             //Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园)
             if (name == this.TB_FirmWoodForest2HomelandTrailerPark.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateFirmWoodForest2HomelandTrailerPark, "Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map2_to_Map3, "Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点失败!");
                 return;
             }
             
             //Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林)
             if (name == this.TB_HomelandTrailerPark2FirmWoodForest.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateHomelandTrailerPark2FirmWoodForest, "Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map3_to_Map2, "Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林) 传送点失败!");
                 return;
             }
 
             //Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩)
             if (name == this.TB_GabachoHeights2MissionaryBeach.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateGabachoHeights2MissionaryBeach, "Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map4_to_Map1, "Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩) 传送点失败!");
                 return;
             }
             //Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)
             if (name == this.TB_GabachoHeights2HavajoIndianReservation.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateGabachoHeights2HavajoIndianReservation, "Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map4_to_Map5, "Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地) 传送点失败!");
                 return;
             }
             //Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山)
             if (name == this.TB_GabachoHeights2NobbingHill.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateGabachoHeights2NobbingHill, "Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map4_to_Map6, "Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
                 return;
             }
             
             
             //Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地)
             if (name == this.TB_HavajoIndianReservation2GabachoHeights.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateHavajoIndianReservation2GabachoHeights, "Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map5_to_Map4, "Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             
             
             //Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心)
             if (name == this.TB_NobbingHill2DownTown.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateNobbingHill2DownTown, "Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map6_to_Map8, "Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心) 传送点失败!");
                 return;
             }
             //Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地)
             if (name == this.TB_NobbingHill2GabachoHeights.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateNobbingHill2GabachoHeights, "Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map6_to_Map4, "Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地) 传送点失败!");
                 return;
             }
             //Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽)
             if (name == this.TB_NobbingHill2MushroomMarsh.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateNobbingHill2MushroomMarsh, "Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map6_to_Map7, "Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽) 传送点失败!");
                 return;
             }
             
             
             //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan)
             if (name == this.TB_MushroomMarsh_Satan.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateMushroomMarsh_Satan, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan) 失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map7_to_Satan, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan) 失败!");
                 return;
             }
             //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife)
             if (name == this.TB_MushroomMarsh_Satan_wife.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateMushroomMarsh_SatanWife, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife) 失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map7_to_SatanWife, "瞬移到 Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife) 失败!");
                 return;
             }
             //Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山)
             if (name == this.TB_MushroomMarsh2NobbingHill.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateMushroomMarsh2NobbingHill, "Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山) 失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map7_to_Map6, "Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山) 失败!");
                 return;
             }
             
             
             //Map8(DownTown 市中心) RonJ大富翁
             if (name == this.TB_Downtown_RonJTowers.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateDowntown_RonJEntrance, "瞬移到 Map8(DownTown 市中心) RonJ大富翁 失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map8_to_RonJEntrance, "瞬移到 Map8(DownTown 市中心) RonJ大富翁 失败!");
                 return;
             }
             //Map8(DownTown 市中心) 天使
             if (name == this.TB_Downtown_Angle.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateDowntown_Angle, "瞬移到 Map8(DownTown 市中心) 天使 失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map8_to_Angle, "瞬移到 Map8(DownTown 市中心) 天使 失败!");
                 return;
             }
             //Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点
             if (name == this.TB_DownTown2ManIsland.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateDownTown2ManIsland, "Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map8_to_Map9, "Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点失败!");
                 return;
             }
             //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
             if (name == this.TB_DownTown2NobbingHill.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateDownTown2NobbingHill, "Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map8_to_Map6, "Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点失败!");
                 return;
             }
             
             
             //Map9(Man Island 曼岛)→高塔入口(Man Needle)
             if (name == this.TB_ManIsland2ManNeedle.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateManIsland_ManNeedle, "Map9(Man Island 曼岛)→高塔入口(Man Needle) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map9_to_ManNeedle, "Map9(Man Island 曼岛)→高塔入口(Man Needle) 传送点失败!");
                 return;
             }
             //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
             if (name == this.TB_ManIsland2DownTown.Name) {
-                TRainerHelper.Teleport(TRainerHelper.CoordinateManIsland2DownTown, "Map9(Man Island 曼岛)→Map8(DownTown 市中心) 传送点失败!");
+                TRainerHelper.Teleport(TRainerHelper.Map9_to_Map8, "Map9(Man Island 曼岛)→Map8(DownTown 市中心) 传送点失败!");
                 return;
             }
         }
@@ -715,33 +794,33 @@ namespace BoneTownHelperApplication.Pages {
             /**
              * 环境亮度设置
              */
+            //黎明(Morning)
+            if (name == this.RB_Brightness_Morning.Name) {
+                TRainerHelper.BrightnessSet(0, true);
+                return;
+            }
             //白昼(Daytime)
             if (name == this.RB_Brightness_Daytime.Name) {
-                TRainerHelper.BrightnessSet(0, true);
+                TRainerHelper.BrightnessSet(1, true);
                 return;
             }
             //傍晚(Evening)
             if (name == this.RB_Brightness_Evening.Name) {
-                TRainerHelper.BrightnessSet(1, true);
+                TRainerHelper.BrightnessSet(2, true);
                 return;
             }
             //黄昏(Dusk)
             if (name == this.RB_Brightness_Dusk.Name) {
-                TRainerHelper.BrightnessSet(2, true);
+                TRainerHelper.BrightnessSet(3, true);
                 return;
             }
             //午夜(Midnight)
             if (name == this.RB_Brightness_Midnight.Name) {
-                TRainerHelper.BrightnessSet(3, true);
+                TRainerHelper.BrightnessSet(4, true);
                 return;
             }
             //拂晓(Dawn)
             if (name == this.RB_Brightness_Dawn.Name) {
-                TRainerHelper.BrightnessSet(4, true);
-                return;
-            }
-            //黎明(Morning)
-            if (name == this.RB_Brightness_Morning.Name) {
                 TRainerHelper.BrightnessSet(5, true);
                 return;
             }
@@ -773,7 +852,10 @@ namespace BoneTownHelperApplication.Pages {
         private void UnfreezeAll() {
             if (isUnfreezeAll) return;
             TRainerHelper.FreezeHealth(false);
-            TRainerHelper.SetHighJump(0, false, false);
+            TRainerHelper.SetJumpHigher(0, false, false);
+            TRainerHelper.SetShield(0, false, false);
+            TRainerHelper.SetInvisible(0, false, false);
+            TRainerHelper.SetDamageTouches(0, false, false);
             TRainerHelper.SetFastRun(0, false, false);
             TRainerHelper.FreezeClimax(false);
             TRainerHelper.PauseDaylight(false, false, false);

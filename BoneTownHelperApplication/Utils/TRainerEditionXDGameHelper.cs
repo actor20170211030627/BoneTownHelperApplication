@@ -19,6 +19,9 @@ namespace BoneTownHelperApplication.Utils {
 
         private const string Health = ModuleName + "+0x00354318,0x2E0,0x470";
         private const string Effect_Countdown_Weed = ModuleName + "+0x00354318,0x2E0,0x5DC";
+        private const string Effect_Countdown_Shroom = ModuleName + "+0x00354318,0x2E0,0x5E0";
+        private const string Effect_Countdown_Peyote = ModuleName + "+0x00354318,0x2E0,0x5E4";
+        private const string Effect_Countdown_Toad = ModuleName + "+0x00354318,0x2E0,0x5E8";
         private const string Effect_Countdown_Crack = ModuleName + "+0x00354318,0x2E0,0x5EC";
         private const string Effect_Climax = ModuleName + "+0x00354318,0x2E0,0x834";
         
@@ -67,70 +70,70 @@ namespace BoneTownHelperApplication.Utils {
         public const string StrAbout = TRainerHelper.StrAbout;
 
         //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
-        public static readonly float[] CoordinateMissionaryBeach2FirmWoodForest = TRainerHelper.CoordinateMissionaryBeach2FirmWoodForest;
+        public static readonly float[] Map1_to_Map2 = TRainerHelper.Map1_to_Map2;
 
         //Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地)
-        public static readonly float[] CoordinateMissionaryBeach2GabachoHeights = TRainerHelper.CoordinateMissionaryBeach2GabachoHeights;
+        public static readonly float[] Map1_to_Map4 = TRainerHelper.Map1_to_Map4;
 
         //Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩)
-        public static readonly float[] CoordinateFirmWoodForest2MissionaryBeach = TRainerHelper.CoordinateFirmWoodForest2MissionaryBeach;
+        public static readonly float[] Map2_to_Map1 = TRainerHelper.Map2_to_Map1;
 
         //Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园)
-        public static readonly float[] CoordinateFirmWoodForest2HomelandTrailerPark = TRainerHelper.CoordinateFirmWoodForest2HomelandTrailerPark;
+        public static readonly float[] Map2_to_Map3 = TRainerHelper.Map2_to_Map3;
 
         //Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林)
-        public static readonly float[] CoordinateHomelandTrailerPark2FirmWoodForest = TRainerHelper.CoordinateHomelandTrailerPark2FirmWoodForest;
+        public static readonly float[] Map3_to_Map2 = TRainerHelper.Map3_to_Map2;
 
         //Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩)
-        public static readonly float[] CoordinateGabachoHeights2MissionaryBeach = TRainerHelper.CoordinateGabachoHeights2MissionaryBeach;
+        public static readonly float[] Map4_to_Map1 = TRainerHelper.Map4_to_Map1;
 
         //Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)
-        public static readonly float[] CoordinateGabachoHeights2HavajoIndianReservation = TRainerHelper.CoordinateGabachoHeights2HavajoIndianReservation;
+        public static readonly float[] Map4_to_Map5 = TRainerHelper.Map4_to_Map5;
 
         //Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山)
-        public static readonly float[] CoordinateGabachoHeights2NobbingHill = TRainerHelper.CoordinateGabachoHeights2NobbingHill;
+        public static readonly float[] Map4_to_Map6 = TRainerHelper.Map4_to_Map6;
 
         //Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地)
-        public static readonly float[] CoordinateHavajoIndianReservation2GabachoHeights = TRainerHelper.CoordinateHavajoIndianReservation2GabachoHeights;
+        public static readonly float[] Map5_to_Map4 = TRainerHelper.Map5_to_Map4;
 
         //Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心)
-        public static readonly float[] CoordinateNobbingHill2DownTown = TRainerHelper.CoordinateNobbingHill2DownTown;
+        public static readonly float[] Map6_to_Map8 = TRainerHelper.Map6_to_Map8;
 
         //Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地)
-        public static readonly float[] CoordinateNobbingHill2GabachoHeights = TRainerHelper.CoordinateNobbingHill2GabachoHeights;
+        public static readonly float[] Map6_to_Map4 = TRainerHelper.Map6_to_Map4;
 
         //Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽)
-        public static readonly float[] CoordinateNobbingHill2MushroomMarsh = TRainerHelper.CoordinateNobbingHill2MushroomMarsh;
+        public static readonly float[] Map6_to_Map7 = TRainerHelper.Map6_to_Map7;
 
         //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan)
-        public static readonly float[] CoordinateMushroomMarsh_Satan = TRainerHelper.CoordinateMushroomMarsh_Satan;
+        public static readonly float[] Map7_to_Satan = TRainerHelper.Map7_to_Satan;
 
         //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife)
-        public static readonly float[] CoordinateMushroomMarsh_SatanWife = TRainerHelper.CoordinateMushroomMarsh_SatanWife;
+        public static readonly float[] Map7_to_SatanWife = TRainerHelper.Map7_to_SatanWife;
 
         //Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山)
-        public static readonly float[] CoordinateMushroomMarsh2NobbingHill = TRainerHelper.CoordinateMushroomMarsh2NobbingHill;
+        public static readonly float[] Map7_to_Map6 = TRainerHelper.Map7_to_Map6;
 
         //Map8 大富翁RonJ
-        public static readonly float[] CoordinateDowntown_RonJEntrance = TRainerHelper.CoordinateDowntown_RonJEntrance;
+        public static readonly float[] Map8_to_RonJEntrance = TRainerHelper.Map8_to_RonJEntrance;
 
         //Map8 天使
-        public static readonly float[] CoordinateDowntown_Angle = TRainerHelper.CoordinateDowntown_Angle;
+        public static readonly float[] Map8_to_Angle = TRainerHelper.Map8_to_Angle;
 
         //Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点
-        public static readonly float[] CoordinateDownTown2ManIsland = TRainerHelper.CoordinateDownTown2ManIsland;
+        public static readonly float[] Map8_to_Map9 = TRainerHelper.Map8_to_Map9;
 
         //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
-        public static readonly float[] CoordinateDownTown2NobbingHill = TRainerHelper.CoordinateDownTown2NobbingHill;
+        public static readonly float[] Map8_to_Map6 = TRainerHelper.Map8_to_Map6;
 
         //Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点
         public static readonly float[] CoordinateDownTown2HomelandTrailerPark = { -388.4f, -955.0f, 608.755f };
 
         //Map9(Man Island 曼岛)→高塔入口(Man Needle)
-        public static readonly float[] CoordinateManIsland_ManNeedle = TRainerHelper.CoordinateManIsland_ManNeedle;
+        public static readonly float[] Map9_to_ManNeedle = TRainerHelper.Map9_to_ManNeedle;
 
         //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
-        public static readonly float[] CoordinateManIsland2DownTown = TRainerHelper.CoordinateManIsland2DownTown;
+        public static readonly float[] Map9_to_Map8 = TRainerHelper.Map9_to_Map8;
 
 
         // 原来的变量 → 改成属性，赋值时自动触发同步
@@ -190,9 +193,17 @@ namespace BoneTownHelperApplication.Utils {
             TRainerHelper.ZAxisEdit(isUp, value, ZAxis);
         }
 
+        /// <summary>
+        /// 获取jj性感度
+        /// </summary>
+        /// <returns></returns>
+        public static float GetBallsSize() {
+            return TRainerHelper.GetBallsSize(Balls_Sexy_Progress);
+        }
+
         //jj性感度加到最大
-        public static void BallsAdd210() {
-            TRainerHelper.BallsAdd210(Balls_Sexy_Count, Balls_Sexy_Progress);
+        public static void SetBallsSize(float ballsSize) {
+            TRainerHelper.SetBallsSize(ballsSize, Balls_Sexy_Count, Balls_Sexy_Progress);
         }
 
         /// <summary>
@@ -216,8 +227,59 @@ namespace BoneTownHelperApplication.Utils {
         /// <param name="height">高度[0~1]</param>
         /// <param name="isFreezeHighJump"></param>
         /// <param name="isPlayAng"></param>
-        public static void SetHighJump(float height, bool isFreezeHighJump, bool isPlayAng) {
-            TRainerHelper.SetHighJump(height, isFreezeHighJump, isPlayAng, Effect_Countdown_Weed);
+        public static void SetJumpHigher(float height, bool isFreezeHighJump, bool isPlayAng) {
+            TRainerHelper.SetJumpHigher(height, isFreezeHighJump, isPlayAng, Effect_Countdown_Weed);
+        }
+
+        /// <summary>
+        /// 获取护盾效果(被打不掉血)
+        /// </summary>
+        public static float GetShield() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Shroom);
+        }
+
+        /// <summary>
+        /// 设置护盾效果(被打不掉血)
+        /// </summary>
+        /// <param name="shield">护盾[0~1]</param>
+        /// <param name="isFreezeShield"></param>
+        /// <param name="isPlayAng"></param>
+        public static void SetShield(float shield, bool isFreezeShield, bool isPlayAng) {
+            TRainerHelper.SetShield(shield, isFreezeShield, isPlayAng, Effect_Countdown_Shroom);
+        }
+
+        /// <summary>
+        /// 获取隐身效果
+        /// </summary>
+        public static float GetInvisible() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Peyote);
+        }
+
+        /// <summary>
+        /// 设置隐身效果
+        /// </summary>
+        /// <param name="invisible">隐身[0~1]</param>
+        /// <param name="isFreeze"></param>
+        /// <param name="isPlayAng"></param>
+        public static void SetInvisible(float invisible, bool isFreeze, bool isPlayAng) {
+            TRainerHelper.SetInvisible(invisible, isFreeze, isPlayAng, Effect_Countdown_Peyote);
+        }
+
+        /// <summary>
+        /// 获取撞飞效果
+        /// </summary>
+        public static float GetDamageTouches() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Toad);
+        }
+
+        /// <summary>
+        /// 设置撞飞效果
+        /// </summary>
+        /// <param name="damageTouches">撞飞[0~1]</param>
+        /// <param name="isFreeze"></param>
+        /// <param name="isPlayAng"></param>
+        public static void SetDamageTouches(float damageTouches, bool isFreeze, bool isPlayAng) {
+            TRainerHelper.SetDamageTouches(damageTouches, isFreeze, isPlayAng, Effect_Countdown_Toad);
         }
 
         /// <summary>

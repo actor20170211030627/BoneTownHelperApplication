@@ -85,6 +85,9 @@
         <Compile Include="Pages\TRainer_Edition_QQ_Group_32_Page.xaml.cs">
           <DependentUpon>TRainer_Edition_QQ_Group_32_Page.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Pages\TRainer_Edition_Steam_32_Page.xaml.cs">
+          <DependentUpon>TRainer_Edition_Steam_32_Page.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Pages\TRainer_Edition_XD_Game_Page.xaml.cs">
           <DependentUpon>TRainer_Edition_XD_Game_Page.xaml</DependentUpon>
         </Compile>
@@ -97,6 +100,7 @@
         <Compile Include="Utils\ProcessUtils.cs" />
         <Compile Include="Utils\SoundPlayerUtils.cs" />
         <Compile Include="Utils\TRainerEditionQQGroup32Helper.cs" />
+        <Compile Include="Utils\TRainerEditionSteam32Helper.cs" />
         <Compile Include="Utils\TRainerEditionXDGameHelper.cs" />
         <Compile Include="Utils\TRainerHelper.cs" />
         <Page Include="MainWindow.xaml">
@@ -113,6 +117,7 @@
         </Compile>
         <Page Include="Pages\MainPage.xaml" />
         <Page Include="Pages\TRainer_Edition_QQ_Group_32_Page.xaml" />
+        <Page Include="Pages\TRainer_Edition_Steam_32_Page.xaml" />
         <Page Include="Pages\TRainer_Edition_XD_Game_Page.xaml" />
         <Page Include="Pages\TRainer_Old_Page.xaml" />
     </ItemGroup>
@@ -137,7 +142,12 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
-      <Resource Include="Resources\Images\FightBuff.png" />
+      <Resource Include="Resources\Images\PwrICONFrog.png" />
+      <Resource Include="Resources\Images\PwrICONPeyote.png" />
+      <Resource Include="Resources\Images\PwrICONCrack.png" />
+      <Resource Include="Resources\Images\PwrICONShroom.png" />
+      <Resource Include="Resources\Images\PwrICONNug.png" />
+      <Resource Include="Resources\Images\ICONRStarDavidGoth.png" />
       <Resource Include="Resources\Images\money_dollar.png" />
       <Resource Include="Resources\Images\Steam_256x256x8BPP.png" />
       <Resource Include="Resources\Images\03_qq_symbol-1-250x300.png" />
@@ -146,8 +156,6 @@
       <Resource Include="Resources\Images\xd.ico" />
       <Resource Include="Resources\Images\DrownBezel.png" />
       <Resource Include="Resources\Images\StaminaTIP.png" />
-      <Resource Include="Resources\Images\icon_fast_run.png" />
-      <Resource Include="Resources\Images\icon_jump.png" />
       <None Include="Assets\Bonetown.ico" />
       <Resource Include="Resources\Images\Powermove.png" />
       <Resource Include="Resources\Images\RonJEntrance.png" />

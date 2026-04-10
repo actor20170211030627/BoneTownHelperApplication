@@ -7,8 +7,6 @@
       mc:Ignorable="d"
       Height="Auto"
       Width="Auto">
-
-
     <StackPanel Orientation="Vertical">
         <!--Top-->
         <DockPanel
@@ -103,6 +101,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
 
+                <!-- rows = 10 -->
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -110,6 +109,10 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
@@ -125,9 +128,9 @@
             </Grid.ColumnDefinitions>
 
             <Image
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.Column="0"
-                Grid.RowSpan="10"
+                Grid.RowSpan="11"
                 Width="150"
                 Source="/Resources/Images/Bonetown_Side_Image(225x320).jpg" />
 
@@ -507,6 +510,7 @@
                 Grid.Row="11"
                 Grid.Column="1"
                 Width="Auto" Height="20"
+                Margin="0 3 0 0"
                 Source="/Resources/Images/height.png" />
             <TextBlock
                 Grid.Row="11"
@@ -523,7 +527,7 @@
                 Grid.Row="11"
                 Grid.Column="4"
                 Padding="5 0"
-                Text="Ctrl + L, Ctrl + H‌"
+                Text="Ctrl + L, Ctrl + H"
                 TextAlignment="Center"
                 Margin="1" />
             <UniformGrid
@@ -543,11 +547,52 @@
                     ContentStringFormat="+{0}"
                     Click="Btn_OnClick" />
             </UniformGrid>
+        </Grid>
+        
+        <Grid Margin="0 10 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!-- rows = 9 -->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
 
+                <!-- rows = 10 -->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Border
-                Grid.Row="12"
-                Grid.Column="1"
-                Width="Auto" Height="20"
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="50" Height="18"
                 Margin="1.5"
                 BorderThickness="1"
                 CornerRadius="1 5 5 1"
@@ -561,23 +606,41 @@
                 </Border.Background>
             </Border>
             <TextBlock
-                Grid.Row="12"
-                Grid.Column="2"
-                VerticalAlignment="Center"
-                Text="jj性感度(Balls sexy)"
+                Grid.Row="0"
+                Grid.Column="1"
+                TextAlignment="Center"
+                Text="jj性感度&#x0A;(Balls sexy)"
                 Margin="1" />
-            <Button
-                Name="Btn_Balls_Max"
-                Grid.Row="12"
-                Grid.Column="5"
-                Click="Btn_OnClick"
-                Content="加到最大(add2Max)" />
+            <Slider
+                Name="Slider_Balls_Size"
+                Grid.Row="0"
+                Grid.Column="2"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="10"
+                Minimum="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Name="Label_Balls_Size"
+                Grid.Row="0"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="0%" />
+            <!-- xaml中不能做x10的百分比运算, 所以只能在代码那边设置... -->
+            <!-- Content="{Binding ElementName=Slider_Balls_Size, Path=Value}" -->
+            <!-- ContentStringFormat="{}{0:P0}": P0 百分比, 例: 0% ~ 100% -->
+            <!-- ContentStringFormat="{}{0:N0}": N0 代表无小数位的数字格式，会自动把 double 四舍五入成整数 -->
+            <!-- ContentStringFormat="{}{0:F0}": F0 代表固定精度 0 位小数，和 N0 效果一致，也是常用写法 -->
 
 
             <Border
-                Grid.Row="13"
-                Grid.Column="1"
-                Width="Auto" Height="20"
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="50" Height="18"
                 Margin="1.5"
                 BorderThickness="1"
                 CornerRadius="1 5 5 1"
@@ -591,36 +654,39 @@
                 </Border.Background>
             </Border>
             <TextBlock
-                Grid.Row="13"
-                Grid.Column="2"
+                Grid.Row="1"
+                Grid.Column="1"
                 TextAlignment="Center"
                 Text="无限健康&#x0A;(Infinite Health)"
                 Margin="1" />
             <Image
-                Grid.Row="13"
-                Grid.Column="5"
+                Grid.Row="1"
+                Grid.Column="2"
                 Name="Image_Infinite_Health"
                 Width="35" Height="Auto"
                 HorizontalAlignment="Left"
+                Margin="2 0 0 0"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
             
+            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\inventory -->
             <Image
-                Grid.Row="14"
-                Grid.Column="1"
-                Width="Auto" Height="20"
-                Source="/Resources/Images/FightBuff.png" />
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/ICONRStarDavidGoth.png" />
             <TextBlock
-                Grid.Row="14"
-                Grid.Column="2"
+                Grid.Row="2"
+                Grid.Column="1"
                 TextAlignment="Center"
                 Text="攻击力&#x0A;(FightBuff)"
                 Margin="1" />
             <Slider
                 Name="Slider_FightBuff"
-                Grid.Row="14"
-                Grid.Column="5"
+                Grid.Row="2"
+                Grid.Column="2"
                 Height="Auto"
+                Margin="2 0 0 0"
                 VerticalAlignment="Center"
                 Maximum="299"
                 Minimum="-1"
@@ -628,124 +694,230 @@
                 TickFrequency="1"
                 IsMoveToPointEnabled="True" />
             <Label
-                Grid.Row="14"
-                Grid.Column="5"
+                Grid.Row="2"
+                Grid.Column="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 IsHitTestVisible="False"
                 Content="{Binding ElementName=Slider_FightBuff, Path=Value}"
                 ContentStringFormat="{}{0:N0}" />
-            
-            <Image
-                Grid.Row="15"
-                Grid.Column="1"
-                Width="Auto" Height="20"
-                Source="/Resources/Images/icon_jump.png" />
-            <TextBlock
-                Grid.Row="15"
-                Grid.Column="2"
-                TextAlignment="Center"
-                Text="跳高效果&#x0A;(High Jump)"
-                Margin="1" />
-            <Slider
-                Name="Slider_High_Jump"
-                Grid.Row="15"
-                Grid.Column="5"
-                Height="Auto"
-                VerticalAlignment="Center"
-                Maximum="1"
-                Minimum="0"
-                Value="0"
-                TickFrequency="0.01"
-                IsMoveToPointEnabled="True" />
-            <Label
-                Grid.Row="15"
-                Grid.Column="5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                IsHitTestVisible="False"
-                Content="{Binding ElementName=Slider_High_Jump, Path=Value}"
-                ContentStringFormat="{}{0:P0}" />
-
-            <Image
-                Grid.Row="16"
-                Grid.Column="1"
-                Width="Auto" Height="20"
-                Source="/Resources/Images/icon_fast_run.png" />
-            <TextBlock
-                Grid.Row="16"
-                Grid.Column="2"
-                TextAlignment="Center"
-                Text="快跑效果&#x0A;(Fast Run)"
-                Margin="1" />
-            <Slider
-                Name="Slider_Fast_Run"
-                Grid.Row="16"
-                Grid.Column="5"
-                Height="Auto"
-                VerticalAlignment="Center"
-                Maximum="1"
-                Minimum="0"
-                Value="0"
-                TickFrequency="0.01"
-                IsMoveToPointEnabled="True" />
-            <Label
-                Grid.Row="16"
-                Grid.Column="5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                IsHitTestVisible="False"
-                Content="{Binding ElementName=Slider_Fast_Run, Path=Value}"
-                ContentStringFormat="{}{0:P0}" />
 
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
             <Image
-                Grid.Row="17"
-                Grid.Column="1"
-                Width="Auto" Height="20"
+                Grid.Row="3"
+                Grid.Column="0"
+                Width="Auto" Height="28"
                 Source="/Resources/Images/StaminaTIP.png" />
             <TextBlock
-                Grid.Row="17"
-                Grid.Column="2"
+                Grid.Row="3"
+                Grid.Column="1"
                 TextAlignment="Center"
                 Text="冻结快感进度&#x0A;(Freeze Climax)"
                 Margin="1" />
             <Image
-                Grid.Row="17"
-                Grid.Column="5"
+                Grid.Row="3"
+                Grid.Column="2"
                 Name="Image_Freeze_Climax"
                 Width="35" Height="Auto"
                 HorizontalAlignment="Left"
+                Margin="2 0 0 0"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
-
+            
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
             <Image
-                Grid.Row="18"
-                Grid.Column="1"
+                Grid.Row="4"
+                Grid.Column="0"
                 Stretch="Fill"
-                Width="Auto" Height="15"
+                Width="50" Height="15"
                 Source="/Resources/Images/DrownBezel.png" />
             <TextBlock
-                Grid.Row="18"
-                Grid.Column="2"
+                Grid.Row="4"
+                Grid.Column="1"
                 TextAlignment="Center"
-                Text="潜水&#x0A;(Diving able)"
+                Text="潜水&#x0A;(Diving)"
                 Margin="1" />
             <Image
-                Grid.Row="18"
-                Grid.Column="5"
+                Grid.Row="4"
+                Grid.Column="2"
                 Name="Image_Diving"
                 Width="35" Height="Auto"
                 HorizontalAlignment="Left"
+                Margin="2 0 0 0"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
+            
+            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\powerup -->
+            <Image
+                Grid.Row="0"
+                Grid.Column="4"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/PwrICONNug.png" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="5"
+                TextAlignment="Center"
+                Text="跳高&#x0A;(Jump Higher)"
+                Margin="1" />
+            <Slider
+                Name="Slider_High_Jump"
+                Grid.Row="0"
+                Grid.Column="6"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_High_Jump, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
+            <Image
+                Grid.Row="1"
+                Grid.Column="4"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/PwrICONShroom.png" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="5"
+                TextAlignment="Center"
+                Text="护盾&#x0A;(Shield)"
+                Margin="1" />
+            <Slider
+                Name="Slider_Shield"
+                Grid.Row="1"
+                Grid.Column="6"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Shield, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
+            <Image
+                Grid.Row="2"
+                Grid.Column="4"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/PwrICONPeyote.png" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="5"
+                TextAlignment="Center"
+                Text="隐身&#x0A;(Invisible)"
+                Margin="1" />
+            <Slider
+                Name="Slider_Invisible"
+                Grid.Row="2"
+                Grid.Column="6"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Invisible, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
+            <!-- 先隐藏, 因为飞天会掉下来 -->
+            <Image
+                Grid.Row="3"
+                Grid.Column="4"
+                Visibility="Hidden"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/PwrICONFrog.png" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="5"
+                Visibility="Hidden"
+                TextAlignment="Center"
+                Text="撞飞(Damage&#x0A;Touches)"
+                Margin="1" />
+            <Slider
+                Name="Slider_Damage_Touches"
+                Grid.Row="3"
+                Grid.Column="6"
+                Visibility="Hidden"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="3"
+                Grid.Column="6"
+                Visibility="Hidden"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Damage_Touches, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
+            <Image
+                Grid.Row="4"
+                Grid.Column="4"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/PwrICONCrack.png" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="5"
+                TextAlignment="Center"
+                Text="快跑&#x0A;(Run Faster)"
+                Margin="1" />
+            <Slider
+                Name="Slider_Fast_Run"
+                Grid.Row="4"
+                Grid.Column="6"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="4"
+                Grid.Column="6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Fast_Run, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
         </Grid>
 
 
         <DockPanel
             Background="LightSkyBlue"
-            Margin="0 5 0 0"
+            Margin="0 10 0 0"
             VerticalAlignment="Center">
             <TextBlock
                 Foreground="White"
@@ -797,6 +969,12 @@
                 Grid.Column="1"
                 Orientation="Horizontal">
                 <RadioButton
+                    Name="RB_Brightness_Morning"
+                    GroupName="Brightness"
+                    Checked="Light_OnClick"
+                    Content="黎明(Morning)"
+                    Margin="5 5 0 5" />
+                <RadioButton
                     Name="RB_Brightness_Daytime"
                     GroupName="Brightness"
                     Checked="Light_OnClick"
@@ -825,12 +1003,6 @@
                     GroupName="Brightness"
                     Checked="Light_OnClick"
                     Content="拂晓(Dawn)"
-                    Margin="5 5 0 5" />
-                <RadioButton
-                    Name="RB_Brightness_Morning"
-                    GroupName="Brightness"
-                    Checked="Light_OnClick"
-                    Content="黎明(Morning)"
                     Margin="5 5 0 5" />
             </StackPanel>
         </Grid>

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Memory;
 
 namespace BoneTownHelperApplication.Utils {
     public static class TRainerHelper {
@@ -22,6 +19,9 @@ namespace BoneTownHelperApplication.Utils {
 
         private const string Health = ModuleName + "+0x00532A28,0x2B8,0x46C";
         private const string Effect_Countdown_Weed = ModuleName + "+0x00532A28,0x2B8,0x5C4";
+        private const string Effect_Countdown_Shroom = ModuleName + "+0x00532A28,0x2B8,0x5C8";
+        private const string Effect_Countdown_Peyote = ModuleName + "+0x00532A28,0x2B8,0x5CC";
+        private const string Effect_Countdown_Toad = ModuleName + "+0x00532A28,0x2B8,0x5D0";
         private const string Effect_Countdown_Crack = ModuleName + "+0x00532A28,0x2B8,0x5D4";
         private const string Effect_Climax = ModuleName + "+0x00532A28,0x2B8,0x808";
 
@@ -87,7 +87,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20260401 & v1.5.0\n" +
+                                       "7.版本 20260410 & v1.6.0\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
                                        "Shift + ~ \t\t     : Old version game open the console (you can switch the mouse out of the game interface)\n" +
@@ -111,7 +111,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20260401 & v1.5.0";
+                                       "7.Version 20260410 & v1.6.0";
 
         public const string StrBrightness = "亮度修改说明:\n" +
                                             "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +
@@ -132,98 +132,82 @@ namespace BoneTownHelperApplication.Utils {
                                             "    Map 7(Mushroom Marsh🍄) cannot have its brightness modified, because the brightness in this map is constantly changing.";
 
         //Map1(Missionary Beach 传教士海滩)→Map2(Firm Wood Forest 阔叶林)
-        public static readonly float[] CoordinateMissionaryBeach2FirmWoodForest = { 1066.876f, -347.3445f, 50.521f };
+        public static readonly float[] Map1_to_Map2 = { 1066.876f, -347.3445f, 50.521f };
 
         //Map1(Missionary Beach 传教士海滩)→Map4(Gabacho Heights 加巴乔高地)
-        public static readonly float[] CoordinateMissionaryBeach2GabachoHeights = { 1177.695f, 433.6344f, 56.082f };
+        public static readonly float[] Map1_to_Map4 = { 1177.695f, 433.6344f, 56.082f };
 
         //Map2(Firm Wood Forest 阔叶林)→Map1(Missionary Beach 传教士海滩)
-        public static readonly float[] CoordinateFirmWoodForest2MissionaryBeach = { 1066.192f, -372.8936f, 105.096f };
+        public static readonly float[] Map2_to_Map1 = { 1066.192f, -372.8936f, 105.096f };
 
         //Map2(Firm Wood Forest 阔叶林)→Map3(Homeland Trailer Park 国土安全拖车公园)
-        public static readonly float[] CoordinateFirmWoodForest2HomelandTrailerPark = { 920.4601f, -812.3506f, 105.376f };
+        public static readonly float[] Map2_to_Map3 = { 920.4601f, -812.3506f, 105.376f };
 
         //Map3(Homeland Trailer Park 国土安全拖车公园)→Map2(Firm Wood Forest 阔叶林)
-        public static readonly float[] CoordinateHomelandTrailerPark2FirmWoodForest = { 716.3653f, -602.741f, 138.2291f };
+        public static readonly float[] Map3_to_Map2 = { 716.3653f, -602.741f, 138.2291f };
 
         //Map4(Gabacho Heights 加巴乔高地)→Map1(Missionary Beach 传教士海滩)
-        public static readonly float[] CoordinateGabachoHeights2MissionaryBeach = { 248.1642f, 1012.699f, 286.917f };
+        public static readonly float[] Map4_to_Map1 = { 248.1642f, 1012.699f, 286.917f };
 
         //Map4(Gabacho Heights 加巴乔高地)→Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)
-        public static readonly float[] CoordinateGabachoHeights2HavajoIndianReservation = { -19.91007f, 997.032f, 275.5724f };
+        public static readonly float[] Map4_to_Map5 = { -19.91007f, 997.032f, 275.5724f };
 
         //Map4(Gabacho Heights 加巴乔高地)→Map6(Nobbing Hill 诺丁山)
-        public static readonly float[] CoordinateGabachoHeights2NobbingHill = { -307.834f, 1045.434f, 291.167f };
+        public static readonly float[] Map4_to_Map6 = { -307.834f, 1045.434f, 291.167f };
 
         //Map5(Havajo Indian Reservation 哈瓦那印第安人保留地)→Map4(Gabacho Heights 加巴乔高地)
-        public static readonly float[] CoordinateHavajoIndianReservation2GabachoHeights = { 1101.682f, 1483.074f, 53.1938f };
+        public static readonly float[] Map5_to_Map4 = { 1101.682f, 1483.074f, 53.1938f };
 
         //Map6(Nobbing Hill 诺丁山)→Map8(DownTown 市中心)
-        public static readonly float[] CoordinateNobbingHill2DownTown = { -646.0f, 146f, 414.574f };
+        public static readonly float[] Map6_to_Map8 = { -646.0f, 146f, 414.574f };
 
         //Map6(Nobbing Hill 诺丁山)→Map4(Gabacho Heights 加巴乔高地)
-        public static readonly float[] CoordinateNobbingHill2GabachoHeights = { -968.0f, 367f, 414.574f };
+        public static readonly float[] Map6_to_Map4 = { -968.0f, 367f, 414.574f };
 
         //Map6(Nobbing Hill 诺丁山)→Map7(Mushroom Marsh 蘑菇沼泽)
-        public static readonly float[] CoordinateNobbingHill2MushroomMarsh = { -821.0f, -108.0f, 409.991f };
+        public static readonly float[] Map6_to_Map7 = { -821.0f, -108.0f, 409.991f };
 
         //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦(Satan)
-        public static readonly float[] CoordinateMushroomMarsh_Satan = { -1318.774f, -120.5363f, 459.324f };
+        public static readonly float[] Map7_to_Satan = { -1318.774f, -120.5363f, 459.324f };
 
         //Map7(Mushroom Marsh 蘑菇沼泽) 撒旦的老婆(Satan's wife)
-        public static readonly float[] CoordinateMushroomMarsh_SatanWife = { -1379.268f, -332.1819f, 493.792f };
+        public static readonly float[] Map7_to_SatanWife = { -1379.268f, -332.1819f, 493.792f };
 
         //Map7(Mushroom Marsh 蘑菇沼泽)→Map6(Nobbing Hill 诺丁山)
-        public static readonly float[] CoordinateMushroomMarsh2NobbingHill = { -1027.47f, 98.30942f, 415.667f };
+        public static readonly float[] Map7_to_Map6 = { -1027.47f, 98.30942f, 415.667f };
 
         //Map8 大富翁RonJ
-        public static readonly float[] CoordinateDowntown_RonJEntrance = { -318.0f, -436f, 633.894f };
+        public static readonly float[] Map8_to_RonJEntrance = { -318.0f, -436f, 633.894f };
 
         //Map8 天使
-        public static readonly float[] CoordinateDowntown_Angle = { 15.0f, -938.6f, 771.5678f };
+        public static readonly float[] Map8_to_Angle = { 15.0f, -938.6f, 771.5678f };
 
         //Map8(DownTown 市中心)→Map9(Man Island 曼岛) 传送点
-        public static readonly float[] CoordinateDownTown2ManIsland = { -858.6f, -636.0f, 650.2626f };
+        public static readonly float[] Map8_to_Map9 = { -858.6f, -636.0f, 650.2626f };
 
         //Map8(DownTown 市中心)→Map6(Nobbing Hill 诺丁山) 传送点
-        public static readonly float[] CoordinateDownTown2NobbingHill = { -291.0f, -426.6f, 626.894f };
+        public static readonly float[] Map8_to_Map6 = { -291.0f, -426.6f, 626.894f };
 
         //Map9(Man Island 曼岛)→高塔入口(Man Needle)
-        public static readonly float[] CoordinateManIsland_ManNeedle = { -145.5f, 532.0f, 883.1036f };
+        public static readonly float[] Map9_to_ManNeedle = { -145.5f, 532.0f, 883.1036f };
 
         //Map9(Man Island 曼岛)→Map8(DownTown 市中心)
-        public static readonly float[] CoordinateManIsland2DownTown = { -409.55f, 103.70f, 710.8217f };
+        public static readonly float[] Map9_to_Map8 = { -409.55f, 103.70f, 710.8217f };
 
 
-        /// <summary>
-        ///                             大晚上亮度   傍晚亮度   大白天亮度
-        /// Lamp_Light                  3F800000    00000000    00000000
-        /// SkyEdge_Color               FF1A0000    FF803B73    FFD9A6A6    //天上亮度, 最主要参数
-        /// SkyEdge_Light               00000000    3F400000    3F800000
-        /// Object_Light                00000000    00000000    3F800000    //晚上改的时候, 右侧参数会亮一些
-        /// SkyEdge_Inner_Green_Light   00000000    3EE66666    3F266666    //视野范围内远处山区(大晚上改成白天: 远方下阵雨的效果)
-        /// SkyEdge_Inner_Blue_Light    00000000    3E6B851F    3F266666
-        /// SkyEdge_Inner_Yellow_Light  3DCCCCCD    3F000000    3F59999A
-        /// Ground_Green2               3DF5C28F    3F19999A    3F333333    //方圆100米颜色亮度(改了后效果比较好)
-        /// Ground_Purper2              3E428F5C    3F0CCCCD    3F333333
-        /// Ground_Yellow2              3F266666    3F0CCCCD    3F266666
-        /// Ground_Green                3D75C28F    3EE66666    3F19999A    //地面颜色亮度(改了后效果一般)
-        /// Ground_Purper               3DE147AE    3E4CCCCD    3F19999A
-        /// Ground_Yellow               3E99999A    3E800000    3F000000
-        /// </summary>
-        public static readonly long[] LampBrightness = { 0x00000000, 0x3F800000 };
-        private static readonly long[] SkyEdge_Inner_Green_Light  = { 0x3F266666, 0x3EE66666, 0x3EE66666, 0x00000000, 0x3E4CDBE0, 0x3EB33333 };
-        private static readonly long[] SkyEdge_Inner_Blue_Light   = { 0x3F266666, 0x3E6B851F, 0x3E6B851F, 0x00000000, 0x3E4CD2D5, 0x3E851EB8 };
-        private static readonly long[] SkyEdge_Inner_Yellow_Light = { 0x3F59999A, 0x3F000000, 0x3F000000, 0x3DCCCCCD, 0x3ECCC341, 0x3E570A3D };
-        private static readonly long[] SkyEdge_Light              = { 0x3F800000, 0x3F400000, 0x3F400000, 0x00000000, 0x3E8025AF, 0x3F800000 };
-        private static readonly long[] SkyEdge_Color              = { 0xFFD9A6A6, 0xFF803B73, 0xFF803B73, 0xFF1A0000, 0xFF663434, 0xFF36435A };
-        private static readonly long[] Ground_Green2              = { 0x3F333333, 0x3F19999A, 0x3F19999A, 0x3DF5C28F, 0x3E4CD6DA, 0x3E99999A };
-        private static readonly long[] Ground_Purper2             = { 0x3F333333, 0x3F0CCCCD, 0x3EB33333, 0x3E428F5C, 0x3E999EA0, 0x3ECCCCCD };
-        private static readonly long[] Ground_Yellow2             = { 0x3F266666, 0x3F0CCCCD, 0x3EB33333, 0x3F266666, 0x3F000283, 0x3F19999A };
-        private static readonly long[] Ground_Green               = { 0x3F19999A, 0x3EE66666, 0x3EE66666, 0x3D75C28F, 0x3DCD3B57, 0x3F266666 };
-        private static readonly long[] Ground_Purper              = { 0x3F19999A, 0x3E4CCCCD, 0x3E4CCCCD, 0x3DE147AE, 0x3E4CF2FD, 0x3F147AE1 };
-        private static readonly long[] Ground_Yellow              = { 0x3F000000, 0x3E800000, 0x3E800000, 0x3E99999A, 0x3E999595, 0x3E6147AE };
-        private static readonly long[] Object_Light               = { 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x39C8FA21, 0x3F800000 };
+        private static readonly long[] LampBrightness             = { 0x00000000, 0x3F800000 };
+        private static readonly long[] SkyEdge_Inner_Green_Light  = { 0x3EB33333, 0x3F266666, 0x3EE66666, 0x3EE66666, 0x00000000, 0x3E4CCCCD };
+        private static readonly long[] SkyEdge_Inner_Blue_Light   = { 0x3E851EB8, 0x3F266666, 0x3E6B851F, 0x3E6B851F, 0x00000000, 0x3E4CCCCD };
+        private static readonly long[] SkyEdge_Inner_Yellow_Light = { 0x3E570A3D, 0x3F59999A, 0x3F000000, 0x3F000000, 0x3DCCCCCD, 0x3ECCCCCD };
+        private static readonly long[] SkyEdge_Light              = { 0x3F800000, 0x3F800000, 0x3F400000, 0x3F400000, 0x00000000, 0x3E800000 };
+        private static readonly long[] SkyEdge_Color              = { 0xFF36435A, 0xFFD9A6A6, 0xFF803B73, 0xFF803B73, 0xFF1A0000, 0xFF663333 };
+        private static readonly long[] Ground_Green2              = { 0x3E99999A, 0x3F333333, 0x3F19999A, 0x3F19999A, 0x3DF5C28F, 0x3E4CCCCD };
+        private static readonly long[] Ground_Purper2             = { 0x3ECCCCCD, 0x3F333333, 0x3F0CCCCD, 0x3EB33333, 0x3E428F5C, 0x3E99999A };
+        private static readonly long[] Ground_Yellow2             = { 0x3F19999A, 0x3F266666, 0x3F0CCCCD, 0x3EB33333, 0x3F266666, 0x3F000000 };
+        private static readonly long[] Ground_Green               = { 0x3F266666, 0x3F19999A, 0x3EE66666, 0x3EE66666, 0x3D75C28F, 0x3DCCCCCD };
+        private static readonly long[] Ground_Purper              = { 0x3F147AE1, 0x3F19999A, 0x3E4CCCCD, 0x3E4CCCCD, 0x3DE147AE, 0x3E4CCCCD };
+        private static readonly long[] Ground_Yellow              = { 0x3E6147AE, 0x3F000000, 0x3E800000, 0x3E800000, 0x3E99999A, 0x3E99999A };
+        private static readonly long[] Object_Light               = { 0x3F800000, 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
 
         //Map1传教士海滩          : Missionary Beach         : game/data/missions/Boardwalk.mis
         // 沙滩酒吧              Sand Bar                   game/data/missions/BeachBar.mis  //酒吧
@@ -244,15 +228,15 @@ namespace BoneTownHelperApplication.Utils {
         //Map9男人岛              : Man Island               : game/data/missions/NeedleExterior.mis
         //男人针塔              Man Needle                 game/data/missions/NeedleInterior.mis
         //最终Boss                                         game/data/missions/FinalMission.mis
-        public static readonly string Map1_Name = "game/data/missions/Boardwalk.mis";
-        public static readonly string Map2_Name = "game/data/missions/Forest-Pigmy.mis";
-        public static readonly string Map3_Name = "game/data/missions/TrailerPark.mis";
-        public static readonly string Map4_Name = "game/data/missions/downtownMinor.mis";
-        public static readonly string Map5_Name = "game/data/missions/Rez.mis";
-        public static readonly string Map6_Name = "game/data/missions/Residential.mis";
-        public static readonly string Map7_Name = "game/data/missions/DrugForest.mis";
-        public static readonly string Map8_Name = "game/data/missions/downtownMajor.mis";
-        public static readonly string Map9_Name = "game/data/missions/NeedleExterior.mis";
+        private static readonly string Map1_Name = "game/data/missions/Boardwalk.mis";
+        private static readonly string Map2_Name = "game/data/missions/Forest-Pigmy.mis";
+        private static readonly string Map3_Name = "game/data/missions/TrailerPark.mis";
+        private static readonly string Map4_Name = "game/data/missions/downtownMinor.mis";
+        private static readonly string Map5_Name = "game/data/missions/Rez.mis";
+        private static readonly string Map6_Name = "game/data/missions/Residential.mis";
+        private static readonly string Map7_Name = "game/data/missions/DrugForest.mis";
+        private static readonly string Map8_Name = "game/data/missions/downtownMajor.mis";
+        private static readonly string Map9_Name = "game/data/missions/NeedleExterior.mis";
 
 
 
@@ -394,20 +378,37 @@ namespace BoneTownHelperApplication.Utils {
             }
         }
 
-        //jj性感度加到最大
-        public static void BallsAdd210(string sexyCount = Balls_Sexy_Count, string sexyProgress = Balls_Sexy_Progress) {
+        /// <summary>
+        /// 获取jj性感度
+        /// </summary>
+        /// <returns></returns>
+        public static float GetBallsSize(string code = Balls_Sexy_Progress) {
+            return MemoryDllUtils.ReadFloat(code);
+        }
+        
+        /// <summary>
+        /// 设置jj性感度
+        /// </summary>
+        /// <param name="ballsSize"></param>
+        /// <param name="codeSC"></param>
+        /// <param name="sexyProgress"></param>
+        public static void SetBallsSize(float ballsSize, string codeSC = Balls_Sexy_Count, string codeSP = Balls_Sexy_Progress) {
             //TODO: byte(9), 2bytes(10), int(10)实际都能写入成功, 但代码返回失败???
-            // bool isSuccess = MemoryDllUtils.WriteByte(sexyCount, 0xa);
-            bool isSuccess = MemoryDllUtils.WriteInt(sexyCount, 10);
+            // bool isSuccess = MemoryDllUtils.WriteByte(codeSC, 0xa);
+            int currentSexyCount = MemoryDllUtils.ReadInt(codeSC);
+            bool isSuccess = true;
+            if (currentSexyCount < ballsSize) {
+                isSuccess = MemoryDllUtils.WriteInt(codeSC, (int)Math.Ceiling(ballsSize));
+            }
             if (!isSuccess) {
-                Console.WriteLine("jj性感度(Balls_Sexy_Count)加到最大(10)失败!");
+                Console.WriteLine($"jj性感度(Balls_Sexy_Count)加到({ballsSize})失败!");
                 return;
             }
-            isSuccess = MemoryDllUtils.WriteFloat(sexyProgress, 10f);
+            isSuccess = MemoryDllUtils.WriteFloat(codeSP, ballsSize);
             if (isSuccess) {
-                PlayAng();
+                // PlayAng();
             } else {
-                Console.WriteLine("jj性感进度(Balls_Sexy_Progress)加到最大(10)失败!");
+                Console.WriteLine($"jj性感进度(Balls_Sexy_Progress)加到({ballsSize})失败!");
             }
         }
 
@@ -439,15 +440,12 @@ namespace BoneTownHelperApplication.Utils {
         /// 设置跳高效果
         /// </summary>
         /// <param name="height">高度[0~1]</param>
-        /// <param name="isFreezeHighJump"></param>
+        /// <param name="isFreeze"></param>
         /// <param name="isPlayAng"></param>
-        public static void SetHighJump(float height, bool isFreezeHighJump, bool isPlayAng, string code = Effect_Countdown_Weed) {
-            if (height > 1) {
-                height = 1;
-            } else if (height < 0) {
-                height = 0;
-            }
-            if (isFreezeHighJump) {
+        public static void SetJumpHigher(float height, bool isFreeze, bool isPlayAng, string code = Effect_Countdown_Weed) {
+            if (height > 1) height = 1;
+            else if (height < 0) height = 0;
+            if (isFreeze) {
                 bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", height);
                 if (isSuccess) {
                     if (isPlayAng) PlayAng();
@@ -456,7 +454,98 @@ namespace BoneTownHelperApplication.Utils {
                 }
             } else {
                 MemoryDllUtils.UnfreezeValue(code);
+                //要设置, 否则DispatcherTimer中会重新读值(>0)并赋值给Slider.Value, 导致Slider.ValueChanged中1个小值被冻结
                 MemoryDllUtils.WriteFloat(code, height);
+            }
+        }
+
+        /// <summary>
+        /// 获取护盾效果(被打不掉血)
+        /// </summary>
+        public static float GetShield() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Shroom);
+        }
+
+        /// <summary>
+        /// 设置护盾效果(被打不掉血)
+        /// </summary>
+        /// <param name="shield">护盾[0~1]</param>
+        /// <param name="isFreeze"></param>
+        /// <param name="isPlayAng"></param>
+        public static void SetShield(float shield, bool isFreeze, bool isPlayAng, string code = Effect_Countdown_Shroom) {
+            if (isFreeze) {
+                if (shield > 1) shield = 1;
+                else if (shield < 0) shield = 0;
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", shield);
+                if (isSuccess) {
+                    if (isPlayAng) PlayAng();
+                } else {
+                    Console.WriteLine("设置护盾效果(被打不掉血) 失败!");
+                }
+            } else {
+                MemoryDllUtils.UnfreezeValue(code);
+                //要设置, 否则DispatcherTimer中会重新读值(>0)并赋值给Slider.Value, 导致Slider.ValueChanged中1个小值被冻结
+                MemoryDllUtils.WriteFloat(code, shield);
+            }
+        }
+
+        /// <summary>
+        /// 获取隐身效果
+        /// </summary>
+        public static float GetInvisible() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Peyote);
+        }
+
+        /// <summary>
+        /// 设置隐身效果
+        /// </summary>
+        /// <param name="invisible">隐身[0~1]</param>
+        /// <param name="isFreeze"></param>
+        /// <param name="isPlayAng"></param>
+        public static void SetInvisible(float invisible, bool isFreeze, bool isPlayAng, string code = Effect_Countdown_Peyote) {
+            if (isFreeze) {
+                if (invisible > 1) invisible = 1;
+                else if (invisible < 0) invisible = 0;
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", invisible);
+                if (isSuccess) {
+                    if (isPlayAng) PlayAng();
+                } else {
+                    Console.WriteLine("设置隐身效果 失败!");
+                }
+            } else {
+                MemoryDllUtils.UnfreezeValue(code);
+                //要设置, 否则DispatcherTimer中会重新读值(>0)并赋值给Slider.Value, 导致Slider.ValueChanged中1个小值被冻结
+                MemoryDllUtils.WriteFloat(code, invisible);
+            }
+        }
+
+        /// <summary>
+        /// 获取撞飞效果
+        /// </summary>
+        public static float GetDamageTouches() {
+            return MemoryDllUtils.ReadFloat(Effect_Countdown_Toad);
+        }
+
+        /// <summary>
+        /// 设置撞飞效果
+        /// </summary>
+        /// <param name="damageTouches">撞飞[0~1]</param>
+        /// <param name="isFreeze"></param>
+        /// <param name="isPlayAng"></param>
+        public static void SetDamageTouches(float damageTouches, bool isFreeze, bool isPlayAng, string code = Effect_Countdown_Toad) {
+            if (isFreeze) {
+                if (damageTouches > 1) damageTouches = 1;
+                else if (damageTouches < 0) damageTouches = 0;
+                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", damageTouches);
+                if (isSuccess) {
+                    if (isPlayAng) PlayAng();
+                } else {
+                    Console.WriteLine("设置撞飞效果 失败!");
+                }
+            } else {
+                MemoryDllUtils.UnfreezeValue(code);
+                //要设置, 否则DispatcherTimer中会重新读值(>0)并赋值给Slider.Value, 导致Slider.ValueChanged中1个小值被冻结
+                MemoryDllUtils.WriteFloat(code, damageTouches);
             }
         }
 
@@ -471,15 +560,12 @@ namespace BoneTownHelperApplication.Utils {
         /// 设置快跑效果
         /// </summary>
         /// <param name="speed">速度[0~1]</param>
-        /// <param name="isFreezeFastRun"></param>
+        /// <param name="isFreeze"></param>
         /// <param name="isPlayAng"></param>
-        public static void SetFastRun(float speed, bool isFreezeFastRun, bool isPlayAng, string code = Effect_Countdown_Crack) {
-            if (speed > 1) {
-                speed = 1;
-            } else if (speed < 0) {
-                speed = 0;
-            }
-            if (isFreezeFastRun) {
+        public static void SetFastRun(float speed, bool isFreeze, bool isPlayAng, string code = Effect_Countdown_Crack) {
+            if (isFreeze) {
+                if (speed > 1) speed = 1;
+                else if (speed < 0) speed = 0;
                 bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", speed);
                 if (isSuccess) {
                     if (isPlayAng) PlayAng();
@@ -488,6 +574,7 @@ namespace BoneTownHelperApplication.Utils {
                 }
             } else {
                 MemoryDllUtils.UnfreezeValue(code);
+                //要设置, 否则DispatcherTimer中会重新读值(>0)并赋值给Slider.Value, 导致Slider.ValueChanged中1个小值被冻结
                 MemoryDllUtils.WriteFloat(code, speed);
             }
         }
@@ -511,15 +598,13 @@ namespace BoneTownHelperApplication.Utils {
         /// <summary>
         /// 冻结快感进度
         /// </summary>
-        /// <param name="isFreezeClimax"></param>
-        public static void FreezeClimax(bool isFreezeClimax, string code = Effect_Climax) {
-            if (isFreezeClimax) {
+        /// <param name="isFreeze"></param>
+        public static void FreezeClimax(bool isFreeze, string code = Effect_Climax) {
+            if (isFreeze) {
                 bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", 1f);
                 if (isSuccess) {
                     PlayAng();
-                } else {
-                    Console.WriteLine("冻结快感进度 失败!");
-                }
+                } else Console.WriteLine("冻结快感进度 失败!");
             } else {
                 MemoryDllUtils.UnfreezeValue(code);
             }
@@ -528,30 +613,27 @@ namespace BoneTownHelperApplication.Utils {
         /// <summary>
         /// 冻结潜水
         /// </summary>
-        /// <param name="isFreezeDiving"></param>
-        public static void FreezeDiving(bool isFreezeDiving, string progress = Drown_ProgressBar,
-            string isDrownDeadable = Is_Drown_Deadable, string isDrownByte = Is_Drown_Byte) {
-            if (isFreezeDiving) {
-                bool isSuccess0 = MemoryDllUtils.FreezeValue(progress, "long", 0);
-                bool isSuccess1 = MemoryDllUtils.FreezeValue(isDrownDeadable, "byte", 0);
-                bool isSuccess2 = MemoryDllUtils.FreezeValue(isDrownByte, "byte", 0);
+        /// <param name="isFreeze"></param>
+        public static void FreezeDiving(bool isFreeze, string codeDP = Drown_ProgressBar,
+            string codeIDD = Is_Drown_Deadable, string codeIDB = Is_Drown_Byte) {
+            if (isFreeze) {
+                //codeDP为什么是long: 因为实际要隐藏的是 codeDP 和 codeDP+0x4 这2个地址
+                bool isSuccess0 = MemoryDllUtils.FreezeValue(codeDP, "long", 0);
+                bool isSuccess1 = MemoryDllUtils.FreezeValue(codeIDD, "byte", 0);
+                bool isSuccess2 = MemoryDllUtils.FreezeValue(codeIDB, "byte", 0);
                 if (isSuccess0 && isSuccess1 && isSuccess2) {
                     PlayAng();
-                } else {
-                    Console.WriteLine("冻结潜水 失败!");
-                }
+                } else Console.WriteLine("冻结潜水 失败!");
             } else {
-                MemoryDllUtils.UnfreezeValue(progress);
-                MemoryDllUtils.UnfreezeValue(isDrownDeadable);
-                MemoryDllUtils.UnfreezeValue(isDrownByte);
-                bool isSuccess0 = MemoryDllUtils.WriteByte(progress, 0);
-                bool isSuccess1 = MemoryDllUtils.WriteByte(isDrownDeadable, 0);   //重置, 否则可能会一下水就死
-                bool isSuccess2 = MemoryDllUtils.WriteByte(isDrownByte, 0);
+                MemoryDllUtils.UnfreezeValue(codeDP);
+                MemoryDllUtils.UnfreezeValue(codeIDD);
+                MemoryDllUtils.UnfreezeValue(codeIDB);
+                bool isSuccess0 = MemoryDllUtils.WriteLong(codeDP, 0);
+                bool isSuccess1 = MemoryDllUtils.WriteByte(codeIDD, 0);   //重置, 否则可能会一下水就死
+                bool isSuccess2 = MemoryDllUtils.WriteByte(codeIDB, 0);
                 if (isSuccess0 && isSuccess1 && isSuccess2) {
                     // PlayAng();
-                } else {
-                    Console.WriteLine("取消冻结 & 重置潜水 失败!");
-                }
+                } else Console.WriteLine("取消冻结 & 重置潜水 失败!");
             }
         }
 
@@ -607,19 +689,17 @@ namespace BoneTownHelperApplication.Utils {
         /// </summary>
         /// <param name="isPause">是否 中止日/夜循环</param>
         /// <param name="isFreeze">是否冻结</param>
-        public static void PauseDaylight(bool isPause, bool isFreeze, bool isPlayAng, String address = pauseDaylight) {
+        public static void PauseDaylight(bool isPause, bool isFreeze, bool isPlayAng, String code = pauseDaylight) {
             bool isSuccess;
             if (isFreeze) {
-                isSuccess = MemoryDllUtils.FreezeValue(address, "byte", isPause ? 1 : 0);
+                isSuccess = MemoryDllUtils.FreezeValue(code, "byte", isPause ? 1 : 0);
             } else {
-                MemoryDllUtils.UnfreezeValue(address);
-                isSuccess = MemoryDllUtils.WriteByte(address, (byte)(isPause ? 1 : 0));
+                MemoryDllUtils.UnfreezeValue(code);
+                isSuccess = MemoryDllUtils.WriteByte(code, (byte)(isPause ? 1 : 0));
             }
             if (isSuccess) {
                 if (isPlayAng) PlayAng();
-            } else {
-                Console.WriteLine("中止日/夜循环 失败!");
-            }
+            } else Console.WriteLine("中止日/夜循环 失败!");
         }
 
         /// <summary>
@@ -630,9 +710,7 @@ namespace BoneTownHelperApplication.Utils {
             bool isSuccess = MemoryDllUtils.WriteLong(address, LampBrightness[isOpen ? 1 : 0]);
             if (isSuccess) {
                 if (isPlayAng) PlayAng();
-            } else {
-                Console.WriteLine("灯光亮度设置 失败!");
-            }
+            } else Console.WriteLine("灯光亮度设置 失败!");
         }
 
 
@@ -667,39 +745,7 @@ namespace BoneTownHelperApplication.Utils {
                              isSuccess30;
             if (isSuccess) {
                 if (isPlayAng) PlayAng();
-            } else {
-                Console.WriteLine("环境亮度设置 失败!");
-            }
-        }
-
-        // private static long _sigl0 = long.MaxValue;
-        private static long _sigl0 = long.MinValue;
-        /// <summary>
-        /// 打印某个时间段内的最后值
-        /// </summary>
-        public static void PrintBrightnesses() {
-            int sigl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Inner_Green_Light);
-            if (sigl == 0) return;
-            if (sigl > _sigl0) {
-                _sigl0 = sigl;
-                int sibl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Inner_Blue_Light);
-                int siyl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Inner_Yellow_Light);
-                int sl = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Light);
-                int sc = MemoryDllUtils.ReadInt(Brightness_SkyEdge_Color);
-                int ll = MemoryDllUtils.ReadInt(LampLight);
-                int gg2 = MemoryDllUtils.ReadInt(Brightness_Ground_Green2);
-                int gp2 = MemoryDllUtils.ReadInt(Brightness_Ground_Purper2);
-                int gy2 = MemoryDllUtils.ReadInt(Brightness_Ground_Yellow2);
-                int gg = MemoryDllUtils.ReadInt(Brightness_Ground_Green);
-                int gp = MemoryDllUtils.ReadInt(Brightness_Ground_Purper);
-                int gy = MemoryDllUtils.ReadInt(Brightness_Ground_Yellow);
-                int ol = MemoryDllUtils.ReadInt(Brightness_Object_Light);
-                Console.WriteLine($"sigl={sigl:X4}, sibl={sibl:X4}, siyl={siyl:X4}" + 
-                                  $" sl={sl:X4}, sc={sc:X4}, ll={ll:X4}, " +
-                                  $"gg2={gg2:X4}, gp2={gp2:X4}, gy2={gy2:X4}, " +
-                                  $"gg={gg:X4}, gp={gp:X4}, gy={gy:X4} " +
-                                  $"ol={ol:X4}");
-            }
+            } else Console.WriteLine("环境亮度设置 失败!");
         }
 
 
@@ -746,7 +792,7 @@ namespace BoneTownHelperApplication.Utils {
 
         /// <summary>
         /// 获取人物正前方角度 (从N开始, N右侧最小, N左侧最大)
-        /// minDegree = 1.49568E-05(0.0000149568 ‌), degreeI = 930803445
+        /// minDegree = 1.49568E-05(0.0000149568), degreeI = 930803445
         /// maxDegree =             6.283183,           degreeI = 1086918614
         /// </summary>
         /// <returns>返回弧度: (0 ~ 2π), 不是角度: (0° ~ 360°)</returns>
@@ -782,36 +828,6 @@ namespace BoneTownHelperApplication.Utils {
                 return new Uri($"pack://application:,,,/{AssemblyName};component/Resources/Images/icon_switch_green2.png");
             }
             return new Uri($"pack://application:,,,/{AssemblyName};component/Resources/Images/icon_switch_lightyellow.png");
-        }
-        
-
-        /// <summary>
-        /// 获取人物正前方角度
-        /// minDegree = 1.49568E-05(0.0000149568 ‌), degreeI = 930803445
-        /// maxDegree =             6.283183,           degreeI = 1086918614
-        /// </summary>
-        public static void PrintDegreePersonFront() {
-            float minDegree = 100, maxDegree = -100;
-            Task.Factory.StartNew((Action)(() => {
-                while (true) {
-                    if (minDegree == 0) {
-                        minDegree = 100;
-                        Console.WriteLine($"minDegree to 100!");
-                    }
-
-                    float degree = MemoryDllUtils.ReadFloat(DegreePersonFront);
-                    int degreeI = MemoryDllUtils.ReadInt(DegreePersonFront);
-                    if (degree < minDegree) {
-                        minDegree = degree;
-                        Console.WriteLine($"minDegree = {minDegree}, degreeI = {degreeI}");
-                    } else if (degree > maxDegree) {
-                        maxDegree = degree;
-                        Console.WriteLine($"maxDegree = {maxDegree}, degreeI = {degreeI}");
-                    }
-
-                    Thread.Sleep(10);
-                }
-            }));
         }
     }
 }
