@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Threading;
+using BoneTownHelperApplication.Dialog;
 using BoneTownHelperApplication.Utils;
 
 namespace BoneTownHelperApplication.Pages {
@@ -79,25 +79,25 @@ namespace BoneTownHelperApplication.Pages {
         }
 
         private void Go2OldVersion() {
-            _contentFrame.Navigate(new TRainer_Old_Page());
+            _contentFrame.Navigate(new TRainer_Old_Page(_contentFrame));
             //手动清理历史记录
             _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         private void Go2Xd_Game() {
-            _contentFrame.Navigate(new TRainer_Edition_XD_Game_Page());
+            _contentFrame.Navigate(new TRainer_Edition_XD_Game_Page(_contentFrame));
             //手动清理历史记录
             _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         private void Go2QQ_Group_32() {
-            _contentFrame.Navigate(new TRainer_Edition_QQ_Group_32_Page());
+            _contentFrame.Navigate(new TRainer_Edition_QQ_Group_32_Page(_contentFrame));
             //手动清理历史记录
             _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         private void Go2Steam_32() {
-            _contentFrame.Navigate(new TRainer_Edition_Steam_32_Page());
+            _contentFrame.Navigate(new TRainer_Edition_Steam_32_Page(_contentFrame));
             //手动清理历史记录
             _contentFrame.NavigationService.RemoveBackEntry();
         }

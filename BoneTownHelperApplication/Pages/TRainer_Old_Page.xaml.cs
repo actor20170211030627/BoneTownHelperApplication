@@ -43,12 +43,14 @@ namespace BoneTownHelperApplication.Pages {
         private bool isUnfreezeAll = true;
 
 
+        private readonly Frame _contentFrame;
         private DispatcherTimer _dispatcherTimer;
 
         private IKeyboardMouseEvents m_GlobalHook;
 
-        public TRainer_Old_Page() {
+        public TRainer_Old_Page(Frame contentFrame) {
             InitializeComponent();
+            this._contentFrame = contentFrame;
             
             this.Loaded += MyPage_Loaded;  // 订阅Loaded事件
             this.Unloaded += MyPage_Unloaded;  // 订阅Unloaded事件
@@ -317,6 +319,7 @@ namespace BoneTownHelperApplication.Pages {
                 } else {
                     // Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
                     UnfreezeAll();
+                    Go2MainPage();
                 }
 
                 this.Border_Running.Visibility = _isProcOpen ? Visibility.Visible : Visibility.Collapsed;
@@ -863,6 +866,12 @@ namespace BoneTownHelperApplication.Pages {
             isUnfreezeAll = true;
         }
         
+        private void Go2MainPage() {
+            _contentFrame.Navigate(new MainPage(_contentFrame));
+            //手动清理历史记录
+            _contentFrame.NavigationService.RemoveBackEntry();
+        }
+
         // 页面卸载时执行 - 这是主要的方法
         private void MyPage_Unloaded(object sender, RoutedEventArgs e) {
             Console.WriteLine("页面卸载 - 在这里清理资源");

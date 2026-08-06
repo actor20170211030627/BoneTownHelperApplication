@@ -79,6 +79,9 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="Dialog\BaseMessageBox.xaml.cs">
+          <DependentUpon>BaseMessageBox.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Pages\MainPage.xaml.cs">
           <DependentUpon>MainPage.xaml</DependentUpon>
         </Compile>
@@ -103,6 +106,7 @@
         <Compile Include="Utils\TRainerEditionSteam32Helper.cs" />
         <Compile Include="Utils\TRainerEditionXDGameHelper.cs" />
         <Compile Include="Utils\TRainerHelper.cs" />
+        <Page Include="Dialog\BaseMessageBox.xaml" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
