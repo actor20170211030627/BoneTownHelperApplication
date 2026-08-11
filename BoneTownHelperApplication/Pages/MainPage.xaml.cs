@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using BoneTownHelperApplication.Dialog;
+using Actor.CustomMessageBox;
 using BoneTownHelperApplication.Utils;
 
 namespace BoneTownHelperApplication.Pages {
@@ -18,6 +18,9 @@ namespace BoneTownHelperApplication.Pages {
         //Steam正版
         private const string Md5_Stream_32   = "dc69f146ca1f901362b7efeeec9427e1";
         private const string Md5_Stream_64   = "0e49ac2c6d568498533805432a96b1d1";
+        
+        private const string Str_64Bit_Tip   = "你打开的BoneTown.exe是64位(修改器还没适配), 请打开BoneTown32.exe, 是否打开文件夹并选中BoneTown32.exe?\n\n" + 
+                                               "U opened BoneTown.exe is 64bit(Trainer haven't support), Pls open BoneTown32.exe, open the folder and select BoneTown32.exe now?";
 
         private readonly Frame _contentFrame;
         private readonly DispatcherTimer _dispatcherTimer;
@@ -32,6 +35,7 @@ namespace BoneTownHelperApplication.Pages {
             _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(600.0);
             _dispatcherTimer.Tick += delegate(object sender, EventArgs args) {
+                //D:\Program Files (x86)\BoneTown\BoneTown.exe
                 string processPath = ProcessUtils.GetProcessPath(TRainerHelper.ProcessName);
                 if (processPath == null) {
                     processPath = ProcessUtils.GetProcessPath(TRainerEditionQQGroup32Helper.ProcessName);
@@ -53,24 +57,39 @@ namespace BoneTownHelperApplication.Pages {
                         Go2QQ_Group_32();
                         break;
                     case Md5_QQ_Group_64:
-                        MessageBoxUtils.NewMessageBox("请打开BoneTown32.exe(64位没适配)\nPls open BoneTown32.exe(64bit no support)")
+                        MessageBoxResult result0 = MessageBox2.NewBuilder(Str_64Bit_Tip)
                             .SetCaption("修改器提示(Trainer tips)")
-                            .SetIcon(MessageBoxImage.Error)
+                            .SetIcon(MessageBoxImage.Question)
+                            .SetButton(MessageBoxButton.YesNo)
+                            .Build()
                             .Show();
+                        if (result0 == MessageBoxResult.Yes) {
+                            string folder = FileUtils.GetDirectoryName(processPath);
+                            FileUtils.OpenFolder(folder + "/BoneTown32.exe", true);
+                        }
                         break;
                     case Md5_Stream_32:
                         Go2Steam_32();
                         break;
                     case Md5_Stream_64:
-                        MessageBoxUtils.NewMessageBox("请打开BoneTown32.exe(64位没适配)\nPls open BoneTown32.exe(64bit no support)")
+                        MessageBoxResult result1 = MessageBox2.NewBuilder(Str_64Bit_Tip)
                             .SetCaption("修改器提示(Trainer tips)")
-                            .SetIcon(MessageBoxImage.Error)
+                            .SetIcon(MessageBoxImage.Question)
+                            .SetButton(MessageBoxButton.YesNo)
+                            .Build()
                             .Show();
+                        if (result1 == MessageBoxResult.Yes) {
+                            string folder = FileUtils.GetDirectoryName(processPath);
+                            FileUtils.OpenFolder(folder + "/BoneTown32.exe", true);
+                        }
                         break;
                     default:
-                        MessageBoxUtils.NewMessageBox("你在哪儿下载的版本? 我这儿没有这个版本, 请加Q群206483634反馈\nCan't find you game version")
+                        MessageBox2.NewBuilder("你在哪儿下载的版本? 我这儿没有这个版本, 请加Q群206483634反馈\n" +
+                                               "Can't find you game version, Pls join the QQ group: 206483634 to feedback"
+                                               )
                             .SetCaption("修改器提示(Trainer tips)")
                             .SetIcon(MessageBoxImage.Error)
+                            .Build()
                             .Show();
                         break;
                 }
@@ -117,9 +136,11 @@ namespace BoneTownHelperApplication.Pages {
             }
             //在Q群下载
             if (name == this.Btn_Second_Coming_Edition_QQ_Group.Name) {
-                MessageBoxResult result = MessageBoxUtils.NewMessageBox("请确保打开的是BoneTown32.exe(64位没适配)\nPls ensure opened BoneTown32.exe(64bit no support)")
+                MessageBoxResult result = MessageBox2.NewBuilder("请确保打开的是BoneTown32.exe(64位没适配)\nPls ensure opened BoneTown32.exe(64bit no support)")
                     .SetCaption("修改器提示(Trainer tips)")
                     .SetIcon(MessageBoxImage.Warning)
+                    .SetButton(MessageBoxButton.OKCancel)
+                    .Build()
                     .Show();
                 if (result == MessageBoxResult.OK) {
                     Go2QQ_Group_32();
@@ -128,9 +149,11 @@ namespace BoneTownHelperApplication.Pages {
             }
             //在Steam正版下载
             if (name == this.Btn_Second_Coming_Edition_Steam.Name) {
-                MessageBoxResult result = MessageBoxUtils.NewMessageBox("请确保打开的是BoneTown32.exe(64位没适配)\nPls ensure opened BoneTown32.exe(64bit no support)")
+                MessageBoxResult result = MessageBox2.NewBuilder("请确保打开的是BoneTown32.exe(64位没适配)\nPls ensure opened BoneTown32.exe(64bit no support)")
                     .SetCaption("修改器提示(Trainer tips)")
                     .SetIcon(MessageBoxImage.Warning)
+                    .SetButton(MessageBoxButton.OKCancel)
+                    .Build()
                     .Show();
                 if (result == MessageBoxResult.OK) {
                     Go2Steam_32();

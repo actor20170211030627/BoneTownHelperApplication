@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Actor.CustomMessageBox;
 using BoneTownHelperApplication.Utils;
 using Gma.System.MouseKeyHook;
 using MessageBox = System.Windows.MessageBox;
@@ -724,13 +725,13 @@ namespace BoneTownHelperApplication.Pages {
             //Map8(DownTown 市中心)→Map3(Homeland Trailer Park 国土安全拖车公园) 传送点
             if (name == this.TB_DownTown2HomelandTrailerPark.Name) {
                 if (!isDiving) {
-                    MessageBoxResult result = MessageBoxUtils.NewMessageBox(
-                            "隐藏点在水下, 请先打开'潜水'功能!\nThe hidden spot is underwater, Pls turn on the 'Diving' function first!"
+                    MessageBoxResult result = MessageBox2.NewBuilder("隐藏点在水下, 请先打开'潜水'功能!\nThe hidden spot is underwater, Pls turn on the 'Diving' function first!"
                         ).SetCaption("提示Tips")
                         .SetButton(MessageBoxButton.OK)
-                        .SetButtonOk("去设置\n(Go2Set)")
+                        .SetOkText("去设置\n(Go2Set)")
                         .SetIcon(MessageBoxImage.Warning)
                         .SetDefaultResult(MessageBoxResult.Yes)
+                        .Build()
                         .Show();
                     return;
                 }
