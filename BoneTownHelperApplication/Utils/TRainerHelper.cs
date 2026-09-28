@@ -24,6 +24,7 @@ namespace BoneTownHelperApplication.Utils {
         private const string Effect_Countdown_Toad = ModuleName + "+0x00532A28,0x2B8,0x5D0";
         private const string Effect_Countdown_Crack = ModuleName + "+0x00532A28,0x2B8,0x5D4";
         private const string Effect_Climax = ModuleName + "+0x00532A28,0x2B8,0x808";
+        private const string Effect_Climax_Girl = ModuleName + "+0x00532A28,0x2B8,0x80C";
 
         public const string Money = ModuleName + "+0x00532A28,0x2B8,0x478";
         
@@ -87,7 +88,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.有问题请在百度贴吧发帖子反馈: https://tieba.baidu.com/f?kw=bonetown, (我想起来的时候会去看看).\n" +
                                        "5.杀毒软件报毒: 请自己添加进白名单.\n" +
                                        "6.作者 actor2015\n" +
-                                       "7.版本 20260410 & v1.6.0\n" +
+                                       "7.版本 20260410 & v1.6.1\n" +
                                        "\n" +
                                        "Game Operation instructions\n" +
                                        "Shift + ~ \t\t     : Old version game open the console (you can switch the mouse out of the game interface)\n" +
@@ -111,7 +112,7 @@ namespace BoneTownHelperApplication.Utils {
                                        "4.If you have any issues, Pls issue at https://tieba.baidu.com/f?kw=bonetown(Chinese webside) to feedback.(Pls explain you country and issues in webside, i will see sometimes.)\n" +
                                        "5.If the antivirus software reports an error, Pls add this to whitelist.\n" +
                                        "6.Author actor2015\n" +
-                                       "7.Version 20260410 & v1.6.0";
+                                       "7.Version 20260410 & v1.6.1";
 
         public const string StrBrightness = "亮度修改说明:\n" +
                                             "前提: 游戏在白天/黑夜转换的时候也在修改亮度, 所以:\n" +
@@ -413,20 +414,19 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
-        /// 是否冻结无限健康
+        /// 设置健康💚
         /// </summary>
-        /// <param name="isFreezeHealth"></param>
-        public static void FreezeHealth(bool isFreezeHealth, string code = Health) {
-            if (isFreezeHealth) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", 1f);
-                if (isSuccess) {
-                    PlayAng();
-                } else {
-                    Console.WriteLine("冻结无限健康 失败!");
-                }
-            } else {
-                MemoryDllUtils.UnfreezeValue(code);
-            }
+        /// <param name="value">[0, 1]</param>
+        public static void SetHealth(bool isFromUser, float value, string code = Health) {
+            if (!isFromUser && value == 0f) return;
+            if (!isFromUser && MemoryDllUtils.ReadFloat(code) >= value) return;
+            bool isSuccess = MemoryDllUtils.WriteFloat(code, value);
+            if (isSuccess) {
+                if (isFromUser) PlayAng();
+            } else Console.WriteLine("设置健康💚 失败!");
+        }
+        public static float GetHealth() {
+            return MemoryDllUtils.ReadFloat(Health);
         }
 
         /// <summary>
@@ -596,18 +596,35 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
-        /// 冻结快感进度
+        /// 设置男性快感进度最小值(允许自增)
         /// </summary>
-        /// <param name="isFreeze"></param>
-        public static void FreezeClimax(bool isFreeze, string code = Effect_Climax) {
-            if (isFreeze) {
-                bool isSuccess = MemoryDllUtils.FreezeValue(code, "float", 1f);
-                if (isSuccess) {
-                    PlayAng();
-                } else Console.WriteLine("冻结快感进度 失败!");
-            } else {
-                MemoryDllUtils.UnfreezeValue(code);
-            }
+        /// <param name="value">[0, 1]</param>
+        public static void SetClimaxManMin(bool isFromUser, float value, string code = Effect_Climax) {
+            if (!isFromUser && value == 0f) return;
+            if (!isFromUser && MemoryDllUtils.ReadFloat(code) >= value) return;
+            bool isSuccess = MemoryDllUtils.WriteFloat(code, value);
+            if (isSuccess) {
+                if (isFromUser) PlayAng();
+            } else Console.WriteLine("设置男性快感进度 失败!");
+        }
+        public static float GetClimaxMan() {
+            return MemoryDllUtils.ReadFloat(Effect_Climax);
+        }
+
+        /// <summary>
+        /// 设置女性快感进度最小值(允许自增)
+        /// </summary>
+        /// <param name="value">[0, 1]</param>
+        public static void SetClimaxGirlMin(bool isFromUser, float value, string code = Effect_Climax_Girl) {
+            if (!isFromUser && value == 0f) return;
+            if (!isFromUser && MemoryDllUtils.ReadFloat(code) >= value) return;
+            bool isSuccess = MemoryDllUtils.WriteFloat(code, value);
+            if (isSuccess) {
+                if (isFromUser) PlayAng();
+            } else Console.WriteLine("设置女性快感进度 失败!");
+        }
+        public static float GetClimaxGirl() {
+            return MemoryDllUtils.ReadFloat(Effect_Climax_Girl);
         }
 
         /// <summary>

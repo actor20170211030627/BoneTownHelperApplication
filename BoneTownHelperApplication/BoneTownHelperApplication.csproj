@@ -47,8 +47,8 @@
         <Reference Include="Costura, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
           <HintPath>..\packages\Costura.Fody.6.0.0\lib\netstandard2.0\Costura.dll</HintPath>
         </Reference>
-        <Reference Include="CustomMessageBox, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\packages\CustomMessageBox.Actor.WPF.1.0.2\lib\net462\CustomMessageBox.dll</HintPath>
+        <Reference Include="CustomMessageBox, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\packages\CustomMessageBox.Actor.WPF.1.0.3\lib\net462\CustomMessageBox.dll</HintPath>
         </Reference>
         <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
@@ -145,6 +145,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="app.manifest" />
+      <Resource Include="Resources\Images\OrgasmTIP.png" />
       <Resource Include="Resources\Images\PwrICONFrog.png" />
       <Resource Include="Resources\Images\PwrICONPeyote.png" />
       <Resource Include="Resources\Images\PwrICONCrack.png" />

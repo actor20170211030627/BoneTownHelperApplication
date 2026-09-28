@@ -22,8 +22,8 @@ namespace BoneTownHelperApplication.Pages {
         private bool _isPauseDaylight = false;
         //灯光是否打开
         private bool _isLampOpen = true;
-        //是否冻结无限健康
-        private bool isFreezeHealth = false;
+        //健康
+        private float health = 0f;
         //冻结跳高效果
         private bool isFreezeHighJump = false;
         //冻结护盾效果
@@ -34,33 +34,32 @@ namespace BoneTownHelperApplication.Pages {
         private bool isFreezeDamageTouches = false;
         //冻结快跑效果
         private bool isFreezeFastRun = false;
-        //冻结快感进度
-        private bool isFreezeClimax = false;
+        //♂️快感进度
+        private float climaxMan = 0f;
+        //♀️快感进度
+        private float climaxGirl = 0f;
         //潜水
         private bool isDiving = false;
         //是否取消冻结所有
         private bool isUnfreezeAll = true;
 
 
-        private readonly Frame _contentFrame;
         private DispatcherTimer _dispatcherTimer;
 
         private IKeyboardMouseEvents m_GlobalHook;
 
         public TRainer_Edition_Steam_32_Page(Frame contentFrame) {
             InitializeComponent();
-            this._contentFrame = contentFrame;
             
             this.Loaded += MyPage_Loaded;  // 订阅Loaded事件
             this.Unloaded += MyPage_Unloaded;  // 订阅Unloaded事件
 
             InitializeTimer();
             InitializeMouseKeyHook();
-            
-            
-            int[] xyzDistanceArray = {1, 2, 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100};
-            this.ComboBox_XYZDistance.ItemsSource = xyzDistanceArray;
-            // this.ComboBox_XYZDistance.SelectedItem = xyzDistanceArray[2];
+
+
+            this.ComboBox_XYZDistance.ItemsSource = TRainer_Old_Page.XyzDistanceArray;
+            // this.ComboBox_XYZDistance.SelectedItem = TRainer_Old_Page.XyzDistanceArray[2];
             // this.ComboBox_XYZDistance.SelectedIndex = 2;
             
 
@@ -133,6 +132,21 @@ namespace BoneTownHelperApplication.Pages {
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
                 if (isFromUser) TRainerEditionSteam32Helper.SetBallsSize((float) ((Slider)sender).Value);
             };
+            //健康💚
+            this.Slider_Health.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerEditionSteam32Helper.PlayClick();
+                }
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) TRainerEditionSteam32Helper.SetHealth(true, health = (float) ((Slider)sender).Value);
+            };
             //攻击力
             this.Slider_FightBuff.ValueChanged += (sender, args) => {
                 if (!_isProcOpen) return;
@@ -147,6 +161,42 @@ namespace BoneTownHelperApplication.Pages {
                 // 鼠标左键按住 + 鼠标在 Slider 上
                 bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
                 if (isFromUser) TRainerEditionSteam32Helper.SetClothing_Health((int) ((Slider)sender).Value);
+            };
+            //♂️快感进度
+            this.Slider_Climax.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) {
+                    climaxMan = (float) ((Slider)sender).Value;
+                    TRainerEditionSteam32Helper.SetClimaxManMin(true, climaxMan);
+                } else return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerEditionSteam32Helper.PlayClick();
+                }
+            };
+            //♀️快感进度
+            this.Slider_Climax_Girl.ValueChanged += (sender, args) => {
+                if (!_isProcOpen) return;
+                if (!_isTRainerOpen) return;
+                // 鼠标左键按住 + 鼠标在 Slider 上
+                bool isFromUser = Mouse.LeftButton == MouseButtonState.Pressed && ((Slider)sender).IsMouseOver;
+                if (isFromUser) {
+                    climaxGirl = (float) ((Slider)sender).Value;
+                    TRainerEditionSteam32Helper.SetClimaxGirlMin(true, climaxGirl);
+                } else return;
+                // 毫秒级 long 时间戳（最推荐）
+                long timeStamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                if (timeStamp - clickTime > 300L) {
+                    clickTime = timeStamp;
+                    //避免回调频率太快, 播放声音过于密集
+                    TRainerEditionSteam32Helper.PlayClick();
+                }
             };
             //跳高
             this.Slider_High_Jump.ValueChanged += (sender, args) => {
@@ -272,8 +322,14 @@ namespace BoneTownHelperApplication.Pages {
 
                     //jj性感度
                     this.Slider_Balls_Size.Value = TRainerEditionSteam32Helper.GetBallsSize();
+                    //健康💚
+                    this.Slider_Health.Value = TRainerEditionSteam32Helper.GetHealth();
                     //攻击力
                     this.Slider_FightBuff.Value = TRainerEditionSteam32Helper.GetClothing_Health();
+                    //♂️快感进度
+                    this.Slider_Climax.Value = TRainerEditionSteam32Helper.GetClimaxMan();
+                    //♀️快感进度
+                    this.Slider_Climax_Girl.Value = TRainerEditionSteam32Helper.GetClimaxGirl();
                     //跳高
                     this.Slider_High_Jump.Value = TRainerEditionSteam32Helper.GetHighJump();
                     //护盾
@@ -284,10 +340,16 @@ namespace BoneTownHelperApplication.Pages {
                     this.Slider_Damage_Touches.Value = TRainerEditionSteam32Helper.GetDamageTouches();
                     //快跑🏃‍♀️
                     this.Slider_Fast_Run.Value = TRainerEditionSteam32Helper.GetFastRun();
+
+                    //健康💚
+                    TRainerEditionSteam32Helper.SetHealth(false, health);
+                    //♂️快感进度
+                    TRainerEditionSteam32Helper.SetClimaxManMin(false, climaxMan);
+                    //♀️快感进度
+                    TRainerEditionSteam32Helper.SetClimaxGirlMin(false, climaxGirl);
                 } else {
                     // Console.WriteLine($"openProcessSuccess: {_isProcOpen}");
                     UnfreezeAll();
-                    Go2MainPage();
                 }
 
                 this.Border_Running.Visibility = _isProcOpen ? Visibility.Visible : Visibility.Collapsed;
@@ -572,28 +634,6 @@ namespace BoneTownHelperApplication.Pages {
                 TRainerEditionSteam32Helper.ZAxisEdit(false, value);
                 return;
             }
-            //无限健康
-            if (name == this.Image_Infinite_Health.Name) {
-                isFreezeHealth = !isFreezeHealth;
-                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(isFreezeHealth);
-                this.Image_Infinite_Health.Source = new BitmapImage(uri);
-                TRainerEditionSteam32Helper.FreezeHealth(isFreezeHealth);
-                if (isFreezeHealth) {
-                    isUnfreezeAll = false;
-                }
-                return;
-            }
-            //冻结快感进度
-            if (name == this.Image_Freeze_Climax.Name) {
-                isFreezeClimax = !isFreezeClimax;
-                Uri uri = TRainerEditionSteam32Helper.GetSwitchUri(isFreezeClimax);
-                this.Image_Freeze_Climax.Source = new BitmapImage(uri);
-                TRainerEditionSteam32Helper.FreezeClimax(isFreezeClimax);
-                if (isFreezeClimax) {
-                    isUnfreezeAll = false;
-                }
-                return;
-            }
             //潜水
             if (name == this.Image_Diving.Name) {
                 isDiving = !isDiving;
@@ -734,7 +774,7 @@ namespace BoneTownHelperApplication.Pages {
                         .SetIcon(MessageBoxImage.Warning)
                         .SetDefaultResult(MessageBoxResult.Yes)
                         .Build()
-                        .Show();
+                        .ShowDialog();
                     return;
                 }
 
@@ -851,22 +891,14 @@ namespace BoneTownHelperApplication.Pages {
         /// </summary>
         private void UnfreezeAll() {
             if (isUnfreezeAll) return;
-            TRainerEditionSteam32Helper.FreezeHealth(false);
             TRainerEditionSteam32Helper.SetJumpHigher(0, false, false);
             TRainerEditionSteam32Helper.SetShield(0, false, false);
             TRainerEditionSteam32Helper.SetInvisible(0, false, false);
             TRainerEditionSteam32Helper.SetDamageTouches(0, false, false);
             TRainerEditionSteam32Helper.SetFastRun(0, false, false);
-            TRainerEditionSteam32Helper.FreezeClimax(false);
             TRainerEditionSteam32Helper.PauseDaylight(false, false, false);
             TRainerEditionSteam32Helper.FreezeDiving(false);
             isUnfreezeAll = true;
-        }
-
-        private void Go2MainPage() {
-            _contentFrame.Navigate(new MainPage(_contentFrame));
-            //手动清理历史记录
-            _contentFrame.NavigationService.RemoveBackEntry();
         }
 
         // 页面卸载时执行 - 这是主要的方法

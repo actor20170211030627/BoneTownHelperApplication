@@ -62,7 +62,7 @@ namespace BoneTownHelperApplication.Pages {
                             .SetIcon(MessageBoxImage.Question)
                             .SetButton(MessageBoxButton.YesNo)
                             .Build()
-                            .Show();
+                            .ShowDialog();
                         if (result0 == MessageBoxResult.Yes) {
                             string folder = FileUtils.GetDirectoryName(processPath);
                             FileUtils.OpenFolder(folder + "/BoneTown32.exe", true);
@@ -77,7 +77,7 @@ namespace BoneTownHelperApplication.Pages {
                             .SetIcon(MessageBoxImage.Question)
                             .SetButton(MessageBoxButton.YesNo)
                             .Build()
-                            .Show();
+                            .ShowDialog();
                         if (result1 == MessageBoxResult.Yes) {
                             string folder = FileUtils.GetDirectoryName(processPath);
                             FileUtils.OpenFolder(folder + "/BoneTown32.exe", true);
@@ -90,7 +90,7 @@ namespace BoneTownHelperApplication.Pages {
                             .SetCaption("修改器提示(Trainer tips)")
                             .SetIcon(MessageBoxImage.Error)
                             .Build()
-                            .Show();
+                            .ShowDialog();
                         break;
                 }
             };
@@ -141,7 +141,7 @@ namespace BoneTownHelperApplication.Pages {
                     .SetIcon(MessageBoxImage.Warning)
                     .SetButton(MessageBoxButton.OKCancel)
                     .Build()
-                    .Show();
+                    .ShowDialog();
                 if (result == MessageBoxResult.OK) {
                     Go2QQ_Group_32();
                 }
@@ -154,7 +154,7 @@ namespace BoneTownHelperApplication.Pages {
                     .SetIcon(MessageBoxImage.Warning)
                     .SetButton(MessageBoxButton.OKCancel)
                     .Build()
-                    .Show();
+                    .ShowDialog();
                 if (result == MessageBoxResult.OK) {
                     Go2Steam_32();
                 }

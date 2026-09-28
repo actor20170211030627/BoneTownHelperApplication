@@ -657,17 +657,28 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 TextAlignment="Center"
-                Text="无限健康&#x0A;(Infinite Health)"
+                Text="健康&#x0A;(Health)"
                 Margin="1" />
-            <Image
+            <Slider
+                Name="Slider_Health"
                 Grid.Row="1"
                 Grid.Column="2"
-                Name="Image_Infinite_Health"
-                Width="35" Height="Auto"
-                HorizontalAlignment="Left"
+                Height="Auto"
                 Margin="2 0 0 0"
-                MouseLeftButtonDown="Btn_OnClick"
-                Source="/Resources/Images/icon_switch_lightyellow.png" />
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Health, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
             
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\inventory -->
             <Image
@@ -712,33 +723,76 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 TextAlignment="Center"
-                Text="冻结快感进度&#x0A;(Freeze Climax)"
+                Text="冻结♂️快感进度&#x0A;(Freeze Climax)"
                 Margin="1" />
-            <Image
+            <Slider
+                Name="Slider_Climax"
                 Grid.Row="3"
                 Grid.Column="2"
-                Name="Image_Freeze_Climax"
-                Width="35" Height="Auto"
-                HorizontalAlignment="Left"
+                Height="Auto"
                 Margin="2 0 0 0"
-                MouseLeftButtonDown="Btn_OnClick"
-                Source="/Resources/Images/icon_switch_lightyellow.png" />
-            
-            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="3"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Climax, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
             <Image
                 Grid.Row="4"
+                Grid.Column="0"
+                Width="Auto" Height="28"
+                Source="/Resources/Images/OrgasmTIP.png" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="1"
+                TextAlignment="Center"
+                Text="设置♀️快感进度&#x0A;(Set Girl Climax)"
+                Margin="1" />
+            <Slider
+                Name="Slider_Climax_Girl"
+                Grid.Row="4"
+                Grid.Column="2"
+                Height="Auto"
+                Margin="2 0 0 0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Minimum="0"
+                Value="0"
+                TickFrequency="0.01"
+                IsMoveToPointEnabled="True" />
+            <Label
+                Grid.Row="4"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False"
+                Content="{Binding ElementName=Slider_Climax_Girl, Path=Value}"
+                ContentStringFormat="{}{0:P0}"/>
+
+            <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\tips -->
+            <Image
+                Grid.Row="5"
                 Grid.Column="0"
                 Stretch="Fill"
                 Width="50" Height="15"
                 Source="/Resources/Images/DrownBezel.png" />
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1"
                 TextAlignment="Center"
                 Text="潜水&#x0A;(Diving)"
                 Margin="1" />
             <Image
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="2"
                 Name="Image_Diving"
                 Width="35" Height="Auto"
@@ -746,7 +800,7 @@
                 Margin="2 0 0 0"
                 MouseLeftButtonDown="Btn_OnClick"
                 Source="/Resources/Images/icon_switch_lightyellow.png" />
-            
+
             <!-- 图片来自: D:\Program Files (x86)\BoneTown\game\data\gui\powerup -->
             <Image
                 Grid.Row="0"

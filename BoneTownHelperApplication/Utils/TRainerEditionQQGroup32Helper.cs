@@ -24,6 +24,7 @@ namespace BoneTownHelperApplication.Utils {
         private const string Effect_Countdown_Toad = ModuleName + "+0x00357F38,0x148,0x644";
         private const string Effect_Countdown_Crack = ModuleName + "+0x00357F38,0x148,0x648";
         private const string Effect_Climax = ModuleName + "+0x00357F38,0x148,0x898";
+        private const string Effect_Climax_Girl = ModuleName + "+0x00357F38,0x148,0x89C";
         
         public const string Money = ModuleName + "+0x00357F38,0x148,0x4A8";
 
@@ -207,11 +208,14 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
-        /// 是否冻结无限健康
+        /// 设置健康💚
         /// </summary>
-        /// <param name="isFreezeHealth"></param>
-        public static void FreezeHealth(bool isFreezeHealth) {
-            TRainerHelper.FreezeHealth(isFreezeHealth, Health);
+        /// <param name="value">[0, 1]</param>
+        public static void SetHealth(bool isFromUser, float value) {
+            TRainerHelper.SetHealth(isFromUser, value, Health);
+        }
+        public static float GetHealth() {
+            return MemoryDllUtils.ReadFloat(Health);
         }
 
         /// <summary>
@@ -316,11 +320,25 @@ namespace BoneTownHelperApplication.Utils {
         }
 
         /// <summary>
-        /// 冻结快感进度
+        /// 设置男性快感进度最小值(允许自增)
         /// </summary>
-        /// <param name="isFreezeClimax"></param>
-        public static void FreezeClimax(bool isFreezeClimax) {
-            TRainerHelper.FreezeClimax(isFreezeClimax, Effect_Climax);
+        /// <param name="value">[0, 1]</param>
+        public static void SetClimaxManMin(bool isFromUser, float value) {
+            TRainerHelper.SetClimaxManMin(isFromUser, value, Effect_Climax);
+        }
+        public static float GetClimaxMan() {
+            return MemoryDllUtils.ReadFloat(Effect_Climax);
+        }
+
+        /// <summary>
+        /// 设置女性快感进度最小值(允许自增)
+        /// </summary>
+        /// <param name="value">[0, 1]</param>
+        public static void SetClimaxGirlMin(bool isFromUser, float value) {
+            TRainerHelper.SetClimaxGirlMin(isFromUser, value, Effect_Climax_Girl);
+        }
+        public static float GetClimaxGirl() {
+            return MemoryDllUtils.ReadFloat(Effect_Climax_Girl);
         }
 
         /// <summary>
